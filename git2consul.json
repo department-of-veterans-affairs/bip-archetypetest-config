@@ -1,0 +1,20 @@
+{
+    "version": "1.0",
+    "repos": [
+        {
+            "name": "bip-archetypetest-config",
+            "url": "ssh://git@github.ec.va.gov/EPMO/bip-archetypetest-config.git",
+            "source_root": "config/dev",
+            "mountpoint": "config/archetypetest",
+            "ignore_repo_name": true,
+            "ignore_file_extension": false,
+            "include_branch_name": true,
+            "branches": [
+                "master",
+				"development"
+            ],
+            "expand_keys": false,
+            "expand_keys_diff": true
+        }
+    ]
+}

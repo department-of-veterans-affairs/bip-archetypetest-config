@@ -1,0 +1,155 @@
+{{- $fullName := include "bip-archetypetest.fullname" . -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "bip-archetypetest.fullname" . }}
+  labels:
+    app: {{ template "bip-archetypetest.name" . }}
+    chart: {{ template "bip-archetypetest.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "bip-archetypetest.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "bip-archetypetest.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      {{- if .Values.imagePullSecret }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            {{- if .Values.consul.enabled }}
+            - name: spring.cloud.consul.enabled
+              value: {{ .Values.consul.enabled | quote }}
+            {{- end }}
+            {{- if .Values.consul.config.enabled }}
+            - name: spring.cloud.consul.config.enabled
+              value: {{ .Values.consul.config.enabled | quote }}
+            {{- end }}
+            {{- if .Values.consul.config.failFast }}
+            - name: spring.cloud.consul.config.failFast
+              value: {{ .Values.consul.config.failFast | quote }}
+            {{- end }}
+            {{- if .Values.consul.config.format }}
+            - name: spring.cloud.consul.config.format
+              value: {{ .Values.consul.config.format | quote }}
+            {{- end }}
+            {{- if .Values.consul.discovery.enabled }}
+            - name: spring.cloud.consul.discovery.enabled
+              value: {{ .Values.consul.discovery.enabled | quote }}
+            {{- end }}
+            {{- if .Values.consul.discovery.register }}
+            - name: spring.cloud.consul.discovery.register
+              value: {{ .Values.consul.discovery.register | quote }}
+            {{- end }}
+            - name: management.health.consul.enabled
+              value: {{ .Values.consul.discovery.enabled | quote }}
+            {{- if .Values.vault.enabled }}
+            - name: spring.cloud.vault.enabled
+              value: {{ .Values.vault.enabled | quote }}
+            {{- end }}
+            {{- if .Values.vault.failFast }}
+            - name: spring.cloud.vault.failFast
+              value: {{ .Values.vault.failFast | quote }}
+            {{- end }}
+            {{- if .Values.vault.consulBackendEnabled }}
+            - name: spring.cloud.vault.consul.enabled
+              value: {{ .Values.vault.consulBackendEnabled | quote }}
+            {{- else }}
+            - name: spring.cloud.consul.config.acl-token
+              valueFrom:
+                secretKeyRef:
+                    name: {{ .Values.consul.secret | default $fullName }}
+                    key: consul-acl-token
+            - name: spring.cloud.consul.discovery.acl-token
+              valueFrom:
+                secretKeyRef:
+                    name: {{ .Values.consul.secret | default $fullName }}
+                    key: consul-acl-token
+            {{- end }}
+            {{- if .Values.vault.kv.applicationName }}
+            - name: spring.cloud.vault.kv.application-name
+              value: {{ .Values.vault.kv.applicationName }}
+            {{- end }}
+            {{- if .Values.spring.profiles }}
+            - name: spring.profiles.active
+              value: {{ .Values.spring.profiles }}
+            {{- end }}
+            {{- if .Values.consul.config.prefix }}
+            - name: spring.cloud.consul.config.prefix
+              value: {{ .Values.consul.config.prefix }}
+            {{- end }}
+            - name: spring.cloud.consul.host
+            {{- if .Values.consul.host }}
+              value: {{ quote .Values.consul.host }}
+            {{- else }}
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.hostIP
+            {{- end }}
+            - name: spring.cloud.consul.port
+              value: {{quote .Values.consul.port }}
+            - name: spring.cloud.consul.scheme
+              value: {{quote .Values.consul.scheme }}
+            - name: spring.cloud.vault.host
+              value: {{quote .Values.vault.host }}
+            - name: spring.cloud.vault.port
+              value: {{quote .Values.vault.port }}
+            - name: spring.cloud.vault.scheme
+              value: {{quote .Values.vault.scheme }}
+            {{- if .Values.vault.authentication }}
+            - name: spring.cloud.vault.authentication
+              value: {{ .Values.vault.authentication }}
+            {{- end }}
+            {{- if .Values.vault.kubernetes }}
+            - name: spring.cloud.vault.kubernetes.role
+              value: {{ quote .Values.vault.kubernetes.role }}
+            - name: spring.cloud.vault.kubernetes.service-account-token-file
+              value: {{ quote .Values.vault.kubernetes.tokenFile }}
+            {{- end }}
+            {{- if .Values.java.toolOptions }}
+            - name: JAVA_TOOL_OPTIONS
+              value: {{ quote .Values.java.toolOptions }}
+            {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 45
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            initialDelaySeconds: 45
+            periodSeconds: 5
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

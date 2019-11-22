@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    initialize: false
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false

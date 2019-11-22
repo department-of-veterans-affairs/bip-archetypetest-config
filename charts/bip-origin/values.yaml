@@ -1,0 +1,112 @@
+# Default values for ocp-archetypetest.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: container-registry.dev8.bip.va.gov/bip-archetypetest
+  tag: master
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: true
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts: 
+    - bip-archetypetest.local
+  path: /
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+route:
+  enabled: false
+  annotations: {}
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 500Mi
+  requests:
+    cpu: 250m
+    memory: 500Mi
+
+java:
+  toolOptions: -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMPercentage=67.0
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+#
+# Application Configuration
+#
+
+consul:
+  # Hostname of Consul Agent. Defaults to the hosts IP address.
+  #host: "consul"
+  
+  # Port of Consul Agent.
+  port: 8500
+
+  # Scheme to use to connect to Consul; https/http.
+  scheme: "https"
+
+  # Name of the platform provided Secret for Consul authentication
+  # If this is not set, then a Secret object is generated to store the Consul ACL token. This would need to populated manually.
+  # secret: consul-acl-token
+  enabled: false
+  config:
+    enabled: false
+    failFast: true
+    prefix: config/archetypetest
+    # Format in which key/values are stored in Consul. Valid values are FILES and KEY_VALUE
+    format: null
+  discovery:
+    enabled: false
+    register: false
+
+  # Set this value to the name of the Secret object containing the Consul ACL token. If not set, a Secret will be created by the Chart
+  secret: null
+  # Set this to the name of the key in the above Secret containing the ACL token value
+  secretKey: consul-acl-token
+  
+
+vault:
+  # Enable or disable integration with Vault
+  enabled: false
+  failFast: true
+
+  # Hostname of Vault service. Required.
+  host: "vault.dev8.bip.va.gov"
+  
+  # Port of Vault service. Required.
+  port: 8200
+
+  # Scheme to use to connect to Vault; https/http. Required.
+  scheme: "https"
+
+  # Enable the use of the Vault Consul backend to generate Consul ACL token. Defaults to false.
+  #consulBackendEnabled: "true"
+
+  # Authentication method for connecting to Vault
+  authentication: KUBERNETES
+  kubernetes:
+    tokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+
+    # Role to use for Kubernetes Authentication. Required.
+    role: null
+  kv:
+    applicationName: null
+
+spring:
+  profiles: null

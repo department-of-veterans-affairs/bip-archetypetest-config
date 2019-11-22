@@ -1,0 +1,63 @@
+---
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease #Custom Object type for use with Flux Helm Operator
+metadata:
+  name: bip-archetypetest-test #Name of the object
+  namespace: archetypetest-test #Namespace in which to install the Chart
+  annotations:
+    flux.weave.works/automated: "true" #Set this to true to automate installation/updating of this release when the Chart of this object changes
+    flux.weave.works/tag.chart-image: glob:test-* #Regex value flux will look for in image tag to auto upadte
+spec:
+  releaseName: bip-archetypetest-test #Name of the Helm release
+
+  ########################################################################
+  # Values section defines the location of the chart
+  # This example pulls the chart from a Git repository
+  ########################################################################
+  chart:
+    git: ssh://git@github.ec.va.gov/EPMO/bip-archetypetest-config #Repository where the pull the chart from
+    ref: master #Branch or tag to retreive the chart from
+    path: charts/bip-archetypetest #Path to the chart directory in the repository
+
+  ########################################################################
+  # Values section defines the parameters to the chart
+  # These are specific to the chart being installed
+  ########################################################################
+  values:
+    ingress:
+      enabled: true
+      hosts:
+        - bip-archetypetest.archetypetest-test.dev8.bip.va.gov
+      annotations:
+        # kubernetes.io/ingress.class: nginx
+        kubernetes.io/tls-acme: "true"
+      path: /
+      tls:
+      - secretName: bip-reference-test-tls
+        hosts:
+          - bip-archetypetest.archetypetest-test.dev8.bip.va.gov
+    image:
+      repository: container-registry.dev8.bip.va.gov/bip-archetypetest
+      tag: 0.0.2-SNAPSHOT
+    consul:
+      enabled: true
+      config:
+        enabled: true
+        prefix: config/archetypetest/development
+      discovery:
+        enabled: true
+        register: true
+      secret: consul-acl-token
+      host: dev8-consul.vault.svc.dev8
+      scheme: http
+    vault:
+      enabled: true
+      host: dev8-vault.vault.svc.dev8
+      kubernetes:
+        role: archetypetest-read
+      kv:
+        applicationName: archetypetest/bip-archetypetest
+      port: 8200
+      scheme: http
+    spring:
+      profiles: test
