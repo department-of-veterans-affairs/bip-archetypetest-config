@@ -1,0 +1,1 @@
+# bip-archetypetest-config
