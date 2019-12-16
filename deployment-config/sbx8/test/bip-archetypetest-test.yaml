@@ -37,7 +37,7 @@ spec:
         hosts:
           - bip-archetypetest.archetypetest-test.sbx8.bip.va.gov
     image:
-      repository: container-registry.sbx8.bip.va.gov/bip-archetypetest
+      repository: container-registry.sbx8.bip.va.gov/archetypetest/bip-archetypetest
       tag: 0.0.2-SNAPSHOT
     consul:
       enabled: true
