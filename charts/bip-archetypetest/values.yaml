@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: container-registry.dev8.bip.va.gov/bip-archetypetest
+  repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest
   tag: master
   pullPolicy: IfNotPresent
 
