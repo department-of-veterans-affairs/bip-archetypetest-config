@@ -30,10 +30,11 @@ route:
   enabled: false
   annotations: {}
 
+#TODO_CMF: Set memory limit back to 500Mi after testing is finished
 resources:
   limits:
     cpu: 1000m
-    memory: 500Mi
+    memory: 550Mi
   requests:
     cpu: 250m
     memory: 500Mi
