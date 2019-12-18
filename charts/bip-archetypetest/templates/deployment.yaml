@@ -131,7 +131,7 @@ spec:
             - name: JAVA_TOOL_OPTIONS
               value: {{ quote .Values.java.toolOptions }}
             {{- end }}
-          {{- if .Values.sleepContainer }}
+          {{- if not .Values.sleepContainer }}
           livenessProbe:
             httpGet:
               path: /actuator/health
