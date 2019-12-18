@@ -131,6 +131,7 @@ spec:
             - name: JAVA_TOOL_OPTIONS
               value: {{ quote .Values.java.toolOptions }}
             {{- end }}
+          {{- if .Values.sleepContainer }}
           livenessProbe:
             httpGet:
               path: /actuator/health
@@ -143,6 +144,7 @@ spec:
               port: http
             initialDelaySeconds: 45
             periodSeconds: 5
+          {{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
