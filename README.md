@@ -28,18 +28,20 @@ To promote changes to the Staging or Production clusters, a contributor should c
 Secrets needed you your application at runtime will be managed in Vault by the platform team. Secrets would include authentication credentials, private keys and other sensitive application information that cannot be bundled in the application container image.
 
 ## Adding New Secrets
-As a development team when you identify the need for a new application secret, the process for getting the Secret created in Vault is to:
+As a development team when you identify the need for a new application secret, the process for getting the Secret created in Dev Vault is to:
 
 * _Login to the vault dev environment [here](https://vault.dev8.bip.va.gov) using your ldap credentials. (Note only admins can add/update vault)_
-* _Navigate to your projects vault root directory, e.g. https://vault.dev8.bip.va.gov/ui/vault/secrets/secret/list/blue/ _
-* _Create the key/value pairs under <service_name>/<env>, e.g. bip-reference-person/dev
-* _Create the key/value for the int and test environments as well if necessary
-* _In the DR for the stage or prod environment, include a request for a new Secret for your application in Vault. Be sure to include:_
+* _Navigate to your projects vault root directory, e.g. https://vault.dev8.bip.va.gov/ui/vault/secrets/secret/list/blue/_
+* _Create the key/value pairs under <service_name>/<env>, e.g. bip-reference-person/dev_
+* _Create the key/value for the int and test environments as well if necessary_
+  
+  
+In the DR for the stage or prod environment, include a request for a new Secret for your application in Vault. Be sure to include:
 * _Vault Path for secret_
 * _Application property name for the secret value_
 * _How to obtain the correct secret value_
 
-__Secrets must be provided over a secured channel like an encrypted email using only VA email addresses or over VA skype. If you need a secure way to transmit a secret value, please use [Onceler](https://onceler.app.cloud.gov/) to generate a one-time use link and send that to the ProdOps team.__
+Secrets must be provided over a secured channel like an encrypted email using only VA email addresses or over VA skype. 
 
 ## Promoting Secrets to Staging and Production clusters
 When a new secret is requested for the Dev environment, the ProdOps team should go ahead and create secrets in the Staging and Production vault instances as well.

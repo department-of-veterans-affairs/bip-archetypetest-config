@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest
+  repository: container-registry.dev8.bip.va.gov/bip-archetypetest
   tag: master
   pullPolicy: IfNotPresent
 
@@ -30,11 +30,10 @@ route:
   enabled: false
   annotations: {}
 
-#TODO_CMF: Set memory limit back to 500Mi after testing is finished
 resources:
   limits:
     cpu: 1000m
-    memory: 700Mi
+    memory: 500Mi
   requests:
     cpu: 250m
     memory: 500Mi

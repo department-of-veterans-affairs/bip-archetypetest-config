@@ -37,15 +37,15 @@ spec:
               containerPort: 8080
               protocol: TCP
           env:
-            {{- if .Values.consul.enabled }}
+            {{- if kindIs "invalid" .Values.consul.enabled | not }}
             - name: spring.cloud.consul.enabled
               value: {{ .Values.consul.enabled | quote }}
             {{- end }}
-            {{- if .Values.consul.config.enabled }}
+            {{- if kindIs "invalid" .Values.consul.config.enabled | not }}
             - name: spring.cloud.consul.config.enabled
               value: {{ .Values.consul.config.enabled | quote }}
             {{- end }}
-            {{- if .Values.consul.config.failFast }}
+            {{- if kindIs "invalid" .Values.consul.config.failFast | not }}
             - name: spring.cloud.consul.config.failFast
               value: {{ .Values.consul.config.failFast | quote }}
             {{- end }}
@@ -53,7 +53,7 @@ spec:
             - name: spring.cloud.consul.config.format
               value: {{ .Values.consul.config.format | quote }}
             {{- end }}
-            {{- if .Values.consul.discovery.enabled }}
+            {{- if kindIs "invalid" .Values.consul.discovery.enabled | not }}
             - name: spring.cloud.consul.discovery.enabled
               value: {{ .Values.consul.discovery.enabled | quote }}
             {{- end }}
@@ -63,7 +63,7 @@ spec:
             {{- end }}
             - name: management.health.consul.enabled
               value: {{ .Values.consul.discovery.enabled | quote }}
-            {{- if .Values.vault.enabled }}
+            {{- if kindIs "invalid" .Values.vault.enabled | not }}
             - name: spring.cloud.vault.enabled
               value: {{ .Values.vault.enabled | quote }}
             {{- end }}
@@ -71,7 +71,7 @@ spec:
             - name: spring.cloud.vault.failFast
               value: {{ .Values.vault.failFast | quote }}
             {{- end }}
-            {{- if .Values.vault.consulBackendEnabled }}
+            {{- if kindIs "invalid" .Values.vault.consulBackendEnabled | not }}
             - name: spring.cloud.vault.consul.enabled
               value: {{ .Values.vault.consulBackendEnabled | quote }}
             {{- else }}

@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease #Custom Object type for use with Flux Helm Operator
 metadata:
   name: bip-archetypetest #Name of the object
@@ -24,7 +24,7 @@ spec:
   ########################################################################
   values:
     image:
-      repository: 172.30.1.1:5000/archetypetest/bip-archetypetest
+      repository: 172.30.1.1:5000/archetypetest-dev/bip-archetypetest
       tag: latest
     vault:
       enabled: false

@@ -1,5 +1,5 @@
 ---
-apiVersion: flux.weave.works/v1beta1
+apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease #Custom Object type for use with Flux Helm Operator
 metadata:
   name: bip-archetypetest-test #Name of the object
@@ -16,7 +16,7 @@ spec:
   ########################################################################
   chart:
     git: ssh://git@github.ec.va.gov/EPMO/bip-archetypetest-config #Repository where the pull the chart from
-    ref: master #Branch or tag to retreive the chart from
+    ref: development #Branch or tag to retreive the chart from
     path: charts/bip-archetypetest #Path to the chart directory in the repository
 
   ########################################################################
@@ -33,7 +33,7 @@ spec:
         kubernetes.io/tls-acme: "true"
       path: /
       tls:
-      - secretName: bip-reference-test-tls
+      - secretName: bip-archetypetest-test-tls
         hosts:
           - bip-archetypetest.archetypetest-test.sbx8.bip.va.gov
     image:
