@@ -30,13 +30,14 @@ route:
   enabled: false
   annotations: {}
 
+# TODO_CMF: Testing new Flux images
 resources:
   limits:
     cpu: 1000m
-    memory: 500Mi
+    memory: 600Mi
   requests:
     cpu: 250m
-    memory: 500Mi
+    memory: 600Mi
 
 java:
   toolOptions: -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMPercentage=67.0
