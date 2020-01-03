@@ -6,7 +6,8 @@ metadata:
   namespace: archetypetest-dev #Namespace in which to install the helmrelease object
   annotations:
     flux.weave.works/automated: "true" #Set this to true to automate installation/updating of this release when the Chart of this object changes
-    flux.weave.works/tag.chart-image: glob:dev-* #Regex value flux will look for in image tag to auto update
+    # TODO_CMF: Update chart-image for testing
+    flux.weave.works/tag.chart-image: glob:container-registry* #Regex value flux will look for in image tag to auto update
 spec:
   releaseName: bip-archetypetest-dev #Name of the Helm release
   targetNamespace: archetypetest-dev #Namespace  in which to install the chart
