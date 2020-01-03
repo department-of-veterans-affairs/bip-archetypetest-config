@@ -62,3 +62,11 @@ spec:
       scheme: http
     spring:
       profiles: dev
+    # TODO_CMF: Testing new Flux images
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 750Mi
+      requests:
+        cpu: 250m
+        memory: 7500Mi
