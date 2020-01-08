@@ -3,4 +3,4 @@ appVersion: "0.0.1-SNAPSHOT"
 description: A Helm chart for BIP Reference Services
 name: bip-archetypetest
 #TODO_CMF: updating chart version for testing
-version: 0.1.6
+version: 0.1.7
