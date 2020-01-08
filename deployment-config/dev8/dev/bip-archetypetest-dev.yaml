@@ -41,7 +41,7 @@ spec:
     image:
       repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest
       # TODO_CMF: changing image tag
-      tag: 0.0.3-SNAPSHOT
+      tag: 0.0.1-SNAPSHOT
     consul:
       enabled: true
       config:
