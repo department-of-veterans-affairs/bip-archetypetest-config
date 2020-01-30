@@ -1,5 +1,2 @@
 foo:
   bar: baz
-  # TODO_CMF: Testing git2consul
-  test2: data2
-  test3: data3
