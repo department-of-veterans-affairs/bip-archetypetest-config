@@ -53,7 +53,7 @@ affinity: {}
 
 consul:
   # Hostname of Consul Agent. Defaults to the hosts IP address.
-  #host: "consul"
+  host: "dev8-consul.vault.svc.dev8"
   
   # Port of Consul Agent.
   port: 8500
@@ -76,7 +76,7 @@ consul:
     register: false
 
   # Set this value to the name of the Secret object containing the Consul ACL token. If not set, a Secret will be created by the Chart
-  secret: null
+  secret: consul-acl-token
   # Set this to the name of the key in the above Secret containing the ACL token value
   secretKey: consul-acl-token
   
@@ -87,7 +87,7 @@ vault:
   failFast: true
 
   # Hostname of Vault service. Required.
-  host: "vault.dev8.bip.va.gov"
+  host: "dev8-vault.vault.svc.dev8"
   
   # Port of Vault service. Required.
   port: 8200
