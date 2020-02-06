@@ -68,7 +68,7 @@ consul:
   config:
     enabled: false
     failFast: true
-    prefix: config/archetypetest
+    prefix: config/archetypetest/development
     # Format in which key/values are stored in Consul. Valid values are FILES and KEY_VALUE
     format: null
   discovery:
