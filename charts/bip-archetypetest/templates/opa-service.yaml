@@ -1,0 +1,21 @@
+{{- if (.Values.opa.enabled) -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: opa-{{ template "bip-archetypetest.fullname" . }}
+  labels:
+    app: opa-{{ template "bip-archetypetest.name" . }}
+    chart: {{ template "bip-archetypetest.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.opaService.type }}
+  ports:
+    - port: {{ .Values.opaService.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: opa-{{ template "bip-archetypetest.name" . }}
+    release: {{ .Release.Name }}
+{{- end }}

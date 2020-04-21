@@ -348,9 +348,9 @@ function rename_directories() {
 
 	# rename bip-origin dirs
 	echo "+>> Renaming directories in place: bip-origin to $artifactId" 2>&1 | tee -a "$genLog"
-	oldWord="bip-origin-config"
+	oldWord="bip-origin"
 	find . -name "*$oldWord*" -depth -type d -maxdepth 4 -print | while read tmpDir; do
-		newDir=${tmpDir//$oldWord/$artifactId}
+		newDir=${tmpDir//$oldWord/$applicationId}
 		echo "mv -f -v $tmpDir $newDir" 2>&1 | tee -a "$genLog"
 		mv -f $tmpDir $newDir 2>&1 >> "$genLog"
 		check_exit_status "$?"
@@ -449,12 +449,14 @@ function change_text() {
 		newVal="$artifactNameUpperCase"
 		echo "sed -i \"\" -e 's/'\"$oldVal\"'/'\"$newVal\"'/g' \"$tmpFile\"" 2>&1 | tee -a "$genLog"
 		sed -i "" -e 's/'"$oldVal"'/'"$newVal"'/g' "$tmpFile" 2>&1 >> "$genLog"
-	    # projectNameSpacePrefix replacement
+	  # projectNameSpacePrefix replacement
 		oldVal="bip-project-namespace-prefix"
 		newVal="$projectNameSpacePrefix"
 		echo "sed -i \"\" -e 's/'\"$oldVal\"'/'\"$newVal\"'/g' \"$tmpFile\"" 2>&1 | tee -a "$genLog"
 		sed -i "" -e 's/'"$oldVal"'/'"$newVal"'/g' "$tmpFile" 2>&1 >> "$genLog"
-	done; check_exit_status "$?"
+	done;
+	### do not check exit status, as windows editions of bash mysteriously report errors, but still do the work
+	# check_exit_status "$?"
 }
 
 ## function to build the new project    ##

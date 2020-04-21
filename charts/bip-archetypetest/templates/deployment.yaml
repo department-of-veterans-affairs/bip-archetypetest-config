@@ -132,6 +132,8 @@ spec:
               value: {{ quote .Values.java.toolOptions }}
             {{- end }}
           {{- if not .Values.sleepContainer }}
+            - name: bip.framework.security.opa.urls
+              value: http://opa-{{ template "bip-archetypetest.fullname" . }}:{{ .Values.opaService.port }}/v1/data/bip/http/authz/admin,http://opa-{{ template "bip-archetypetest.fullname" . }}:{{ .Values.opaService.port }}/v1/data/bip/http/authz/allow
           livenessProbe:
             httpGet:
               path: /actuator/health

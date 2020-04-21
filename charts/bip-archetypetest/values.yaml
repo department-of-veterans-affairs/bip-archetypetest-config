@@ -9,9 +9,18 @@ image:
   tag: master
   pullPolicy: IfNotPresent
 
+opaImage:
+  repository: container-registry.dev8.bip.va.gov/openpolicyagent/opa
+  tag: 0.16.0
+  pullPolicy: IfNotPresent
+
 service:
   type: ClusterIP
   port: 8080
+
+opaService:
+  type: ClusterIP
+  port: 8181
 
 ingress:
   enabled: true
@@ -37,6 +46,14 @@ resources:
   requests:
     cpu: 250m
     memory: 500Mi
+
+opaResources:
+  limits:
+    cpu: 250m
+    memory: 250Mi
+  requests:
+    cpu: 250m
+    memory: 250Mi
 
 java:
   toolOptions: -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMPercentage=67.0
@@ -110,3 +127,7 @@ vault:
 
 spring:
   profiles: null
+
+opa:
+  enabled: false # OPAEnablement: Set this to true if you want to enable OPA
+  rego: api_authz_jwt_token.rego

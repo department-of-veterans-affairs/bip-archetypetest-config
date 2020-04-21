@@ -24,7 +24,7 @@ spec:
   ########################################################################
   values:
     image:
-      repository: 172.30.1.1:5000/archetypetest-dev/bip-archetypetest
+      repository: 172.30.1.1:5000/archetypetest/bip-archetypetest
       tag: latest
     vault:
       enabled: false

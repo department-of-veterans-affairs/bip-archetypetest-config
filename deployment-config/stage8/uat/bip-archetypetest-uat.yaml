@@ -39,8 +39,10 @@ spec:
         hosts:
           - bip-archetypetest.archetypetest-uat.stage8.bip.va.gov
     image:
-      repository: container-registry.stage8.bip.va.gov/bip-archetypetest
+      repository: container-registry.stage8.bip.va.gov/archetypetest/bip-archetypetest
       tag: 0.0.2-SNAPSHOT
+    opaImage:
+      repository: container-registry.stage8.bip.va.gov/openpolicyagent/opa
     consul:
       config:
         enabled: true
