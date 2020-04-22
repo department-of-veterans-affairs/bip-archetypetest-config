@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest
   tag: master
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 opaImage:
   repository: container-registry.dev8.bip.va.gov/openpolicyagent/opa
