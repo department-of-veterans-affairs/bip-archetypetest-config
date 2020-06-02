@@ -49,7 +49,7 @@ spec:
         enabled: true
         register: true
       secret: consul-acl-token
-      host: dev8-consul.vault.svc.dev8
+      host: dev8-consul-helm-server.vault.svc.dev8
       scheme: http
     vault:
       enabled: true

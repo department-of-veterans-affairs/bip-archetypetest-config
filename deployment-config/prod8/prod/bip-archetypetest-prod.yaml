@@ -2,22 +2,23 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease #Custom Object type for use with Flux Helm Operator
 metadata:
-  name: bip-archetypetest-preprod #Name of the object
-  namespace: archetypetest-ivv #Namespace in which to install the helmrelease object
+  name: bip-archetypetest-prod #Name of the object
+  namespace: archetypetest-perf #Namespace in which to install the Chart
   annotations:
     flux.weave.works/automated: "true" #Set this to true to automate installation/updating of this release when the Chart of this object changes
-    flux.weave.works/tag.chart-image: glob:preprod-* #Regex value flux will look for in image tag to auto upadte
+    flux.weave.works/tag.chart-image: glob:prod-* #Regex value flux will look for in image tag to auto update
 
 spec:
-  releaseName: bip-archetypetest-preprod #Name of the Helm release
-  targetNamespace: archetypetest-preprod #Namespace in which to deploy chart  
+  releaseName: bip-archetypetest-prod #Name of the Helm release
+  targetNamespace: archetypetest-prod #Namespace in which to install the chart
+
   ########################################################################
   # Values section defines the location of the chart
   # This example pulls the chart from a Git repository
   ########################################################################
   chart:
     git: ssh://git@github.ec.va.gov/EPMO/bip-archetypetest-config #Repository where the pull the chart from
-    ref: staging #Branch or tag to retreive the chart from
+    ref: master #Branch or tag to retreive the chart from
     path: charts/bip-archetypetest #Path to the chart directory in the repository
 
   ########################################################################
@@ -28,33 +29,34 @@ spec:
     ingress:
       enabled: true
       hosts:
-        - bip-archetypetest.archetypetest-preprod.stage8.bip.va.gov
+        - bip-archetypetest.archetypetest-prod.prod8.bip.va.gov
       annotations:
         # kubernetes.io/ingress.class: nginx
         kubernetes.io/tls-acme: "true"
       path: /
       tls:
-      - secretName: bip-archetypetest-preprod-tls
-        hosts:
-          - bip-archetypetest.archetypetest-preprod.stage8.bip.va.gov
+        - secretName: bip-archetypetest-prod-tls
+          hosts:
+            - bip-archetypetest.archetypetest-prod.prod8.bip.va.gov
     image:
-      repository: container-registry.stage8.bip.va.gov/archetypetest/bip-archetypetest
+      repository: container-registry.prod8.bip.va.gov/archetypetest/bip-archetypetest
       tag: 0.0.2-SNAPSHOT
     opaImage:
-      repository: container-registry.stage8.bip.va.gov/openpolicyagent/opa
+      repository: container-registry.prod8.bip.va.gov/openpolicyagent/opa
     consul:
+      enabled: true
       config:
         enabled: true
-        prefix: config/archetypetest/preprod
+        prefix: config/archetypetest/prod
       discovery:
         enabled: true
         register: true
       secret: consul-acl-token
-      host: stage8-consul.vault.svc.stage8
+      host: prod8-consul.vault.svc.prod8
       scheme: http
     vault:
       enabled: true
-      host: stage8-vault.vault.svc.stage8
+      host: prod8-vault.vault.svc.prod8
       kubernetes:
         role: archetypetest-read
       kv:
@@ -62,4 +64,4 @@ spec:
       port: 8200
       scheme: http
     spring:
-      profiles: dev
+      profiles: prod
