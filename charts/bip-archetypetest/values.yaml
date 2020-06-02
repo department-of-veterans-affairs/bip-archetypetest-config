@@ -70,7 +70,7 @@ affinity: {}
 
 consul:
   # Hostname of Consul Agent. Defaults to the hosts IP address.
-  host: "dev8-consul.vault.svc.dev8"
+  host: "dev8-consul-helm-server.vault.svc.dev8"
   
   # Port of Consul Agent.
   port: 8500
