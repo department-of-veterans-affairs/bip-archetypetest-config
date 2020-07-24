@@ -58,6 +58,8 @@ spec:
                         args: "^${computer.jnlpmac} ^${computer.name}"
       plugins.txt: |
         scriptler:3.1
+        mailer:1.32
+        token-macro:2.12
     jenkins_framework_library: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
     github_apiurl: "https://github.ec.va.gov/api/v3"
     jenkins_framework_library_branch: master
