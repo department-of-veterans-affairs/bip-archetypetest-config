@@ -1,0 +1,64 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease #Custom Object type for use with Flux Helm Operator
+metadata:
+  name: jenkins-config #Name of the object
+  namespace: archetypetest-dev #Namespace in which to install the helmrelease object
+  annotations:
+    flux.weave.works/automated: "true" #Set this to true to automate installation/updating of this release when the Chart of this object changes
+spec:
+  releaseName: jenkins-config #Name of the Helm release
+  targetNamespace: archetypetest-dev #Namespace  in which to install the chart
+
+  ########################################################################
+  # Values section defines the location of the chart
+  # This example pulls the chart from a Git repository
+  ########################################################################
+  chart:
+    git: ssh://git@github.ec.va.gov/EPMO/bip-archetypetest-config #Repository where the pull the chart from
+    ref: development #Branch or tag to retreive the chart from
+    path: charts/jenkins-config #Path to the chart directory in the repository
+  values:
+    jenkinsConfig:
+      globalLibrary.yaml: |
+        unclassified:
+          globalLibraries:
+            libraries:
+            - name: "jenkins-library"
+              defaultVersion: "development"
+              implicit: true
+              retriever:
+                modernSCM:
+                  scm:
+                    git:
+                      credentialsId: "github"
+                      remote: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
+                      traits:
+                      - "branchDiscoveryTrait"
+      zzzz-alphatical-override-additionalSlaves.yaml: |
+        jenkins:
+          clouds:
+            - kubernetes:
+                name: kubernetes
+                serverUrl: "https://kubernetes.default"
+                namespace: "archetypetest-dev"
+                jenkinsUrl: "http://dev8-archetypetest-jenkins:8080"
+                jenkinsTunnel: "dev8-archetypetest-jenkins-agent:50000"
+                templates:
+                  - name: "fortify-sca"
+                    label: "fortify-sca"
+                    nodeUsageMode: EXCLUSIVE
+                    inheritFrom: "default"
+                    containers:
+                      - name: jnlp
+                        image: "container-registry.dev8.bip.va.gov/ci/jenkins-slave-fortify:20.1.0"
+                        alwaysPullImage: false
+                        workingDir: "/home/jenkins"
+                        command: ""
+                        args: "^${computer.jnlpmac} ^${computer.name}"
+    jenkins_framework_library: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
+    github_apiurl: "https://github.ec.va.gov/api/v3"
+    jenkins_framework_library_branch: master
+    jenkins_framework_library_owner: EPMO
+    jenkins_framework_library_repo: "bip-jenkins-lib"
+    jenkins_project_repo_owner: EPMO
