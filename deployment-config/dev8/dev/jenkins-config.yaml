@@ -62,6 +62,7 @@ spec:
         token-macro:2.12
         cucumber-reports:5.3.0
         blueocean-dashboard:1.23.2
+        blueocean-web:1.23.2
     jenkins_framework_library: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
     github_apiurl: "https://github.ec.va.gov/api/v3"
     jenkins_framework_library_branch: master
