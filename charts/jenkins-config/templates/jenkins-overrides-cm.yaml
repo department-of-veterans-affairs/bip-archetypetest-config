@@ -9,6 +9,10 @@ metadata:
     heritage: {{ .Release.Service }}
 data:
 {{- range $key, $val := .Values.jenkinsConfig }}
+  {{ $key }}.yaml: |-
+{{ tpl $val $| indent 4 }}
+{{- end }}
+{{- range $key, $val := .Values.jenkinsPlugins }}
   {{ $key }}: |-
 {{ tpl $val $| indent 4 }}
 {{- end }}

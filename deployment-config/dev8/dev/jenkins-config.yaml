@@ -20,7 +20,7 @@ spec:
     path: charts/jenkins-config #Path to the chart directory in the repository
   values:
     jenkinsConfig:
-      globalLibrary.yaml: |
+      globalLibrary: |
         unclassified:
           globalLibraries:
             libraries:
@@ -35,7 +35,7 @@ spec:
                       remote: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
                       traits:
                       - "branchDiscoveryTrait"
-      zzzz-alphatical-override-additionalSlaves.yaml: |
+      zzzz-alphatical-override-additionalSlaves: |
         jenkins:
           clouds:
             - kubernetes:
@@ -56,6 +56,7 @@ spec:
                         workingDir: "/home/jenkins"
                         command: ""
                         args: "^${computer.jnlpmac} ^${computer.name}"
+    jenkinsPlugins:
       plugins.txt: |
         blueocean-commons:1.23.2
         scriptler:3.1
@@ -67,6 +68,8 @@ spec:
         jenkins-design-language:1.23.2
         blueocean-dashboard:1.23.2
         mailer:1.32
+      pluginProperties.txt: |
+        merge
     jenkins_framework_library: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
     github_apiurl: "https://github.ec.va.gov/api/v3"
     jenkins_framework_library_branch: master
