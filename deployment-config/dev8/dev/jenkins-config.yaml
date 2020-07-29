@@ -68,7 +68,7 @@ spec:
         jenkins-design-language:1.23.2
         blueocean-dashboard:1.23.2
         mailer:1.32
-      pluginProperties.yaml:
+      pluginProperties.yaml: |
         pluginAction: merge
     jenkins_framework_library: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
     github_apiurl: "https://github.ec.va.gov/api/v3"
