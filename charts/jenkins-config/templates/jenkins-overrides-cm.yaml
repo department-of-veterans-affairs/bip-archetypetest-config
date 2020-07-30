@@ -12,7 +12,3 @@ data:
   {{ $key }}.yaml: |-
 {{ tpl $val $| indent 4 }}
 {{- end }}
-{{- range $key, $val := .Values.jenkinsPlugins }}
-  {{ $key }}: |-
-{{ tpl $val $| indent 4 }}
-{{- end }}
