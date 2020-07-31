@@ -58,19 +58,6 @@ spec:
                         args: "^${computer.jnlpmac} ^${computer.name}"
     jenkinsPlugins:
       plugins.txt: |
-#        Merge example
-#        blueocean-commons:1.23.2
-#        scriptler:3.1
-#        blueocean-rest:1.23.2
-#        token-macro:2.12
-#        blueocean-core-js:1.23.2
-#        cucumber-reports:5.3.0
-#        blueocean-web:1.23.2
-#        jenkins-design-language:1.23.2
-#        blueocean-dashboard:1.23.2
-#        mailer:1.32
-#
-#        Overwrite example
         ace-editor:1.1
         ant:1.11
         antisamy-markup-formatter:1.8
@@ -193,7 +180,6 @@ spec:
         workflow-support:3.3
         dashboard-view:2.12
         analysis-core:1.96
-#        twistlock-jenkins-plugin:19.11.512::https://nexus.dev8.bip.va.gov/repository/project-dependencies/prisma-cloud/twistlock-jenkins-plugin/19.11.512/twistlock-jenkins-plugin-19.11.512.hpi
       pluginProperties.yaml: |
         pluginOverrideMethod: overwrite
     jenkins_framework_library: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
