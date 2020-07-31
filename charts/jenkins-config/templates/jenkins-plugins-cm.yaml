@@ -1,14 +1,14 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: tenant-dev8-archetypetest-jenkins-plugins
-  labels:
-    app: {{ template "jenkins-config.name" . }}
-    chart: {{ template "jenkins-config.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-data:
-{{- range $key, $val := .Values.jenkinsPlugins }}
-  {{ $key }}: |-
-{{ tpl $val $| indent 4 }}
-{{- end }}
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: tenant-dev8-archetypetest-jenkins-plugins
+#  labels:
+#    app: {{ template "jenkins-config.name" . }}
+#    chart: {{ template "jenkins-config.chart" . }}
+#    release: {{ .Release.Name }}
+#    heritage: {{ .Release.Service }}
+#data:
+#{{- range $key, $val := .Values.jenkinsPlugins }}
+#  {{ $key }}: |-
+#{{ tpl $val $| indent 4 }}
+#{{- end }}
