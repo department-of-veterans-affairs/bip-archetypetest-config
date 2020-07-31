@@ -195,7 +195,7 @@ spec:
         analysis-core:1.96
 #        twistlock-jenkins-plugin:19.11.512::https://nexus.dev8.bip.va.gov/repository/project-dependencies/prisma-cloud/twistlock-jenkins-plugin/19.11.512/twistlock-jenkins-plugin-19.11.512.hpi
       pluginProperties.yaml: |
-        pluginAction: merge
+        pluginOverrideMethod: overwrite
     jenkins_framework_library: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
     github_apiurl: "https://github.ec.va.gov/api/v3"
     jenkins_framework_library_branch: master
