@@ -58,130 +58,12 @@ spec:
                         args: "^${computer.jnlpmac} ^${computer.name}"
     jenkinsPlugins:
       plugins.txt: |
-        ace-editor:1.1
-        ant:1.11
-        antisamy-markup-formatter:1.8
-        apache-httpcomponents-client-4-api:4.5.10-2.0
-        authentication-tokens:1.3
-        aws-credentials:1.28
-        aws-java-sdk:1.11.723
-        blueocean-autofavorite:1.2.4
-        blueocean-bitbucket-pipeline:1.22.0
-        blueocean-commons:1.22.0
-        blueocean-config:1.22.0
-        blueocean-core-js:1.22.0
-        blueocean-dashboard:1.22.0
-        blueocean-display-url:2.3.1
-        blueocean-events:1.22.0
-        blueocean-git-pipeline:1.22.0
-        blueocean-github-pipeline:1.22.0
-        blueocean-i18n:1.22.0
-        blueocean-jira:1.22.0
-        blueocean-jwt:1.22.0
-        blueocean-personalization:1.22.0
-        blueocean-pipeline-api-impl:1.22.0
-        blueocean-pipeline-editor:1.22.0
-        blueocean-pipeline-scm-api:1.22.0
-        blueocean-rest:1.22.0
-        blueocean-rest-impl:1.22.0
-        blueocean-web:1.22.0
-        bouncycastle-api:2.18
-        branch-api:2.5.5
-        cloudbees-bitbucket-branch-source:2.6.0
-        cloudbees-folder:6.10.1
-        command-launcher:1.4
-        config-file-provider:3.6.3
-        configuration-as-code:1.35
-        credentials:2.3.0
-        credentials-binding:1.20
-        cucumber-reports:5.0.2
-        display-url-api:2.3.2
-        docker-commons:1.16
-        docker-workflow:1.21
-        durable-task:1.33
-        external-monitor-job:1.7
-        favorite:2.3.2
-        generic-webhook-trigger:1.66
-        git:4.1.1
-        git-client:3.0.0
-        git-server:1.9
-        github:1.29.5
-        github-api:1.106
-        github-branch-source:2.6.0
-        h2-api:1.4.199
-        handlebars:1.1.1
-        handy-uri-templates-2-api:2.1.8-1.0
-        htmlpublisher:1.21
-        jackson2-api:2.10.2
-        javadoc:1.5
-        jaxb:2.3.0.1
-        jdk-tool:1.4
-        jenkins-design-language:1.22.0
-        jira:3.0.12
-        jquery:1.12.4-1
-        jquery-detached:1.2.1
-        jquery-ui:1.0.2
-        jsch:0.1.55.2
-        junit:1.28
-        kubernetes:1.20.0
-        kubernetes-client-api:4.6.4-2
-        kubernetes-credentials:0.4.1
-        kubernetes-credentials-provider:0.12.1
-        ldap:1.21
-        lockable-resources:2.7
+        powershell:1.4
+        scriptler:3.1
         mailer:1.32
-        matrix-auth:2.5
-        matrix-project:1.14
-        mercurial:2.8
-        momentjs:1.1.1
-        multibranch-job-tear-down:1.2
-        pam-auth:1.6
-        performance:3.17
-        pipeline-aws:1.41
-        pipeline-build-step:2.10
-        pipeline-github:2.5
-        pipeline-graph-analysis:1.10
-        pipeline-input-step:2.11
-        pipeline-maven:3.8.2
-        pipeline-milestone-step:1.3.1
-        pipeline-model-api:1.5.1
-        pipeline-model-declarative-agent:1.1.1
-        pipeline-model-definition:1.5.1
-        pipeline-model-extensions:1.5.1
-        pipeline-rest-api:2.13
-        pipeline-stage-step:2.3
-        pipeline-stage-tags-metadata:1.5.1
-        pipeline-stage-view:2.13
-        pipeline-utility-steps:2.5.0
-        plain-credentials:1.7
-        pubsub-light:1.13
-        role-strategy:2.16
-        scm-api:2.6.3
-        script-security:1.70
-        slack:2.27
-        sonar:2.11
-        sse-gateway:1.21
-        ssh-credentials:1.18
-        structs:1.20
-        token-macro:2.10
-        trilead-api:1.0.5
-        variant:1.3
-        windows-slaves:1.6
-        workflow-aggregator:2.6
-        workflow-api:2.39
-        workflow-basic-steps:2.18
-        workflow-cps:2.80
-        workflow-cps-global-lib:2.15
-        workflow-durable-task-step:2.35
-        workflow-job:2.36
-        workflow-multibranch:2.21
-        workflow-scm-step:2.9
-        workflow-step-api:2.21
-        workflow-support:3.3
-        dashboard-view:2.12
-        analysis-core:1.96
+        token-macro:2.12
       pluginProperties.yaml: |
-        pluginOverrideMethod: overwrite
+        pluginOverrideMethod: merge
     jenkins_framework_library: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
     github_apiurl: "https://github.ec.va.gov/api/v3"
     jenkins_framework_library_branch: master
@@ -189,82 +71,305 @@ spec:
     jenkins_framework_library_repo: "bip-jenkins-lib"
     jenkins_project_repo_owner: EPMO
     jenkinsJobs:
-      bip-archetypetest: |-
+      image-promotion: |-
+        <?xml version='1.1' encoding='UTF-8'?>
         <org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject plugin="workflow-multibranch@2.21">
-        <actions/>
-        <description/>
-        <properties>
-        <org.csanchez.jenkins.plugins.kubernetes.KubernetesFolderProperty plugin="kubernetes@1.20.0">
-        <permittedClouds/>
-        </org.csanchez.jenkins.plugins.kubernetes.KubernetesFolderProperty>
-        <org.jenkinsci.plugins.pipeline.maven.MavenConfigFolderOverrideProperty plugin="pipeline-maven@3.8.2">
-        <settings class="jenkins.mvn.DefaultSettingsProvider"/>
-        <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
-        <override>false</override>
-        </org.jenkinsci.plugins.pipeline.maven.MavenConfigFolderOverrideProperty>
-        <org.jenkinsci.plugins.pipeline.modeldefinition.config.FolderConfig plugin="pipeline-model-definition@1.5.1">
-        <dockerLabel/>
-        <registry plugin="docker-commons@1.16"/>
-        </org.jenkinsci.plugins.pipeline.modeldefinition.config.FolderConfig>
-        </properties>
-        <folderViews class="jenkins.branch.MultiBranchProjectViewHolder" plugin="branch-api@2.5.5">
-        <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
-        </folderViews>
-        <healthMetrics>
-        <com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric plugin="cloudbees-folder@6.10.1">
-        <nonRecursive>false</nonRecursive>
-        </com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric>
-        </healthMetrics>
-        <icon class="jenkins.branch.MetadataActionFolderIcon" plugin="branch-api@2.5.5">
-        <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
-        </icon>
-        <orphanedItemStrategy class="com.cloudbees.hudson.plugins.folder.computed.DefaultOrphanedItemStrategy" plugin="cloudbees-folder@6.10.1">
-        <pruneDeadBranches>true</pruneDeadBranches>
-        <daysToKeep>-1</daysToKeep>
-        <numToKeep>-1</numToKeep>
-        </orphanedItemStrategy>
-        <triggers>
-        <com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger plugin="cloudbees-folder@6.10.1">
-        <spec>H/5 * * * *</spec>
-        <interval>900000</interval>
-        </com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger>
-        </triggers>
-        <disabled>false</disabled>
-        <sources class="jenkins.branch.MultiBranchProject$BranchSourceList" plugin="branch-api@2.5.5">
-        <data>
-        <jenkins.branch.BranchSource>
-        <source class="org.jenkinsci.plugins.github_branch_source.GitHubSCMSource" plugin="github-branch-source@2.6.0">
-        <id>95f4fcda-912d-41eb-b373-bb865db31478</id>
-        <apiUri>https://github.ec.va.gov/api/v3</apiUri>
-        <credentialsId>github</credentialsId>
-        <repoOwner>EPMO</repoOwner>
-        <repository>Bip-archetypetest</repository>
-        <repositoryUrl>https://github.ec.va.gov/EPMO/Bip-archetypetest</repositoryUrl>
-        <traits>
-        <org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
-        <strategyId>1</strategyId>
-        </org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
-        <org.jenkinsci.plugins.github__branch__source.OriginPullRequestDiscoveryTrait>
-        <strategyId>1</strategyId>
-        </org.jenkinsci.plugins.github__branch__source.OriginPullRequestDiscoveryTrait>
-        <org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
-        <strategyId>1</strategyId>
-        <trust class="org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait$TrustPermission"/>
-        </org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
-        <jenkins.scm.impl.trait.RegexSCMHeadFilterTrait plugin="scm-api@2.6.3">
-        <regex>(master|development|PR-.*)</regex>
-        </jenkins.scm.impl.trait.RegexSCMHeadFilterTrait>
-        </traits>
-        </source>
-        <strategy class="jenkins.branch.DefaultBranchPropertyStrategy">
-        <properties class="empty-list"/>
-        </strategy>
-        </jenkins.branch.BranchSource>
-        </data>
-        <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
-        </sources>
-        <factory class="org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory">
-        <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
-        <scriptPath>Jenkinsfile</scriptPath>
-        </factory>
+          <actions/>
+          <description></description>
+          <displayName>Image Promotion (Overriding Display Name)</displayName>
+          <properties>
+            <org.csanchez.jenkins.plugins.kubernetes.KubernetesFolderProperty plugin="kubernetes@1.20.0">
+              <permittedClouds/>
+            </org.csanchez.jenkins.plugins.kubernetes.KubernetesFolderProperty>
+            <org.jenkinsci.plugins.pipeline.maven.MavenConfigFolderOverrideProperty plugin="pipeline-maven@3.8.1">
+              <settings class="jenkins.mvn.DefaultSettingsProvider"/>
+              <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
+              <override>false</override>
+            </org.jenkinsci.plugins.pipeline.maven.MavenConfigFolderOverrideProperty>
+            <org.jenkinsci.plugins.pipeline.modeldefinition.config.FolderConfig plugin="pipeline-model-definition@1.3.9">
+              <dockerLabel></dockerLabel>
+              <registry plugin="docker-commons@1.15"/>
+            </org.jenkinsci.plugins.pipeline.modeldefinition.config.FolderConfig>
+          </properties>
+          <folderViews class="jenkins.branch.MultiBranchProjectViewHolder" plugin="branch-api@2.5.4">
+            <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+          </folderViews>
+          <healthMetrics>
+            <com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric plugin="cloudbees-folder@6.9">
+              <nonRecursive>false</nonRecursive>
+            </com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric>
+          </healthMetrics>
+          <icon class="jenkins.branch.MetadataActionFolderIcon" plugin="branch-api@2.5.4">
+            <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+          </icon>
+          <orphanedItemStrategy class="com.cloudbees.hudson.plugins.folder.computed.DefaultOrphanedItemStrategy" plugin="cloudbees-folder@6.9">
+            <pruneDeadBranches>true</pruneDeadBranches>
+            <daysToKeep>-1</daysToKeep>
+            <numToKeep>-1</numToKeep>
+          </orphanedItemStrategy>
+          <triggers/>
+          <disabled>false</disabled>
+          <sources class="jenkins.branch.MultiBranchProject$BranchSourceList" plugin="branch-api@2.5.4">
+            <data>
+              <jenkins.branch.BranchSource>
+                <source class="org.jenkinsci.plugins.github_branch_source.GitHubSCMSource" plugin="github-branch-source@2.5.8">
+                  <id>cbde242e-0bf0-48d3-8888-b9dce2782cff</id>
+                  <apiUri>{{ .Values.github_apiurl }}</apiUri>
+                  <credentialsId>github</credentialsId>
+                  <repoOwner>{{ .Values.jenkins_framework_library_owner }}</repoOwner>
+                  <repository>{{ .Values.jenkins_framework_library_repo }}</repository>
+                  <traits>
+                    <org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
+                      <strategyId>1</strategyId>
+                    </org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
+                    <org.jenkinsci.plugins.github__branch__source.ArchetypeTestPullRequestDiscoveryTrait>
+                      <strategyId>1</strategyId>
+                    </org.jenkinsci.plugins.github__branch__source.ArchetypeTestPullRequestDiscoveryTrait>
+                    <org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
+                      <strategyId>1</strategyId>
+                      <trust class="org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait$TrustPermission"/>
+                    </org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
+                    <jenkins.scm.impl.trait.WildcardSCMHeadFilterTrait plugin="scm-api@2.6.3">
+                      <includes>{{ .Values.jenkins_framework_library_branch }}</includes>
+                      <excludes></excludes>
+                    </jenkins.scm.impl.trait.WildcardSCMHeadFilterTrait>
+                  </traits>
+                </source>
+                <strategy class="jenkins.branch.DefaultBranchPropertyStrategy">
+                  <properties class="empty-list"/>
+                </strategy>
+              </jenkins.branch.BranchSource>
+            </data>
+            <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+          </sources>
+          <factory class="org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory">
+            <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+            <scriptPath>Jenkinsfile.promotion</scriptPath>
+          </factory>
+        </org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject>
+      performance-test: |-
+        <?xml version='1.1' encoding='UTF-8'?>
+        <flow-definition plugin="workflow-job@2.32">
+          <actions>
+            <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.3.9"/>
+            <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.3.9">
+              <jobProperties/>
+              <triggers/>
+              <parameters>
+                <string>agentLabel</string>
+                <string>perfTestUrl</string>
+                <string>perfOpts</string>
+              </parameters>
+              <options/>
+            </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+          </actions>
+          <description></description>
+          <keepDependencies>false</keepDependencies>
+          <properties>
+            <hudson.model.ParametersDefinitionProperty>
+              <parameterDefinitions>
+                <hudson.model.StringParameterDefinition>
+                  <name>perfTestUrl</name>
+                  <description>Provide the base url to use to do performance testing if not specified in your Jenkinsfile or you desire to override the default. e.g. http://bip-reference-person-dev.blue-dev:8080</description>
+                  <defaultValue></defaultValue>
+                  <trim>false</trim>
+                </hudson.model.StringParameterDefinition>
+                <hudson.model.StringParameterDefinition>
+                  <name>perfOpts</name>
+                  <description>Override performance options. For example: -DjMeterTestFile=load-*.jmx as a regex match for which jmeter test definition files should be run.</description>
+                  <defaultValue></defaultValue>
+                  <trim>false</trim>
+                </hudson.model.StringParameterDefinition>
+                <hudson.model.StringParameterDefinition>
+                  <name>agentLabel</name>
+                  <description>Override the default agent label to run this test under.</description>
+                  <defaultValue></defaultValue>
+                  <trim>false</trim>
+                </hudson.model.StringParameterDefinition>
+              </parameterDefinitions>
+            </hudson.model.ParametersDefinitionProperty>
+            <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
+          </properties>
+          <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.74">
+            <scm class="hudson.plugins.git.GitSCM" plugin="git@3.12.1">
+              <configVersion>2</configVersion>
+              <userRemoteConfigs>
+                <hudson.plugins.git.UserRemoteConfig>
+                  <url>https://github.ec.va.gov/EPMO/bip-archetypetest</url>
+                  <credentialsId>github</credentialsId>
+                </hudson.plugins.git.UserRemoteConfig>
+              </userRemoteConfigs>
+              <branches>
+                <hudson.plugins.git.BranchSpec>
+                  <name>*/master</name>
+                </hudson.plugins.git.BranchSpec>
+              </branches>
+              <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+              <submoduleCfg class="list"/>
+              <extensions/>
+            </scm>
+            <scriptPath>Jenkinsfile.perfTest</scriptPath>
+            <lightweight>true</lightweight>
+          </definition>
+          <triggers/>
+          <disabled>false</disabled>
+        </flow-definition>
+      bip-archetypetest: |-
+        <?xml version='1.1' encoding='UTF-8'?>
+        <org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject plugin="workflow-multibranch@2.21">
+          <actions/>
+          <description></description>
+          <properties>
+            <org.jenkinsci.plugins.configfiles.folder.FolderConfigFileProperty plugin="config-file-provider@3.6.3">
+              <configs class="sorted-set">
+                <comparator class="org.jenkinsci.plugins.configfiles.folder.FolderConfigFileProperty$1"/>
+              </configs>
+            </org.jenkinsci.plugins.configfiles.folder.FolderConfigFileProperty>
+            <org.jenkinsci.plugins.pipeline.maven.MavenConfigFolderOverrideProperty plugin="pipeline-maven@3.8.2">
+              <settings class="jenkins.mvn.DefaultSettingsProvider"/>
+              <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
+              <override>false</override>
+            </org.jenkinsci.plugins.pipeline.maven.MavenConfigFolderOverrideProperty>
+            <org.jenkinsci.plugins.pipeline.modeldefinition.config.FolderConfig plugin="pipeline-model-definition@1.5.1">
+              <dockerLabel></dockerLabel>
+              <registry plugin="docker-commons@1.16"/>
+            </org.jenkinsci.plugins.pipeline.modeldefinition.config.FolderConfig>
+          </properties>
+          <folderViews class="jenkins.branch.MultiBranchProjectViewHolder" plugin="branch-api@2.5.5">
+            <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+          </folderViews>
+          <healthMetrics>
+            <com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric plugin="cloudbees-folder@6.10.1">
+              <nonRecursive>false</nonRecursive>
+            </com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric>
+          </healthMetrics>
+          <icon class="jenkins.branch.MetadataActionFolderIcon" plugin="branch-api@2.5.5">
+            <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+          </icon>
+          <orphanedItemStrategy class="com.cloudbees.hudson.plugins.folder.computed.DefaultOrphanedItemStrategy" plugin="cloudbees-folder@6.10.1">
+            <pruneDeadBranches>true</pruneDeadBranches>
+            <daysToKeep>-1</daysToKeep>
+            <numToKeep>-1</numToKeep>
+          </orphanedItemStrategy>
+          <triggers>
+            <com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger plugin="cloudbees-folder@6.10.1">
+              <spec>H/5 * * * *</spec>
+              <interval>900000</interval>
+            </com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger>
+          </triggers>
+          <disabled>false</disabled>
+          <sources class="jenkins.branch.MultiBranchProject$BranchSourceList" plugin="branch-api@2.5.5">
+            <data>
+              <jenkins.branch.BranchSource>
+                <source class="org.jenkinsci.plugins.github_branch_source.GitHubSCMSource" plugin="github-branch-source@2.6.0">
+                  <id>2f86c1d8-79cb-4209-a89e-e069db7c070d</id>
+                  <apiUri>https://github.ec.va.gov/api/v3</apiUri>
+                  <credentialsId>github</credentialsId>
+                  <repoOwner>EPMO</repoOwner>
+                  <repository>bip-archetypetest</repository>
+                  <repositoryUrl>https://github.ec.va.gov/EPMO/bip-archetypetest.git</repositoryUrl>
+                  <traits>
+                    <org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
+                      <strategyId>1</strategyId>
+                    </org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
+                    <org.jenkinsci.plugins.github__branch__source.ArchetypeTestPullRequestDiscoveryTrait>
+                      <strategyId>1</strategyId>
+                    </org.jenkinsci.plugins.github__branch__source.ArchetypeTestPullRequestDiscoveryTrait>
+                    <org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
+                      <strategyId>1</strategyId>
+                      <trust class="org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait$TrustPermission"/>
+                    </org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
+                    <jenkins.scm.impl.trait.WildcardSCMHeadFilterTrait plugin="scm-api@2.6.3">
+                      <includes>master PR-* development release-*</includes>
+                      <excludes></excludes>
+                    </jenkins.scm.impl.trait.WildcardSCMHeadFilterTrait>
+                  </traits>
+                </source>
+                <strategy class="jenkins.branch.DefaultBranchPropertyStrategy">
+                  <properties class="empty-list"/>
+                </strategy>
+              </jenkins.branch.BranchSource>
+            </data>
+            <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+          </sources>
+          <factory class="org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory">
+            <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+            <scriptPath>Jenkinsfile</scriptPath>
+          </factory>
+        </org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject>
+      functional-test: |-
+        <?xml version='1.1' encoding='UTF-8'?>
+        <org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject plugin="workflow-multibranch@2.21">
+          <actions/>
+          <description></description>
+          <properties>
+            <org.csanchez.jenkins.plugins.kubernetes.KubernetesFolderProperty plugin="kubernetes@1.20.0">
+              <permittedClouds/>
+            </org.csanchez.jenkins.plugins.kubernetes.KubernetesFolderProperty>
+            <org.jenkinsci.plugins.pipeline.maven.MavenConfigFolderOverrideProperty plugin="pipeline-maven@3.8.2">
+              <settings class="jenkins.mvn.DefaultSettingsProvider"/>
+              <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
+              <override>false</override>
+            </org.jenkinsci.plugins.pipeline.maven.MavenConfigFolderOverrideProperty>
+            <org.jenkinsci.plugins.pipeline.modeldefinition.config.FolderConfig plugin="pipeline-model-definition@1.5.1">
+              <dockerLabel></dockerLabel>
+              <registry plugin="docker-commons@1.16"/>
+            </org.jenkinsci.plugins.pipeline.modeldefinition.config.FolderConfig>
+          </properties>
+          <folderViews class="jenkins.branch.MultiBranchProjectViewHolder" plugin="branch-api@2.5.5">
+            <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+          </folderViews>
+          <healthMetrics>
+            <com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric plugin="cloudbees-folder@6.10.1">
+              <nonRecursive>false</nonRecursive>
+            </com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric>
+          </healthMetrics>
+          <icon class="jenkins.branch.MetadataActionFolderIcon" plugin="branch-api@2.5.5">
+            <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+          </icon>
+          <orphanedItemStrategy class="com.cloudbees.hudson.plugins.folder.computed.DefaultOrphanedItemStrategy" plugin="cloudbees-folder@6.10.1">
+            <pruneDeadBranches>true</pruneDeadBranches>
+            <daysToKeep>-1</daysToKeep>
+            <numToKeep>-1</numToKeep>
+          </orphanedItemStrategy>
+          <triggers/>
+          <disabled>false</disabled>
+          <sources class="jenkins.branch.MultiBranchProject$BranchSourceList" plugin="branch-api@2.5.5">
+            <data>
+              <jenkins.branch.BranchSource>
+                <source class="org.jenkinsci.plugins.github_branch_source.GitHubSCMSource" plugin="github-branch-source@2.6.0">
+                  <id>835ebf77-445c-422e-a818-01ef06ff2e02</id>
+                  <apiUri>https://github.ec.va.gov/api/v3</apiUri>
+                  <credentialsId>github</credentialsId>
+                  <repoOwner>EPMO</repoOwner>
+                  <repository>bip-archetypetest</repository>
+                  <repositoryUrl>https://github.ec.va.gov/EPMO/bip-archetypetest</repositoryUrl>
+                  <traits>
+                    <org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
+                      <strategyId>1</strategyId>
+                    </org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
+                    <org.jenkinsci.plugins.github__branch__source.ArchetypeTestPullRequestDiscoveryTrait>
+                      <strategyId>1</strategyId>
+                    </org.jenkinsci.plugins.github__branch__source.ArchetypeTestPullRequestDiscoveryTrait>
+                    <org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
+                      <strategyId>1</strategyId>
+                      <trust class="org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait$TrustPermission"/>
+                    </org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
+                    <jenkins.scm.impl.trait.WildcardSCMHeadFilterTrait plugin="scm-api@2.6.3">
+                      <includes>master PR-* development release-*</includes>
+                      <excludes></excludes>
+                    </jenkins.scm.impl.trait.WildcardSCMHeadFilterTrait>
+                  </traits>
+                </source>
+                <strategy class="jenkins.branch.DefaultBranchPropertyStrategy">
+                  <properties class="empty-list"/>
+                </strategy>
+              </jenkins.branch.BranchSource>
+            </data>
+            <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+          </sources>
+          <factory class="org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory">
+            <owner class="org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject" reference="../.."/>
+            <scriptPath>Jenkinsfile.funcTest</scriptPath>
+          </factory>
         </org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject>
