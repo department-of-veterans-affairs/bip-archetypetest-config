@@ -129,5 +129,5 @@ spring:
   profiles: null
 
 opa:
-  enabled: true # OPAEnablement: Set this to true if you want to enable OPA
+  enabled: false # OPAEnablement: Set this to true if you want to enable OPA
   rego: api_authz_jwt_token.rego
