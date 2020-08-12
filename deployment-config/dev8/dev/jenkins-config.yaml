@@ -58,13 +58,13 @@ spec:
                         command: ""
                         args: "^${computer.jnlpmac} ^${computer.name}"
     jenkinsPlugins:
-      plugins.txt: |
-        powershell:1.4
-        scriptler:3.1
-        mailer:1.32
-        token-macro:2.12
-      pluginProperties.yaml: |
-        pluginOverrideMethod: merge
+    #  plugins.txt: |
+    #    powershell:1.4
+    #    scriptler:3.1
+    #    mailer:1.32
+    #    token-macro:2.12
+    #  pluginProperties.yaml: |
+    #    pluginOverrideMethod: merge
     jenkins_framework_library: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
     github_apiurl: "https://github.ec.va.gov/api/v3"
     jenkins_framework_library_branch: master
