@@ -52,6 +52,8 @@ spec:
         register: true
       secret: consul-acl-token
       host: prod8-consul.vault.svc.prod8
+      #TODO: Update when changes have been made to prod
+      #host: prod8-consul-helm-server.vault.svc.prod8
       scheme: http
     vault:
       enabled: true

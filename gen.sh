@@ -31,6 +31,7 @@ artifactNameLowerCase=""
 artifactNameUpperCase=""
 servicePort=""
 projectNameSpacePrefix=""
+enableOPA=false
 
 ################################################################################
 #########################                              #########################
@@ -208,6 +209,7 @@ function read_properties() {
 				if [[ "$theKey" == "artifactNameUpperCase" ]]; then artifactNameUpperCase=$theVal; fi
 				if [[ "$theKey" == "servicePort" ]]; then servicePort=$theVal; fi
 				if [[ "$theKey" == "projectNameSpacePrefix" ]]; then projectNameSpacePrefix=$theVal; fi
+				if [[ "$theKey" == "enableOPA" ]]; then enableOPA=$theVal; fi
 			fi
 		done < "$cwd/$propertiesFile"
 		IFS=$OIFS
@@ -454,6 +456,12 @@ function change_text() {
 		newVal="$projectNameSpacePrefix"
 		echo "sed -i \"\" -e 's/'\"$oldVal\"'/'\"$newVal\"'/g' \"$tmpFile\"" 2>&1 | tee -a "$genLog"
 		sed -i "" -e 's/'"$oldVal"'/'"$newVal"'/g' "$tmpFile" 2>&1 >> "$genLog"
+        if [ "$enableOPA" = true ] ; then
+            oldVal="false # OPAEnablement"
+            newVal="true # OPAEnablement"
+            echo "LC_ALL=C sed -i \"\" -e 's/'\"$oldVal\"'/'\"$newVal\"'/g' \"$tmpFile\"" 2>&1 | tee -a "$genLog"
+            LC_ALL=C sed -i "" -e 's/'"$oldVal"'/'"$newVal"'/g' "$tmpFile" 2>&1 >> "$genLog"
+        fi
 	done;
 	### do not check exit status, as windows editions of bash mysteriously report errors, but still do the work
 	# check_exit_status "$?"

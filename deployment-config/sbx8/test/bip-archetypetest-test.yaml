@@ -50,7 +50,7 @@ spec:
         enabled: true
         register: true
       secret: consul-acl-token
-      host: sbx8-consul.vault.svc.sbx8
+      host: sbx8-consul-helm-server.vault.svc.sbx8
       scheme: http
     vault:
       enabled: true
