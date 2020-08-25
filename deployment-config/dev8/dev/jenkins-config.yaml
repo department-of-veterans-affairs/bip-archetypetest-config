@@ -74,12 +74,15 @@ spec:
     #    token-macro:2.12
     #  pluginProperties.yaml: |
     #    pluginOverrideMethod: merge
-    jenkins_framework_library: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
-    github_apiurl: "https://github.ec.va.gov/api/v3"
-    jenkins_framework_library_branch: master
-    jenkins_framework_library_owner: EPMO
-    jenkins_framework_library_repo: "bip-jenkins-lib"
-    jenkins_project_repo_owner: EPMO
+    ########################################################################
+    # These values are used in the jenkinsJob overrides examples below.
+    ########################################################################
+    #jenkins_framework_library: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
+    #github_apiurl: "https://github.ec.va.gov/api/v3"
+    #jenkins_framework_library_branch: master
+    #jenkins_framework_library_owner: EPMO
+    #jenkins_framework_library_repo: "bip-jenkins-lib"
+    #jenkins_project_repo_owner: EPMO
     jenkinsJobs:
     ########################################################################
     # Jenkins Jobs can be defined here.
