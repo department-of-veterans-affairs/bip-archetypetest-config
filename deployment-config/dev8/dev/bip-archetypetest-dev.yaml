@@ -49,7 +49,7 @@ spec:
           enabled: false
       discovery:
         enabled: true
-        register: false
+        register: true
         client:
           composite-indicator:
             enabled: false
