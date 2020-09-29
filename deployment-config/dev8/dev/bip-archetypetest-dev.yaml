@@ -45,21 +45,20 @@ spec:
       config:
         enabled: true
         prefix: config/archetypetest/development
-        watch:
-          enabled: false
+      watch:
+        enabled: false
       discovery:
         enabled: true
         register: true
         client:
           compositeIndicator:
             enabled: false
+      management:
+        health:
+          enabled: false
       secret: consul-acl-token
       host: dev8-consul-helm-server.vault.svc.dev8
       scheme: http
-    management:
-      health:
-        consul:
-          enabled: false
     vault:
       enabled: true
       host: dev8-vault.vault.svc.dev8
