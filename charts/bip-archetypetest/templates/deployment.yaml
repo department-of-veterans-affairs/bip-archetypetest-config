@@ -73,7 +73,7 @@ spec:
             - name: spring.cloud.discovery.client.composite-indicator.enabled
               value: {{ .Values.consul.discovery.client.compositeIndicator.enabled | quote }}
             {{- end }}
-            {{- if .Values.consul.discovery.client.compositeIndicator.enabled }}
+            {{- if .Values.management.health.vault.enabled }}
             - name: management.health.vault.enabled
               value: {{ .Values.management.health.vault.enabled | quote }}
             {{- end }}
