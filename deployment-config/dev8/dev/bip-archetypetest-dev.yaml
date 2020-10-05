@@ -28,7 +28,7 @@ spec:
     ingress:
       enabled: true
       hosts:
-      - bip-archetypetest.archetypetest-dev.dev8.bip.va.gov
+        - bip-archetypetest.archetypetest-dev.dev8.bip.va.gov
       annotations:
         # kubernetes.io/ingress.class: nginx
         kubernetes.io/tls-acme: "true"
@@ -36,32 +36,32 @@ spec:
       tls:
       - secretName: bip-archetypetest-dev-tls
         hosts:
-        - bip-archetypetest.archetypetest-dev.dev8.bip.va.gov
+          - bip-archetypetest.archetypetest-dev.dev8.bip.va.gov
     image:
       repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest
-      tag: development-742c54386901d0f005cc9b77d39b93dd811efa37
+      tag: 0.0.2-SNAPSHOT
     consul:
       enabled: true
       config:
         enabled: true
         prefix: config/archetypetest/development
-      watch:
-        enabled: false
       discovery:
         enabled: true
-        register: true
+        register: false
         client:
           compositeIndicator:
-            enabled: true
+            enabled: false
+      watch:
+        enabled: false
       secret: consul-acl-token
       host: dev8-consul-helm-server.vault.svc.dev8
       scheme: http
     management:
       health:
         consul:
-          enabled: true
+          enabled: false
         vault:
-          enabled: true
+          enabled: false
     vault:
       enabled: true
       host: dev8-vault.vault.svc.dev8
@@ -73,5 +73,3 @@ spec:
       scheme: http
     spring:
       profiles: dev
-    java:
-      toolOptions: -Djavax.net.debug=all
