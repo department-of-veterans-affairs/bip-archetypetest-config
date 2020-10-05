@@ -53,8 +53,11 @@ spec:
         client:
           compositeIndicator:
             enabled: false
-      management:
-        health:
+    management:
+      health:
+        consul:
+          enabled: false
+        vault:
           enabled: false
       secret: consul-acl-token
       host: dev8-consul-helm-server.vault.svc.dev8

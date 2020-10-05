@@ -61,12 +61,22 @@ spec:
             - name: spring.cloud.consul.discovery.register
               value: {{ .Values.consul.discovery.register | quote }}
             {{- end }}
+            {{- if .Values.management.health.consul.enabled }}
             - name: management.health.consul.enabled
-              value: {{ .Values.consul.management.health.enabled | quote }}
+              value: {{ .Values.management.health.consul.enabled | quote }}
+            {{- end }}
+            {{- if .Values.consul.watch.enabled }}
             - name: spring.cloud.consul.watch.enabled
               value: {{ .Values.consul.watch.enabled | quote }}
+            {{- end }}
+            {{- if .Values.consul.discovery.client.compositeIndicator.enabled }}
             - name: spring.cloud.discovery.client.composite-indicator.enabled
               value: {{ .Values.consul.discovery.client.compositeIndicator.enabled | quote }}
+            {{- end }}
+            {{- if .Values.management.health.vault.enabled }}
+            - name: management.health.vault.enabled
+              value: {{ .Values.management.health.vault.enabled | quote }}
+            {{- end }}
             {{- if kindIs "invalid" .Values.vault.enabled | not }}
             - name: spring.cloud.vault.enabled
               value: {{ .Values.vault.enabled | quote }}
