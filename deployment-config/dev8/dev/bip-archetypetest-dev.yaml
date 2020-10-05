@@ -50,18 +50,9 @@ spec:
       discovery:
         enabled: true
         register: true
-        client:
-          compositeIndicator:
-            enabled: true
       secret: consul-acl-token
       host: dev8-consul-helm-server.vault.svc.dev8
       scheme: http
-    management:
-      health:
-        consul:
-          enabled: true
-        vault:
-          enabled: true
     vault:
       enabled: true
       host: dev8-vault.vault.svc.dev8
