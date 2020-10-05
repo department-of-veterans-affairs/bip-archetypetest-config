@@ -49,12 +49,23 @@ spec:
         prefix: config/archetypetest/prodtest
       discovery:
         enabled: true
-        register: true
+        register: false
+        client:
+          compositeIndicator:
+            enabled: false
+      watch:
+        enabled: false
       secret: consul-acl-token
       host: prod8-consul.vault.svc.prod8
       #TODO: Update when changes have been made to prod
       #host: prod8-consul-helm-server.vault.svc.prod8
       scheme: http
+    management:
+      health:
+        consul:
+          enabled: false
+        vault:
+          enabled: false
     vault:
       enabled: true
       host: prod8-vault.vault.svc.prod8

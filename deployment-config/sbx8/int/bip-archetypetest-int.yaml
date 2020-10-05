@@ -49,10 +49,21 @@ spec:
         prefix: config/archetypetest/development
       discovery:
         enabled: true
-        register: true
+        register: false
+        client:
+          compositeIndicator:
+            enabled: false
+      watch:
+        enabled: false
       secret: consul-acl-token
       host: sbx8-consul-helm-server.vault.svc.sbx8
       scheme: http
+    management:
+      health:
+        consul:
+          enabled: false
+        vault:
+          enabled: false
     vault:
       enabled: true
       host: sbx8-vault.vault.svc.sbx8
