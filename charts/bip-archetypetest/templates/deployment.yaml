@@ -61,7 +61,7 @@ spec:
             - name: spring.cloud.consul.discovery.register
               value: {{ .Values.consul.discovery.register | quote }}
             {{- end }}
-            {{- if kindIs "invalid" .Values.management.health.consul.enabled | not }}
+            {{- if .Values.management.health.consul.enabled }}
             - name: management.health.consul.enabled
               value: {{ .Values.management.health.consul.enabled | quote }}
             {{- end }}
