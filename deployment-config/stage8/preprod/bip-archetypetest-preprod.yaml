@@ -52,8 +52,6 @@ spec:
         client:
           compositeIndicator:
             enabled: false
-      watch:
-        enabled: false
       secret: consul-acl-token
       host: stage8-consul-helm-server.vault.svc.stage8
       scheme: http
