@@ -65,10 +65,6 @@ spec:
             - name: management.health.consul.enabled
               value: {{ .Values.management.health.consul.enabled | quote }}
             {{- end }}
-            {{- if kindIs "invalid" .Values.consul.watch.enabled | not }}
-            - name: spring.cloud.consul.watch.enabled
-              value: {{ .Values.consul.watch.enabled | quote }}
-            {{- end }}
             {{- if kindIs "invalid" .Values.consul.discovery.client.compositeIndicator.enabled | not }}
             - name: spring.cloud.discovery.client.composite-indicator.enabled
               value: {{ .Values.consul.discovery.client.compositeIndicator.enabled | quote }}

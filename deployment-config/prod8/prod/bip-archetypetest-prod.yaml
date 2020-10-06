@@ -54,8 +54,6 @@ spec:
         client:
           compositeIndicator:
             enabled: false
-      watch:
-        enabled: false
 
       secret: consul-acl-token
       host: prod8-consul.vault.svc.prod8
