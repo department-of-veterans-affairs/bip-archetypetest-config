@@ -188,11 +188,12 @@ spec:
               name: keystore-volume
             - mountPath: /tmp/vacerts
               name: va-certs
-        {{- end }}
       volumes:
-        {{- if .Values.certs.import }}
       - emptyDir: {}
         name: keystore-volume
+      - name: va-certs
+        configMap:
+          name: {{ $fullName }}-va-certs
         {{- end }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
