@@ -141,9 +141,9 @@ spec:
             - name: JAVA_TOOL_OPTIONS
               value: {{ quote .Values.java.toolOptions }}
             {{- end }}
-          {{- if not .Values.sleepContainer }}
             - name: bip.framework.security.opa.urls
               value: http://opa-{{ template "bip-archetypetest.fullname" . }}:{{ .Values.opaService.port }}/v1/data/bip/http/authz/admin,http://opa-{{ template "bip-archetypetest.fullname" . }}:{{ .Values.opaService.port }}/v1/data/bip/http/authz/allow
+          {{- if not .Values.sleepContainer }}
           livenessProbe:
             httpGet:
               path: /actuator/health
@@ -159,6 +159,41 @@ spec:
           {{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
+    {{- if .Values.certs.import }}
+          volumeMounts:
+            - mountPath: /var/run/secrets/java.io/keystores
+              name: keystore-volume
+            - mountPath: /tmp/vacerts
+              name: va-certs
+      initContainers:
+        - name: pem-to-truststore
+          image: registry.access.redhat.com/openjdk/openjdk-11-rhel7:1.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: va_certs
+              value: /tmp/vacerts
+            - name: truststore_jks
+              value: /var/run/secrets/java.io/keystores/truststore.jks
+          command:
+            - /bin/bash
+          args:
+            - -c
+            - echo 'Importing following va certificates from ConfigMap';
+              cd $va_certs; pwd; ls; for file in *; do keytool -import -noprompt -keystore $truststore_jks -file
+              $file -storepass changeit -alias $file; done; echo 'Importing certs from JAVA_HOME trust store';
+              keytool -importkeystore -srckeystore $JAVA_HOME/lib/security/cacerts -srcstorepass
+              changeit -destkeystore $truststore_jks -deststorepass changeit
+          volumeMounts:
+            - mountPath: /var/run/secrets/java.io/keystores
+              name: keystore-volume
+            - mountPath: /tmp/vacerts
+              name: va-certs
+        {{- end }}
+      volumes:
+        {{- if .Values.certs.import }}
+      - emptyDir: {}
+        name: keystore-volume
+        {{- end }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
