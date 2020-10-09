@@ -19,6 +19,7 @@ spec:
     ref: development #Branch or tag to retreive the chart from
     path: charts/jenkins-config #Path to the chart directory in the repository
   values:
+    cluster: dev8
     jenkinsConfig:
     ############################################################################################
     # The Jenkins Global Pipeline Library and Maven Agents can be overridden here.
