@@ -1,0 +1,16 @@
+{{- if (.Values.certs.import) -}}
+{{- $fullName := include "bip-archetypetest.fullname" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $fullName }}-va-certs
+  labels:
+    app: {{ template "bip-archetypetest.name" . }}
+    chart: {{ template "bip-archetypetest.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+binaryData:
+{{- range $key, $val := .Values.certs.vaCertificates }}
+  {{ $key }}: {{ $.Files.Get $val | b64enc }}
+{{- end }}
+{{- end }}
