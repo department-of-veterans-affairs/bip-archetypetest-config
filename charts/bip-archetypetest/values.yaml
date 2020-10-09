@@ -91,12 +91,20 @@ consul:
   discovery:
     enabled: false
     register: false
-
+    client:
+      compositeIndicator:
+        enabled: false
   # Set this value to the name of the Secret object containing the Consul ACL token. If not set, a Secret will be created by the Chart
   secret: consul-acl-token
   # Set this to the name of the key in the above Secret containing the ACL token value
   secretKey: consul-acl-token
-  
+
+management:
+  health:
+    consul:
+      enabled: false
+    vault:
+      enabled: false
 
 vault:
   # Enable or disable integration with Vault
