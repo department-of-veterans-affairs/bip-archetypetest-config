@@ -150,12 +150,14 @@ spec:
               port: http
             initialDelaySeconds: 45
             periodSeconds: 5
+            failureThreshold: 6
           readinessProbe:
             httpGet:
               path: /actuator/health
               port: http
             initialDelaySeconds: 45
             periodSeconds: 5
+            failureThreshold: 6
           {{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
