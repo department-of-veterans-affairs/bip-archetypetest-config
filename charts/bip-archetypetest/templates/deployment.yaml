@@ -170,7 +170,7 @@ spec:
           {{- if not .Values.sleepContainer }}
           livenessProbe:
             httpGet:
-              path: /actuator/health
+              path: /actuator/info
               port: http
             initialDelaySeconds: 45
             periodSeconds: 5
