@@ -113,7 +113,7 @@ management:
       enabled: false
     ratelimiters:
       enabled: false
-    ciruitbreakers:
+    circuitbreakers:
       enabled: false
     hystrix:
       enabled: false
