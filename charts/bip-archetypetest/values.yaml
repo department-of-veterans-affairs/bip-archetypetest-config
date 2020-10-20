@@ -56,7 +56,7 @@ opaResources:
     memory: 250Mi
 
 java:
-  toolOptions: -XX:+PrintFlagsFinal -XX:MaxRAMPercentage=67.0 -Djavax.net.ssl.trustStorePassword=changeit -Djavax.net.ssl.trustStore=/var/run/secrets/java.io/keystores/truststore.jks
+  toolOptions: -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMPercentage=67.0 -Djavax.net.ssl.trustStorePassword=changeit -Djavax.net.ssl.trustStore=/var/run/secrets/java.io/keystores/truststore.jks
 
 nodeSelector: {}
 
