@@ -105,7 +105,18 @@ management:
       enabled: false
     vault:
       enabled: false
-
+    db:
+      enabled: false
+    diskspace:
+      enabled: false
+    refresh:
+      enabled: false
+    ratelimiters:
+      enabled: false
+    circuitbreakers:
+      enabled: false
+    hystrix:
+      enabled: false
 vault:
   # Enable or disable integration with Vault
   enabled: false

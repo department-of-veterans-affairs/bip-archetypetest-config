@@ -60,6 +60,18 @@ spec:
           enabled: false
         vault:
           enabled: false
+        db:
+          enabled: true
+        diskspace:
+          enabled: true
+        refresh:
+          enabled: true
+        ratelimiters:
+          enabled: true
+        circuitbreakers:
+          enabled: true
+        hystrix:
+          enabled: true
     vault:
       enabled: true
       host: dev8-vault.vault.svc.dev8
