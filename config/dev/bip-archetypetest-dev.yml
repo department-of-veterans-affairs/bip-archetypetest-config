@@ -1,2 +1,24 @@
-foo:
-  bar: dude
+spring:
+  cloud:
+    discovery:
+      client:
+        composite-indicator:
+          enabled: true
+management:
+  health:
+    consul:
+      enabled: true
+    vault:
+      enabled: true
+    db:
+      enabled: true
+    diskspace:
+      enabled: true
+    refresh:
+      enabled: true
+    ratelimiters:
+      enabled: true
+    circuitbreakers:
+      enabled: true
+    hystrix:
+      enabled: true
