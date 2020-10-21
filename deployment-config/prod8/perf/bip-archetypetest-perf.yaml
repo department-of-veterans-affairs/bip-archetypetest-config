@@ -64,6 +64,18 @@ spec:
           enabled: false
         vault:
           enabled: false
+        db:
+          enabled: false
+        diskspace:
+          enabled: true
+        refresh:
+          enabled: true
+        ratelimiters:
+          enabled: false
+        circuitbreakers:
+          enabled: false
+        hystrix:
+          enabled: false
     vault:
       enabled: true
       host: prod8-vault.vault.svc.prod8

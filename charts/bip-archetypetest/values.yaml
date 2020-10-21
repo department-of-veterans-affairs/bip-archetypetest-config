@@ -98,7 +98,7 @@ consul:
   secret: consul-acl-token
   # Set this to the name of the key in the above Secret containing the ACL token value
   secretKey: consul-acl-token
-  
+
 management:
   health:
     consul:
@@ -108,15 +108,16 @@ management:
     db:
       enabled: false
     diskspace:
-      enabled: false
+      enabled: true
     refresh:
-      enabled: false
+      enabled: true
     ratelimiters:
       enabled: false
     circuitbreakers:
       enabled: false
     hystrix:
       enabled: false
+
 vault:
   # Enable or disable integration with Vault
   enabled: false
