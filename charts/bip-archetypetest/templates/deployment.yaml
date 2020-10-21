@@ -37,42 +37,6 @@ spec:
               containerPort: 8080
               protocol: TCP
           env:
-            {{- if kindIs "invalid" .Values.management.health.consul.enabled | not }}
-            - name: management.health.consul.enabled
-              value: {{ .Values.management.health.consul.enabled | quote }}
-            {{- end }}
-            {{- if kindIs "invalid" .Values.consul.discovery.client.compositeIndicator.enabled | not }}
-            - name: spring.cloud.discovery.client.composite-indicator.enabled
-              value: {{ .Values.consul.discovery.client.compositeIndicator.enabled | quote }}
-            {{- end }}
-            {{- if kindIs "invalid" .Values.management.health.vault.enabled | not }}
-            - name: management.health.vault.enabled
-              value: {{ .Values.management.health.vault.enabled | quote }}
-            {{- end }}
-            {{- if kindIs "invalid" .Values.management.health.db.enabled | not }}
-            - name: management.health.db.enabled
-              value: {{ .Values.management.health.db.enabled | quote }}
-            {{- end }}
-            {{- if kindIs "invalid" .Values.management.health.diskspace.enabled | not }}
-            - name: management.health.diskspace.enabled
-              value: {{ .Values.management.health.diskspace.enabled | quote }}
-            {{- end }}
-            {{- if kindIs "invalid" .Values.management.health.refresh.enabled | not }}
-            - name: management.health.refresh.enabled
-              value: {{ .Values.management.health.refresh.enabled | quote }}
-            {{- end }}
-            {{- if kindIs "invalid" .Values.management.health.ratelimiters.enabled | not }}
-            - name: management.health.ratelimiters.enabled
-              value: {{ .Values.management.health.ratelimiters.enabled | quote }}
-            {{- end }}
-            {{- if kindIs "invalid" .Values.management.health.circuitbreakers.enabled | not }}
-            - name: management.health.circuitbreakers.enabled
-              value: {{ .Values.management.health.circuitbreakers.enabled | quote }}
-            {{- end }}
-            {{- if kindIs "invalid" .Values.management.health.hystrix.enabled | not }}
-            - name: management.health.hystrix.enabled
-              value: {{ .Values.management.health.hystrix.enabled | quote }}
-            {{- end }}
             {{- if kindIs "invalid" .Values.consul.enabled | not }}
             - name: spring.cloud.consul.enabled
               value: {{ .Values.consul.enabled | quote }}
