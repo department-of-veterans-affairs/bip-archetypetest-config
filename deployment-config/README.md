@@ -8,7 +8,7 @@ Each namespace used by your project has its own instances of Flux and Helm that 
 If you are deploying a Helm Chart, then you should create a `HelmRelease` object YAML that describes the chart you want to apply and the configuration of that chart. The bip-archetypetest application provides an [example of a HelmRelease object](dev/bip-archetypetest-dev.yaml). Flux will apply this object to your namespace, which in turn will be read by the [Flux Helm operator](https://github.com/weaveworks/flux/blob/master/site/helm-integration.md) and it will then install the chart using Helm. For more information on writing your `HelmRelease` object YAML, see the [Flux Helm operator documentation](https://github.com/weaveworks/flux/blob/master/site/helm-integration.md).
 
 ## Health Checks
-Health Checks are used to determine if the application is an a healthy state.
+Health Checks are used to determine if the application is in a healthy state.
 Enabled health checks will be found at the `/actuator/health` endpoint.
 If any individual health check returns a status of `DOWN`, the entire `/actuator/health` endpoint will also return a status of `DOWN`, so configure desired health checks accordingly. 
 ###Default Health Check Descriptions:

@@ -50,30 +50,9 @@ spec:
       discovery:
         enabled: true
         register: false
-        client:
-          compositeIndicator:
-            enabled: false
       secret: consul-acl-token
       host: stage8-consul-helm-server.vault.svc.stage8
       scheme: http
-    management:
-      health:
-        consul:
-          enabled: false
-        vault:
-          enabled: false
-        db:
-          enabled: false
-        diskspace:
-          enabled: true
-        refresh:
-          enabled: true
-        ratelimiters:
-          enabled: false
-        circuitbreakers:
-          enabled: false
-        hystrix:
-          enabled: false
     vault:
       enabled: true
       host: stage8-vault.vault.svc.stage8
