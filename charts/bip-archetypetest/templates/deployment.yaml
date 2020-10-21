@@ -41,6 +41,10 @@ spec:
             - name: management.health.consul.enabled
               value: {{ .Values.management.health.consul.enabled | quote }}
             {{- end }}
+            {{- if kindIs "invalid" .Values.consul.discovery.client.compositeIndicator.enabled | not }}
+            - name: spring.cloud.discovery.client.composite-indicator.enabled
+              value: {{ .Values.consul.discovery.client.compositeIndicator.enabled | quote }}
+            {{- end }}
             {{- if kindIs "invalid" .Values.management.health.vault.enabled | not }}
             - name: management.health.vault.enabled
               value: {{ .Values.management.health.vault.enabled | quote }}
@@ -92,10 +96,6 @@ spec:
             {{- if .Values.consul.discovery.register }}
             - name: spring.cloud.consul.discovery.register
               value: {{ .Values.consul.discovery.register | quote }}
-            {{- end }}
-            {{- if kindIs "invalid" .Values.consul.discovery.client.compositeIndicator.enabled | not }}
-            - name: spring.cloud.discovery.client.composite-indicator.enabled
-              value: {{ .Values.consul.discovery.client.compositeIndicator.enabled | quote }}
             {{- end }}
             {{- if kindIs "invalid" .Values.vault.enabled | not }}
             - name: spring.cloud.vault.enabled
