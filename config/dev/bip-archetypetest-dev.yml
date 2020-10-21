@@ -3,22 +3,22 @@ spring:
     discovery:
       client:
         composite-indicator:
-          enabled: false
+          enabled: true
 management:
   health:
     consul:
-      enabled: false
+      enabled: true
     vault:
-      enabled: false
+      enabled: true
     db:
-      enabled: false
+      enabled: true
     diskspace:
-      enabled: false
+      enabled: true
     refresh:
-      enabled: false
+      enabled: true
     ratelimiters:
-      enabled: false
+      enabled: true
     circuitbreakers:
-      enabled: false
+      enabled: true
     hystrix:
-      enabled: false
+      enabled: true
