@@ -13,9 +13,9 @@ management:
     db:
       enabled: false
     diskspace:
-      enabled: true
+      enabled: false
     refresh:
-      enabled: true
+      enabled: false
     ratelimiters:
       enabled: false
     circuitbreakers:
