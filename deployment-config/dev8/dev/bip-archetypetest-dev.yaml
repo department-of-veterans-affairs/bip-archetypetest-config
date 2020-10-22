@@ -64,15 +64,15 @@ spec:
       profiles: dev
     livenessProbe: |
       httpGet:
-        path: /actuator/info
+        path: /actuator/health
         port: http
-      initialDelaySeconds: 45
-      periodSeconds: 5
-      failureThreshold: 6
+      initialDelaySeconds: 50
+      periodSeconds: 10
+      failureThreshold: 10
     readinessProbe: |
       httpGet:
         path: /actuator/health
         port: http
-      initialDelaySeconds: 45
-      periodSeconds: 5
-      failureThreshold: 6
+      initialDelaySeconds: 50
+      periodSeconds: 10
+      failureThreshold: 10
