@@ -203,8 +203,121 @@ An example `jenkinsPlugins` configuration can be found [here](deployment-config/
 In the example above, the tenant is installing two new plugins (powershell and scriptler) and 
 updating the versions of two existing plugins (mailer and token-macro) by using the merge `pluginOverrideMethod`.
 
+### Health Check Configuration
+Health Checks are used to determine if the application is in a healthy state.
+Enabled health checks will be found at the `/actuator/health` endpoint.
+If any individual health check returns a status of `DOWN`, the entire `/actuator/health` endpoint will also return a status of `DOWN`, so configure desired health checks accordingly.
+
+#### Default Health Check Descriptions:
+* __consul__:
+    * Health check for Consul service instances.
+    * `management.health.consul.enabled`
+    * __Causes 500 errors to occur for `/actuator/health` endpoint when Consul is down.__
+    * More info [here](https://cloud.spring.io/spring-cloud-consul/multi/multi_spring-cloud-consul-discovery.html#_http_health_check).
+* __composite-indicator__:
+    * Health check for Consul Discovery Client. Details includes a list of all services registered in Consul.
+    * `spring.cloud.discovery.client.composite-indicator.enabled`
+    * __Causes 500 errors to occur for `/actuator/health` endpoint when Consul is down.__
+    * More info [here](https://spring.getdocs.org/en-US/spring-cloud-docs/spring-cloud-commons/cloud-native-applications/spring-cloud-commons:-common-abstractions/discovery-client.html#_health_indicator).
+* __vault__:
+    * Health check returning status of Vault server.
+    * `management.health.vault.enabled`
+    * __Causes 500 errors to occur for `/actuator/health` endpoint when Vault is down.__
+    * More info [here](https://cloud.spring.io/spring-cloud-vault/reference/html/).
+* __diskSpace__:
+    * A HealthIndicator that checks available disk space and reports a status of Status.DOWN when it drops below a configurable threshold.
+    * `management.health.diskspace.enabled`
+    * More info [here](https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/actuate/system/DiskSpaceHealthIndicator.html).
+* __refreshScope__:
+    * Health indicator for the refresh scope and configuration properties rebinding. If an environment change causes a bean to fail in instantiate or bind this indicator will generally say what the problem was and switch to DOWN.
+    * `management.health.refresh.enabled`
+    * More info [here](https://www.javadoc.io/doc/org.springframework.cloud/spring-cloud-commons-parent/1.1.8.RELEASE/org/springframework/cloud/health/RefreshScopeHealthIndicator.html).
+* __db__:
+    * HealthIndicator that tests the status of a DataSource and optionally runs a test query.
+    * `management.health.db.enabled`
+    * More info [here](https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/actuate/jdbc/DataSourceHealthIndicator.html).
+* __hystrix__:
+    * Health indicator for Hystrix indicating the state of connected circuit breakers.
+    * `management.health.hystrix.enabled`
+    * More info [here](https://cloud.spring.io/spring-cloud-netflix/multi/multi__circuit_breaker_hystrix_clients.html#_health_indicator).
+* __rateLimiters__:
+    * Health indicator for Resilience4j RateLimiters.
+    * `management.health.ratelimiters.enabled`
+    * More info on RateLimiters [here](https://resilience4j.readme.io/docs/ratelimiter).
+    * More info on Resilience4j health endpoints [here](https://resilience4j.readme.io/docs/getting-started-3#section-health-endpoint).
+* __circuitBreakers__:
+    * Health indicator for Resilience4j CircuitBreakers. A closed CircuitBreaker state is mapped to UP, an open state to DOWN and a half-open state to UNKNOWN.
+    * `management.health.circuitbreakers.enabled`
+    * More info on CircuitBreakers [here](https://resilience4j.readme.io/docs/circuitbreaker).
+    * More info on Resilience4j health endpoints [here](https://resilience4j.readme.io/docs/getting-started-3#section-health-endpoint).
+
+#### Health Check Properties:
+The health checks described above can be configured by adding these properties to the desired config file (example: [bip-archetypetest-dev.yml](config/dev/bip-archetypetest-dev.yml)).
+```
+spring:
+  cloud:
+    discovery:
+      client:
+        composite-indicator:
+          enabled: false
+management:
+  health:
+    consul:
+      enabled: false
+    vault:
+      enabled: false
+    db:
+      enabled: false
+    diskspace:
+      enabled: true
+    refresh:
+      enabled: true
+    ratelimiters:
+      enabled: false
+    circuitbreakers:
+      enabled: false
+    hystrix:
+      enabled: false
+```
+
+#### Validating Health Check Configuration
+To validate that the health check properties have been updated appropriately check the `actuator/env` endpoint.
+To validate that the health checks are disabled/enabled as desired check the `actuator/health` endpoint.
+
+### Liveness and Readiness Probe Configuration
+__Liveness Probes__ are used to determine if a container is in an unhealthy state and needs to be restarted.
+
+__Readiness Probes__ are used to determine when a container is ready to start accepting traffic. 
+A Pod is considered ready when all of its containers are ready. 
+One use of this signal is to control which Pods are used as backends for Services. When a Pod is not ready, it is removed from Service load balancers.
+
+Liveness and Readiness Probe default values are configured in the [deploymentTemplate](charts/bip-archetypetest/templates/deployment.yaml).
+```
+env:
+  ...
+  livenessProbe:
+    httpGet:
+      path: /actuator/info
+      port: http
+    initialDelaySeconds: 45
+    periodSeconds: 5
+  readinessProbe:
+    httpGet:
+      path: /actuator/health
+      port: http
+    initialDelaySeconds: 45
+    periodSeconds: 5
+```
+* __httpGet__: The probe will perform an HTTP GET request on the specified `path` and `port`. Any code greater than or equal to 200 and less than 400 returned indicates success. Any other code indicates failure.
+* __initialDelaySeconds__: Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds. Minimum value is 0.
+* __periodSeconds__: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+
+More info can be found [here](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
+
 ### [Config](config)
 The `config` folder contains the runtime configuration for our service. These key/value pairs are loaded into Consul using [git2consul](https://github.com/breser/git2consul).
+
+__Note__: The consul.config.prefix property in the deployment configs may need to be updated depending on where the values are being stored in Consul.
 
 ### [Deployment Config](deployment-config)
 The `deployment-config` folder contains HelmObject configuration files used to configure our Helm deployment packages for different environments.
