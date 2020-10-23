@@ -291,28 +291,31 @@ __Readiness Probes__ are used to determine when a container is ready to start ac
 A Pod is considered ready when all of its containers are ready. 
 One use of this signal is to control which Pods are used as backends for Services. When a Pod is not ready, it is removed from Service load balancers.
 
-Liveness and Readiness Probe default values are configured in the [deploymentTemplate](charts/bip-archetypetest/templates/deployment.yaml).
+Liveness and Readiness Probe values are configured in the deployment config yaml files under `values:` (example: [bip-archetypetest-dev.yaml](deployment-config/dev8/dev/bip-archetypetest-dev.yaml)).
 ```
-env:
+values:
   ...
-  livenessProbe:
+  livenessProbe: |
     httpGet:
       path: /actuator/info
       port: http
     initialDelaySeconds: 45
     periodSeconds: 5
-  readinessProbe:
+    failureThreshold: 6
+  readinessProbe: |
     httpGet:
       path: /actuator/health
       port: http
     initialDelaySeconds: 45
     periodSeconds: 5
+    failureThreshold: 6
 ```
 * __httpGet__: The probe will perform an HTTP GET request on the specified `path` and `port`. Any code greater than or equal to 200 and less than 400 returned indicates success. Any other code indicates failure.
 * __initialDelaySeconds__: Number of seconds after the container has started before liveness or readiness probes are initiated. Defaults to 0 seconds. Minimum value is 0.
 * __periodSeconds__: How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+* __failureThreshold__: The number of times readiness/liveness checks will be attempted by probes before giving up. When the failure threshold is reached for a liveness probe, the container is restarted. When the failure threshold is reached for a readiness probe, the Pod will be marked Unready. Defaults to 3. Minimum value is 1.
 
-More info can be found [here](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
+More info on Liveness and Readiness probes can be found [here](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
 
 ### [Config](config)
 The `config` folder contains the runtime configuration for our service. These key/value pairs are loaded into Consul using [git2consul](https://github.com/breser/git2consul).
