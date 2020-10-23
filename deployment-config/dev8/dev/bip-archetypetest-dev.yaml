@@ -39,7 +39,7 @@ spec:
         - bip-archetypetest.archetypetest-dev.dev8.bip.va.gov
     image:
       repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest
-      tag: development-80388b6e86fe6cdab62d53e03cffd3b322c5382c
+      tag: development-bb417a29d6c6283ae179a89c24f87b96a97871b2
     consul:
       enabled: true
       config:
