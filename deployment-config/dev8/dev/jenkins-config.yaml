@@ -49,7 +49,7 @@ spec:
                   scm:
                     git:
                       branches:
-                      - name: "*/JTEAdditions"
+                      - name: "*/development"
                       buildChooser: "default"
                       doGenerateSubmoduleConfigurations: false
                       userRemoteConfigs:
@@ -62,7 +62,7 @@ spec:
                     scm:
                       git:
                         branches:
-                        - name: "*/JTEAdditions"
+                        - name: "*/development"
                         buildChooser: "default"
                         doGenerateSubmoduleConfigurations: false
                         userRemoteConfigs:
