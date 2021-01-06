@@ -15,7 +15,7 @@ spec:
   ########################################################################
   chart:
     git: ssh://git@github.com/department-of-veterans-affairs/ocp-external-config #Repository where the pull the chart from
-    ref: promotion #Branch or tag to retreive the chart from
+    ref: promotion #Branch or tag to retrieve the chart from
     path: charts/bip-archetypetest #Path to the chart directory in the repository
 
   ########################################################################

@@ -6,7 +6,7 @@ metadata:
   namespace: archetypetest-dev #Namespace in which to install the Chart
   annotations:
     flux.weave.works/automated: "true" #Set this to true to automate installation/updating of this release when the Chart of this object changes
-    flux.weave.works/tag.chart-image: glob:test-* #Regex value flux will look for in image tag to auto upadte
+    flux.weave.works/tag.chart-image: glob:test-* #Regex value flux will look for in image tag to auto update
 spec:
   releaseName: bip-archetypetest-test #Name of the Helm release
   targetNamespace: archetypetest-test #Namespace  in which to install the chart
@@ -17,7 +17,7 @@ spec:
   ########################################################################
   chart:
     git: ssh://git@github.ec.va.gov/EPMO/bip-archetypetest-config #Repository where the pull the chart from
-    ref: development #Branch or tag to retreive the chart from
+    ref: development #Branch or tag to retrieve the chart from
     path: charts/bip-archetypetest #Path to the chart directory in the repository
 
   ########################################################################
@@ -48,18 +48,9 @@ spec:
       discovery:
         enabled: true
         register: false
-        client:
-          compositeIndicator:
-            enabled: false
       secret: consul-acl-token
       host: dev8-consul-helm-server.vault.svc.dev8
       scheme: http
-    management:
-      health:
-        consul:
-          enabled: false
-        vault:
-          enabled: false
     vault:
       enabled: true
       host: dev8-vault.vault.svc.dev8

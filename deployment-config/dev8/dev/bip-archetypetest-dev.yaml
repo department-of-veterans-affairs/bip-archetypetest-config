@@ -17,7 +17,7 @@ spec:
   ########################################################################
   chart:
     git: ssh://git@github.ec.va.gov/EPMO/bip-archetypetest-config #Repository where the pull the chart from
-    ref: development #Branch or tag to retreive the chart from
+    ref: development #Branch or tag to retrieve the chart from
     path: charts/bip-archetypetest #Path to the chart directory in the repository
 
   ########################################################################
@@ -28,7 +28,7 @@ spec:
     ingress:
       enabled: true
       hosts:
-      - bip-archetypetest.archetypetest-dev.dev8.bip.va.gov
+        - bip-archetypetest.archetypetest-dev.dev8.bip.va.gov
       annotations:
         # kubernetes.io/ingress.class: nginx
         kubernetes.io/tls-acme: "true"
@@ -36,7 +36,7 @@ spec:
       tls:
       - secretName: bip-archetypetest-dev-tls
         hosts:
-        - bip-archetypetest.archetypetest-dev.dev8.bip.va.gov
+          - bip-archetypetest.archetypetest-dev.dev8.bip.va.gov
     image:
       repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest
       tag: development-e274c85c212aa98deb34fac9a6acfe9ded8fe8a2
@@ -48,30 +48,9 @@ spec:
       discovery:
         enabled: true
         register: false
-        client:
-          compositeIndicator:
-            enabled: false
       secret: consul-acl-token
       host: dev8-consul-helm-server.vault.svc.dev8
       scheme: http
-    management:
-      health:
-        consul:
-          enabled: false
-        vault:
-          enabled: false
-        db:
-          enabled: true
-        diskspace:
-          enabled: true
-        refresh:
-          enabled: true
-        ratelimiters:
-          enabled: true
-        circuitbreakers:
-          enabled: true
-        hystrix:
-          enabled: true
     vault:
       enabled: true
       host: dev8-vault.vault.svc.dev8

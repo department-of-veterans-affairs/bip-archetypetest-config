@@ -17,7 +17,7 @@ spec:
   ########################################################################
   chart:
     git: ssh://git@github.ec.va.gov/EPMO/bip-archetypetest-config #Repository where the pull the chart from
-    ref: master #Branch or tag to retreive the chart from
+    ref: master #Branch or tag to retrieve the chart from
     path: charts/bip-archetypetest #Path to the chart directory in the repository
 
   ########################################################################
@@ -50,20 +50,11 @@ spec:
       discovery:
         enabled: true
         register: false
-        client:
-          compositeIndicator:
-            enabled: false
       secret: consul-acl-token
       host: prod8-consul.vault.svc.prod8
       #TODO: Update when changes have been made to prod
       #host: prod8-consul-helm-server.vault.svc.prod8
       scheme: http
-    management:
-      health:
-        consul:
-          enabled: false
-        vault:
-          enabled: false
     vault:
       enabled: true
       host: prod8-vault.vault.svc.prod8

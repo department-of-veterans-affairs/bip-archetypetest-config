@@ -98,25 +98,7 @@ consul:
   secret: consul-acl-token
   # Set this to the name of the key in the above Secret containing the ACL token value
   secretKey: consul-acl-token
-  
-management:
-  health:
-    consul:
-      enabled: false
-    vault:
-      enabled: false
-    db:
-      enabled: false
-    diskspace:
-      enabled: false
-    refresh:
-      enabled: false
-    ratelimiters:
-      enabled: false
-    circuitbreakers:
-      enabled: false
-    hystrix:
-      enabled: false
+
 vault:
   # Enable or disable integration with Vault
   enabled: false
@@ -171,3 +153,18 @@ certs:
     VA-Internal-S2-ICA3-v1: vacerts/VA-Internal-S2-ICA3-v1.cer
     VA-Internal-S2-ICA7: vacerts/VA-Internal-S2-ICA7.cer
     VAFIM1-Internal-S2-ICA1-v1: vacerts/VAFIM1-Internal-S2-ICA1-v1.cer
+
+livenessProbe: |
+  httpGet:
+    path: /actuator/info
+    port: http
+  initialDelaySeconds: 45
+  periodSeconds: 5
+  failureThreshold: 6
+readinessProbe: |
+  httpGet:
+    path: /actuator/health
+    port: http
+  initialDelaySeconds: 45
+  periodSeconds: 5
+  failureThreshold: 6

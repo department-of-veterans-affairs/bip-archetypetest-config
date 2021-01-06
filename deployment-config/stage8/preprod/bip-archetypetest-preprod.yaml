@@ -6,18 +6,18 @@ metadata:
   namespace: archetypetest-ivv #Namespace in which to install the helmrelease object
   annotations:
     flux.weave.works/automated: "true" #Set this to true to automate installation/updating of this release when the Chart of this object changes
-    flux.weave.works/tag.chart-image: glob:preprod-* #Regex value flux will look for in image tag to auto upadte
+    flux.weave.works/tag.chart-image: glob:preprod-* #Regex value flux will look for in image tag to auto update
 
 spec:
   releaseName: bip-archetypetest-preprod #Name of the Helm release
-  targetNamespace: archetypetest-preprod #Namespace in which to deploy chart  
+  targetNamespace: archetypetest-preprod #Namespace in which to deploy chart
   ########################################################################
   # Values section defines the location of the chart
   # This example pulls the chart from a Git repository
   ########################################################################
   chart:
     git: ssh://git@github.ec.va.gov/EPMO/bip-archetypetest-config #Repository where the pull the chart from
-    ref: staging #Branch or tag to retreive the chart from
+    ref: staging #Branch or tag to retrieve the chart from
     path: charts/bip-archetypetest #Path to the chart directory in the repository
 
   ########################################################################
@@ -49,18 +49,9 @@ spec:
       discovery:
         enabled: true
         register: false
-        client:
-          compositeIndicator:
-            enabled: false
       secret: consul-acl-token
       host: stage8-consul-helm-server.vault.svc.stage8
       scheme: http
-    management:
-      health:
-        consul:
-          enabled: false
-        vault:
-          enabled: false
     vault:
       enabled: true
       host: stage8-vault.vault.svc.stage8
