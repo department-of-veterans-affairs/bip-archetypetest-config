@@ -79,20 +79,20 @@ spec:
                         userRemoteConfigs:
                         - credentialsId: "github"
                           url: "https://github.com/boozallen/sdp-images"
-          tool:
-            git:
-              installations:
-              - home: "git"
-                name: "Default"
-            nodejs:
-              installations:
-              - name: "Nodejs"
-                properties:
-                - installSource:
-                    installers:
-                    - nodeJSInstaller:
-                        id: "14.15.0"
-                        npmPackagesRefreshHours: 72
+        tool:
+          git:
+            installations:
+            - home: "git"
+              name: "Default"
+          nodejs:
+            installations:
+            - name: "Nodejs"
+              properties:
+              - installSource:
+                  installers:
+                  - nodeJSInstaller:
+                      id: "14.15.0"
+                      npmPackagesRefreshHours: 72
     #  zzzz-alphatical-override-additionalSlaves: |
     #    jenkins:
     #      clouds:
