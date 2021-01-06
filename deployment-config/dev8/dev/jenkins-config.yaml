@@ -106,11 +106,14 @@ spec:
     # An example is provided below. Check "Overriding Jenkins Plugins" in
     # the root README.md for more info.
     ########################################################################
-    #  plugins.txt: |
-    #    powershell:1.4
-    #    scriptler:3.1
-    #    mailer:1.32
-    #    token-macro:2.12
+      plugins.txt: |
+        powershell:1.4
+        scriptler:3.1
+        mailer:1.32
+        token-macro:2.12
+        parameterized-remote-trigger:3.1.4
+        templating-engine:1.7.1
+        docker-workflow:1.24
     #  pluginProperties.yaml: |
     #    pluginOverrideMethod: merge
     ########################################################################
