@@ -38,7 +38,7 @@ spec:
         hosts:
         - bip-archetypetest-ui-dev.dev8.bip.va.gov
     image:
-      repository: container-registry.dev8.bip.va.gov/blue/bip-archetypetest-ui
+      repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest-ui
       tag: dev-df1e34c1ee08c104334b2219bbe58350bb8df02a
       pullPolicy: Always
     resources:
