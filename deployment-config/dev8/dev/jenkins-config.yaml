@@ -79,6 +79,20 @@ spec:
                         userRemoteConfigs:
                         - credentialsId: "github"
                           url: "https://github.com/boozallen/sdp-images"
+          tool:
+            git:
+              installations:
+              - home: "git"
+                name: "Default"
+            nodejs:
+              installations:
+              - name: "Nodejs"
+                properties:
+                - installSource:
+                    installers:
+                    - nodeJSInstaller:
+                        id: "14.15.0"
+                        npmPackagesRefreshHours: 72
     #  zzzz-alphatical-override-additionalSlaves: |
     #    jenkins:
     #      clouds:
@@ -106,14 +120,11 @@ spec:
     # An example is provided below. Check "Overriding Jenkins Plugins" in
     # the root README.md for more info.
     ########################################################################
-      plugins.txt: |
-        powershell:1.4
-        scriptler:3.1
-        mailer:1.32
-        token-macro:2.12
-        parameterized-remote-trigger:3.1.4
-        templating-engine:1.7.1
-        docker-workflow:1.24
+    #  plugins.txt: |
+    #    powershell:1.4
+    #    scriptler:3.1
+    #    mailer:1.32
+    #    token-macro:2.12
     #  pluginProperties.yaml: |
     #    pluginOverrideMethod: merge
     ########################################################################
