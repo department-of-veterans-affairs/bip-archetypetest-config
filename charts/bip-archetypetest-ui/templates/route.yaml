@@ -1,0 +1,24 @@
+{{- if .Values.route.enabled -}}
+{{- $fullName := include "bip-archetypetest-ui.fullname" . -}}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ $fullName }}
+  labels:
+    app: {{ template "bip-archetypetest-ui.name" . }}
+    chart: {{ template "bip-archetypetest-ui.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- with .Values.route.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: {{ $fullName }}
+    weight: 100
+  wildcardPolicy: None
+{{- end }}

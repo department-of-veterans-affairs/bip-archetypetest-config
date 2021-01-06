@@ -17,7 +17,7 @@ spec:
   ########################################################################
   chart:
     git: ssh://git@github.ec.va.gov/EPMO/bip-archetypetest-config #Repository where the pull the chart from
-    ref: master #Branch or tag to retreive the chart from
+    ref: master #Branch or tag to retrieve the chart from
     path: charts/bip-archetypetest #Path to the chart directory in the repository
 
   ########################################################################

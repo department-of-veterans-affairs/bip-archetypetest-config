@@ -252,7 +252,8 @@ If any individual health check returns a status of `DOWN`, the entire `/actuator
     * More info on Resilience4j health endpoints [here](https://resilience4j.readme.io/docs/getting-started-3#section-health-endpoint).
 
 #### Health Check Properties:
-The health checks described above can be configured by adding these properties to the desired config file (example: [bip-archetypetest-dev.yml](config/dev/bip-archetypetest-dev.yml)).
+Defaults for the Health Checks described above are defined in the `bip-archetypetest.yml` file in the service repo.
+If these default values need to be configured differently in each environment, they can be added to the appropriate yml files in the `/config` directory (example: [bip-archetypetest-dev.yml](config/dev/bip-archetypetest-dev.yml)).
 ```
 spring:
   cloud:
@@ -291,7 +292,8 @@ __Readiness Probes__ are used to determine when a container is ready to start ac
 A Pod is considered ready when all of its containers are ready. 
 One use of this signal is to control which Pods are used as backends for Services. When a Pod is not ready, it is removed from Service load balancers.
 
-Liveness and Readiness Probe values are configured in the deployment config yaml files under `values:` (example: [bip-archetypetest-dev.yaml](deployment-config/dev8/dev/bip-archetypetest-dev.yaml)).
+Default values for Liveness and Readiness probes are defined in [values.yaml](charts/bip-archetypetest/values.yaml).
+If these values need to be configured differently in each environment, add these properties to the appropriate deployment config yaml files (example: [bip-archetypetest-dev.yaml](deployment-config/dev8/dev/bip-archetypetest-dev.yaml)).
 ```
 values:
   ...
@@ -323,7 +325,10 @@ The `config` folder contains the runtime configuration for our service. These ke
 __Note__: The consul.config.prefix property in the deployment configs may need to be updated depending on where the values are being stored in Consul.
 
 ### [Deployment Config](deployment-config)
-The `deployment-config` folder contains HelmObject configuration files used to configure our Helm deployment packages for different environments.
+The `deployment-config` folder contains Helm Release configuration files used to configure our Helm deployment packages for different environments. It also contains bootstrapping configuration options that cannot be provided through Consul.
+
+### Service Repository Configuration
+Default runtime configuration is often embedded in the application under the `src/main/resources/bip-<service>.yml` file.  Default bootstrapping configuration is often embedded in the application under the `src/main/resources/bootstrap.yml` file. Examples of these files can be found [here](https://github.ec.va.gov/EPMO/bip-archetype-service/tree/master/bip-archetype-service-archetypetest/bip-archetypetest/src/main/resources).
 
 ### [Flux Service](flux-service)
 The `flux-service` folder contains YAML files for installing Flux and Tiller into Openshift and Kubernetes in such a way that those services have access to only a single namespace. This directory is not needed for other projects. Its likely this directory will move to a Platform repository at a later date.
