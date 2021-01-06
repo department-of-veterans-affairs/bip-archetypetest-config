@@ -3,7 +3,7 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease #Custom Object type for use with Flux Helm Operator
 metadata:
   name: bip-archetypetest-ui-dev #Name of the object
-  namespace: blue-dev #Namespace in which to install the helmrelease object
+  namespace: archetypetest-dev #Namespace in which to install the helmrelease object
   annotations:
     flux.weave.works/automated: "true" #Set this to true to automate installation/updating of this release when the Chart of this object changes
     flux.weave.works/tag.chart-image: glob:dev-*
