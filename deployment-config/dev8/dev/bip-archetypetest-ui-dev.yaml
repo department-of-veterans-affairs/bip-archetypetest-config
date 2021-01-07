@@ -41,7 +41,7 @@ spec:
         - bip-archetypetest-ui-dev.dev8.bip.va.gov
     image:
       repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest-ui
-      tag: dev-6ce43354e5c61ba1ad430b5e9457cc24302d7339
+      tag: dev-11fe1e88454b4d7f9b7ee7e4e9f902fede533de5
       pullPolicy: Always
     resources:
       limits:
