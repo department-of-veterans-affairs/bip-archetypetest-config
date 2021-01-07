@@ -25,6 +25,8 @@ spec:
   # These are specific to the chart being installed
   ########################################################################
   values:
+    ui:
+      enabled: true 
     ingress:
       enabled: true
       hosts:
@@ -39,7 +41,7 @@ spec:
         - bip-archetypetest-ui-dev.dev8.bip.va.gov
     image:
       repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest-ui
-      tag: dev-1b2bbb3e9bd0a134472e764bab467dc20fcd981e
+      tag: dev-df1e34c1ee08c104334b2219bbe58350bb8df02a
       pullPolicy: Always
     resources:
       limits:

@@ -1,3 +1,4 @@
+{{- if (.Values.ui.enabled) -}}
 {{- $fullName := include "bip-archetypetest-ui.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
@@ -70,4 +71,4 @@ spec:
       tolerations:
 {{ toYaml . | indent 8 }}
     {{- end }}
-    
+{{- end }}

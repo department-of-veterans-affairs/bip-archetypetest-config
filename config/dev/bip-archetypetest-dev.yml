@@ -1,6 +1,6 @@
 foo:
   bar: value
-bip.framework.securi
+bip.framework.security:
   http:
     cors:
       enabled: true

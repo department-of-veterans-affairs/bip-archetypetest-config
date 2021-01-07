@@ -1,3 +1,4 @@
+{{- if (.Values.ui.enabled) -}}
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "bip-archetypetest-ui.fullname" . -}}
 {{- $ingressPath := .Values.ingress.path -}}
@@ -36,4 +37,5 @@ spec:
               serviceName: {{ $fullName }}
               servicePort: 80
   {{- end }}
+{{- end }}
 {{- end }}
