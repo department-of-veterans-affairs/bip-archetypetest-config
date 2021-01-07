@@ -1,12 +1,12 @@
-package bip.http.authz
+package bip.reference.person.http.authz
 
 import input
 
 ########################################################
-# BIP Framework sets fields/keys under "input" field 
+# BIP Framework sets fields/keys under "input" field
 # passed for the OPA request body (req_body)
-# 1) input.auth 
-#	 - Represents the token for an authentication 
+# 1) input.auth
+#	 - Represents the token for an authentication
 #		request or for an authenticated principal
 # 2) input.method
 #	 - Represents the name of the HTTP method
@@ -62,6 +62,10 @@ allow {
 # Allow admin users to invoke any methods.
 admin {
   input.auth.principal.assuranceLevel == 3 	# fake assuranceLevel just to demonstrate
+}
+
+admin {
+  input.auth.principal.assuranceLevel == 7 	# fake assuranceLevel just to demonstrate
 }
 
 # user-role assignments
