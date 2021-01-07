@@ -1,4 +1,4 @@
-package bip.reference.person.http.authz
+package bip.http.authz
 
 import input
 
