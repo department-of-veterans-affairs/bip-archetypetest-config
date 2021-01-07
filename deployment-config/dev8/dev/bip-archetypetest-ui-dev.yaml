@@ -58,4 +58,4 @@ spec:
       archetypetestUrl: https://archetypetest-dev.dev8.bip.va.gov
       realm: idp
       clientId: bip-archetypetest-ui-dev
-      jwtDomains: https://blue.dev8.bip.va.gov,https://bip-archetypetest-ui-dev.dev8.bip.va.gov
+      jwtDomains: https://blue.dev8.bip.va.gov,https://archetypetest-dev.dev8.bip.va.gov
