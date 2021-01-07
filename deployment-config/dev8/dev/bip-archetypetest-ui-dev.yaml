@@ -26,7 +26,7 @@ spec:
   ########################################################################
   values:
     ui:
-      enabled: true 
+      enabled: true
     ingress:
       enabled: true
       hosts:
@@ -41,7 +41,7 @@ spec:
         - bip-archetypetest-ui-dev.dev8.bip.va.gov
     image:
       repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest-ui
-      tag: dev-1b2bbb3e9bd0a134472e764bab467dc20fcd981e
+      tag: dev-6ce43354e5c61ba1ad430b5e9457cc24302d7339
       pullPolicy: Always
     resources:
       limits:
