@@ -25,6 +25,8 @@ spec:
   # These are specific to the chart being installed
   ########################################################################
   values:
+    ui:
+      enabled: true 
     ingress:
       enabled: true
       hosts:
