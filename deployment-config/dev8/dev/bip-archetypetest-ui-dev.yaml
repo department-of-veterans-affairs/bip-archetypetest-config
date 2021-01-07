@@ -55,7 +55,7 @@ spec:
     react:
       bssUrl: https://bss-dev.dev8.bip.va.gov/auth/
       brpUrl: https://blue.dev8.bip.va.gov
-      archetypetestUrl: https://bip-archetypetest-ui-dev.dev8.bip.va.gov
+      archetypetestUrl: https://bip-archetypetest-dev.dev8.bip.va.gov
       realm: idp
       clientId: bip-archetypetest-ui-dev
       jwtDomains: https://blue.dev8.bip.va.gov,https://bip-archetypetest-ui-dev.dev8.bip.va.gov
