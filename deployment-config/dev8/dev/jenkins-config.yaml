@@ -194,9 +194,9 @@ spec:
     #                <org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
     #                  <strategyId>1</strategyId>
     #                </org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
-    #                <org.jenkinsci.plugins.github__branch__source.ArchetypeTestPullRequestDiscoveryTrait>
+    #                <org.jenkinsci.plugins.github__branch__source.OriginPullRequestDiscoveryTrait>
     #                  <strategyId>1</strategyId>
-    #                </org.jenkinsci.plugins.github__branch__source.ArchetypeTestPullRequestDiscoveryTrait>
+    #                </org.jenkinsci.plugins.github__branch__source.OriginPullRequestDiscoveryTrait>
     #                <org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
     #                  <strategyId>1</strategyId>
     #                  <trust class="org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait$TrustPermission"/>
@@ -344,9 +344,9 @@ spec:
     #                <org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
     #                  <strategyId>1</strategyId>
     #                </org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
-    #                <org.jenkinsci.plugins.github__branch__source.ArchetypeTestPullRequestDiscoveryTrait>
+    #                <org.jenkinsci.plugins.github__branch__source.OriginPullRequestDiscoveryTrait>
     #                  <strategyId>1</strategyId>
-    #                </org.jenkinsci.plugins.github__branch__source.ArchetypeTestPullRequestDiscoveryTrait>
+    #                </org.jenkinsci.plugins.github__branch__source.OriginPullRequestDiscoveryTrait>
     #                <org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
     #                  <strategyId>1</strategyId>
     #                  <trust class="org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait$TrustPermission"/>
@@ -420,9 +420,9 @@ spec:
     #                <org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
     #                  <strategyId>1</strategyId>
     #                </org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
-    #                <org.jenkinsci.plugins.github__branch__source.ArchetypeTestPullRequestDiscoveryTrait>
+    #                <org.jenkinsci.plugins.github__branch__source.OriginPullRequestDiscoveryTrait>
     #                  <strategyId>1</strategyId>
-    #                </org.jenkinsci.plugins.github__branch__source.ArchetypeTestPullRequestDiscoveryTrait>
+    #                </org.jenkinsci.plugins.github__branch__source.OriginPullRequestDiscoveryTrait>
     #                <org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
     #                  <strategyId>1</strategyId>
     #                  <trust class="org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait$TrustPermission"/>
@@ -503,9 +503,9 @@ spec:
                     <org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
                       <strategyId>1</strategyId>
                     </org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
-                    <org.jenkinsci.plugins.github__branch__source.ArchetypeTestPullRequestDiscoveryTrait>
+                    <org.jenkinsci.plugins.github__branch__source.OriginPullRequestDiscoveryTrait>
                       <strategyId>1</strategyId>
-                    </org.jenkinsci.plugins.github__branch__source.ArchetypeTestPullRequestDiscoveryTrait>
+                    </org.jenkinsci.plugins.github__branch__source.OriginPullRequestDiscoveryTrait>
                     <org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
                       <strategyId>1</strategyId>
                       <trust class="org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait$TrustPermission"/>
