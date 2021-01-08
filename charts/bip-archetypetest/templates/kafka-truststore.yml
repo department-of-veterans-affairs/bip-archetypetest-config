@@ -1,0 +1,15 @@
+{{- if (.Values.opa.enabled) -}}
+  {{- $fullName := include "bip-archetypetest.fullname" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $fullName }}-kafka-truststore
+  labels:
+    app: {{ template "bip-archetypetest.name" . }}
+    chart: {{ template "bip-archetypetest.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+binaryData:
+  truststore: |-
+  {{ .Files.Get .Values.kafka.truststore | b64enc | indent 4 }}
+  {{- end }}

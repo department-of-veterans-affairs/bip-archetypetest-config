@@ -133,6 +133,10 @@ opa:
   enabled: true # OPAEnablement: Set this to true if you want to enable OPA
   rego: api_authz_jwt_token.rego
 
+kafka:
+  truststore: blueTruststore.jks
+  keystore: blueKeystore.jks
+
 certs:
   import: true
   vaCertificates:

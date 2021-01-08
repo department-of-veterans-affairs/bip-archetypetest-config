@@ -13,7 +13,7 @@ spring:
     properties:
       ssl:
         keystore:
-          location: classpath:test/ssl/dev/blueKeystore.jks
+          location: /kafka/keystore.jks
         truststore:
-          location: classpath:test/ssl/dev/blueTruststore.jks
+          location: /kafka/truststore.jks
 
