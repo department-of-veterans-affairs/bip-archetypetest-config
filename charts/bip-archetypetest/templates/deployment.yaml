@@ -176,10 +176,6 @@ spec:
               name: keystore-volume
             - mountPath: /tmp/vacerts
               name: va-certs
-            - name: kafka-keystore
-              mountPath: /kafka/keystore.jks
-            - name: kafka-truststore
-              mountPath: /kafka/truststore.jks
       volumes:
         - name: kafka-keystore
           configMap:
