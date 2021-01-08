@@ -20,6 +20,13 @@ spec:
         app: {{ template "bip-archetypetest.name" . }}
         release: {{ .Release.Name }}
     spec:
+      volumes:
+        - name: kafka-keystore
+          configMap:
+            name: {{ $fullName }}-kafka-keystore
+        - name: kafka-truststore
+          configMap:
+            name: {{ $fullName }}-kafka-truststore
       {{- if .Values.imagePullSecret }}
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
@@ -36,6 +43,13 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
+          volumeMounts:
+            - name: kafka-keystore
+              mountPath: /kafka/keystore.jks
+              subPath: kafka
+            - name: kakfa-truststore
+              mountPath: /kafka/truststore.jks
+              subPath: kafka
           env:
             {{- if kindIs "invalid" .Values.consul.enabled | not }}
             - name: spring.cloud.consul.enabled
