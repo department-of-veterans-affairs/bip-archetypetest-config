@@ -150,9 +150,9 @@ spec:
             - mountPath: /tmp/vacerts
               name: va-certs
             - name: kafka-keystore
-              mountPath: /kafka
+              mountPath: /kafka/keystore
             - name: kafka-truststore
-              mountPath: /kafka
+              mountPath: /kafka/truststore
       initContainers:
         - name: pem-to-truststore
           image: registry.access.redhat.com/openjdk/openjdk-11-rhel7:1.1
