@@ -151,7 +151,7 @@ spec:
               name: va-certs
             - name: kafka-keystore
               mountPath: /kafka/keystore.jks
-            - name: kakfa-truststore
+            - name: kafka-truststore
               mountPath: /kafka/truststore.jks
       initContainers:
         - name: pem-to-truststore
