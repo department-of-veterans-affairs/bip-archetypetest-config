@@ -36,13 +36,6 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
-          volumeMounts:
-            - name: kafka-keystore
-              mountPath: /kafka/keystore.jks
-              subPath: kafka
-            - name: kakfa-truststore
-              mountPath: /kafka/truststore.jks
-              subPath: kafka
           env:
             {{- if kindIs "invalid" .Values.consul.enabled | not }}
             - name: spring.cloud.consul.enabled
@@ -156,6 +149,10 @@ spec:
               name: keystore-volume
             - mountPath: /tmp/vacerts
               name: va-certs
+            - name: kafka-keystore
+              mountPath: /kafka/keystore.jks
+            - name: kakfa-truststore
+              mountPath: /kafka/truststore.jks
       initContainers:
         - name: pem-to-truststore
           image: registry.access.redhat.com/openjdk/openjdk-11-rhel7:1.1
