@@ -13,7 +13,7 @@ spring:
     properties:
       ssl:
         keystore:
-          location: /kafka/keystore/keystore.jks
+          location: /kafka/keystore/keystore
         truststore:
-          location: /kafka/truststore/truststore.jks
+          location: /kafka/truststore/truststore
 
