@@ -20,13 +20,6 @@ spec:
         app: {{ template "bip-archetypetest.name" . }}
         release: {{ .Release.Name }}
     spec:
-      volumes:
-        - name: kafka-keystore
-          configMap:
-            name: {{ $fullName }}-kafka-keystore
-        - name: kafka-truststore
-          configMap:
-            name: {{ $fullName }}-kafka-truststore
       {{- if .Values.imagePullSecret }}
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
@@ -187,6 +180,12 @@ spec:
             - mountPath: /tmp/vacerts
               name: va-certs
       volumes:
+      - name: kafka-keystore
+        configMap:
+          name: {{ $fullName }}-kafka-keystore
+      - name: kafka-truststore
+        configMap:
+          name: {{ $fullName }}-kafka-truststore
       - emptyDir: {}
         name: keystore-volume
       - name: va-certs
