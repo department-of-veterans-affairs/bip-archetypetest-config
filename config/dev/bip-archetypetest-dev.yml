@@ -17,4 +17,5 @@ spring:
           location: /kafka/keystore/keystore
         truststore:
           location: /kafka/truststore/truststore
-
+bip.framework.security.opa:
+  enabled: false # OPAEnablement: Set this to true if you want to enable OPA
