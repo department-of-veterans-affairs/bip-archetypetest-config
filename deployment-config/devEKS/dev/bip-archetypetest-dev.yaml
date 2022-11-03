@@ -31,7 +31,7 @@ spec:
       enabled: true
       #TODO_CMF: Update hosts value to resolve "Unexpected error validating SSL certificate"
       hosts:
-      - archetypetest.sbx.bip.va.gov
+      - archetypetest.dev.bip.va.gov
       annotations:
         # kubernetes.io/ingress.class: nginx
         #TODO_CMF: Update annotation in attempt to resolve "Could not determine issuer for ingress due to bad annotations" error
@@ -41,7 +41,7 @@ spec:
       - secretName: bip-reference-dev-tls
         #TODO_CMF: Update hosts value to resolve "Unexpected error validating SSL certificate"
         hosts:
-        - archetypetest.sbx.bip.va.gov
+        - archetypetest.dev.bip.va.gov
     kong:
       ingress:
         anonymous:
@@ -80,7 +80,7 @@ spec:
             hosts:
             - bip-archetypetest.archetypetest-dev.apps.dev8.bip.va.gov
     image:
-      repository: container-registry.sbx.bip.va.gov/archetypetest/bip-archetypetest
+      repository: container-registry.dev.bip.va.gov/archetypetest/bip-archetypetest
       tag: dev-d85ebfb0e5fd01813e24fec4dbc049348a25a3e5
       pullPolicy: Always
     resources:

@@ -18,7 +18,7 @@ spec:
   ########################################################################
   chart:
     git: ssh://git@github.ec.va.gov/EPMO/bip-archetypetest-config #Repository where the pull the chart from
-    ref: development #Branch or tag to retreive the chart from
+    ref: feature/BIAPL-15286-EKS #Branch or tag to retreive the chart from
     path: charts/bip-archetypetest-example #Path to the chart directory in the repository
     skipDepUpdate: true
 
