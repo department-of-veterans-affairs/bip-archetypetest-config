@@ -19,9 +19,7 @@ spec:
     ref: development #Branch or tag to retreive the chart from
     path: charts/jenkins-config #Path to the chart directory in the repository
   values:
-    helmVersion: v3
-    #TODO_CMF: Update cluster value
-    cluster: sbx
+    cluster: dev
     jenkinsConfig:
       globalLibrary: |
         unclassified:
@@ -79,8 +77,6 @@ spec:
                         args: "^${computer.jnlpmac} ^${computer.name}"
     jenkinsPlugins:
       plugins.txt: |
-        fortify:21.2.37
-        dependency-check-jenkins-plugin:5.1.2
       pluginProperties.yaml: |
         pluginOverrideMethod: merge
     jenkins_framework_library: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"

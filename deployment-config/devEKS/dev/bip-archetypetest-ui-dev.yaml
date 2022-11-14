@@ -33,18 +33,18 @@ spec:
     ingress:
       enabled: true
       hosts:
+      - bip-archetypetest-ui-dev.dev.bip.va.gov
       - bip-archetypetest-ui-dev.dev8.bip.va.gov
       annotations:
-        # kubernetes.io/ingress.class: nginx
-        kubernetes.io/tls-acme: "true"
       path: /
       tls:
       - secretName: bip-archetypetest-ui-dev
         hosts:
+        - bip-archetypetest-ui-dev.dev.bip.va.gov
         - bip-archetypetest-ui-dev.dev8.bip.va.gov
     image:
-      repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest-ui
-      tag: dev-11fe1e88454b4d7f9b7ee7e4e9f902fede533de5
+      repository: container-registry.dev.bip.va.gov/archetypetest/bip-archetypetest-ui
+      tag: dev-df1e34c1ee08c104334b2219bbe58350bb8df02a
       pullPolicy: Always
     resources:
       limits:

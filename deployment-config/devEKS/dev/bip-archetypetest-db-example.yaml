@@ -53,8 +53,6 @@ spec:
         enabled: true
         register: false
       secret: consul-acl-token
-      #TODO_CMF: Update consul.host to resolve "dev8-consul.vault.svc.dev8: Name or service not known" error
-      host: dev8-consul-helm-server.vault
       scheme: http
     vault:
       enabled: true

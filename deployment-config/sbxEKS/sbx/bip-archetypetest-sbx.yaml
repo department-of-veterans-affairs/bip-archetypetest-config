@@ -27,43 +27,38 @@ spec:
   # These are specific to the chart being installed
   ########################################################################
   values:
+    # kubernetes ingress configuration
     ingress:
       enabled: true
-      #TODO_CMF: Update hosts value to resolve "Unexpected error validating SSL certificate"
       hosts:
       - archetypetest.sbx.bip.va.gov
+      - archetypetest.sbx8.bip.va.gov
       annotations:
-        # kubernetes.io/ingress.class: nginx
-        #TODO_CMF: Update annotation in attempt to resolve "Could not determine issuer for ingress due to bad annotations" error
-        #kubernetes.io/tls-acme: "true"
       path: /
       tls:
-      - secretName: bip-reference-sbx-tls
-        #TODO_CMF: Update hosts value to resolve "Unexpected error validating SSL certificate"
+      - secretName: bip-archetypetest-sbx-tls
         hosts:
         - archetypetest.sbx.bip.va.gov
     kong:
       ingress:
         anonymous:
-          #TODO_CMF: Disable kong while troubleshooting ingress
           enabled: false
           hosts:
-          - name: bip-archetypetest.archetypetest-sbx.apps.sbx8.bip.va.gov
-            paths:
-            - /
+            - name: bip-archetypetest.archetypetest-sbx.apps.sbx.bip.va.gov
+              paths:
+                - /
           annotations:
             kubernetes.io/ingress.class: kong-internal
             kubernetes.io/tls-acme: "true"
             plugins.konghq.com: archetypetest-sbx.bip-archetypetest-sbx.acl, archetypetest-sbx.bip-archetypetest-sbx.jwt.anonymous
           tls:
-          - secretName: bip-reference-sbx-tls
-            hosts:
-            - bip-archetypetest.archetypetest-sbx.apps.sbx8.bip.va.gov
+            - secretName: bip-archetypetest-sbx-tls
+              hosts:
+                - bip-archetypetest.archetypetest-sbx.apps.sbx.bip.va.gov
         secured:
-          #TODO_CMF: Disable kong while troubleshooting ingress
           enabled: false
           hosts:
-          - name: bip-archetypetest.archetypetest-sbx.apps.sbx8.bip.va.gov
+          - name: bip-archetypetest.archetypetest-sbx.apps.sbx.bip.va.gov
             paths:
             - /api/v.+/persons
             - /api/v.+/sns
@@ -76,9 +71,10 @@ spec:
             plugins.konghq.com: archetypetest-sbx.bip-archetypetest-sbx.acl, archetypetest-sbx.bip-archetypetest-sbx.jwt
             configuration.konghq.com: bip-archetypetest-sbx-kongingress
           tls:
-          - secretName: bip-reference-sbx-tls
-            hosts:
-            - bip-archetypetest.archetypetest-sbx.apps.sbx8.bip.va.gov
+            - secretName: bip-archetypetest-sbx-tls
+              hosts:
+                - bip-archetypetest.archetypetest-sbx.apps.sbx.bip.va.gov
+
     image:
       repository: container-registry.sbx.bip.va.gov/archetypetest/bip-archetypetest
       tag: sbx-d85ebfb0e5fd01813e24fec4dbc049348a25a3e5
@@ -104,7 +100,6 @@ spec:
       enabled: true
       host: vault.vault
       kubernetes:
-        #TODO_CMF: Update role to match sbx vault
         role: archetypetest-read
       kv:
         applicationName: archetypetest/bip-archetypetest

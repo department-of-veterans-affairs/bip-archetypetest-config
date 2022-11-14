@@ -32,6 +32,7 @@ artifactNameUpperCase=""
 servicePort=""
 projectNameSpacePrefix=""
 enableOPA=false
+enableUI=false
 
 ################################################################################
 #########################                              #########################
@@ -207,9 +208,12 @@ function read_properties() {
 				if [[ "$theKey" == "artifactName" ]]; then artifactName=$theVal; fi
 				if [[ "$theKey" == "artifactNameLowerCase" ]]; then artifactNameLowerCase=$theVal; fi
 				if [[ "$theKey" == "artifactNameUpperCase" ]]; then artifactNameUpperCase=$theVal; fi
+				if [[ "$theKey" == "artifactNameUnderscores" ]]; then artifactNameUnderscores=$theVal; fi
 				if [[ "$theKey" == "servicePort" ]]; then servicePort=$theVal; fi
 				if [[ "$theKey" == "projectNameSpacePrefix" ]]; then projectNameSpacePrefix=$theVal; fi
 				if [[ "$theKey" == "enableOPA" ]]; then enableOPA=$theVal; fi
+				if [[ "$theKey" == "enableUI" ]]; then enableUI=$theVal; fi
+				if [[ "$theKey" == "includeSecureEnclave" ]]; then includeSecureEnclave=$theVal; fi
 			fi
 		done < "$cwd/$propertiesFile"
 		IFS=$OIFS
@@ -309,6 +313,10 @@ function copy_origin_project() {
 	echo "cp -R -f ./$originDirName/ ./$artifactId/" 2>&1 | tee -a "$genLog"
 	# tee does not play well with some bash commands, so just redirect output to the log
 	cp -R -f "./$originDirName/" "./$artifactId/" 2>&1 >> "$genLog"
+
+	if [ "$includeSecureEnclave" -ne true ]; then
+	    rm -R -f "./$artifactId/secure-enclave/" 2>&1 >> "$genLog"
+    fi
 	check_exit_status "$?"
 }
 
@@ -436,6 +444,11 @@ function change_text() {
 		newVal="$artifactId"
 		echo "sed -i \"\" -e 's/'\"$oldVal\"'/'\"$newVal\"'/g' \"$tmpFile\"" 2>&1 | tee -a "$genLog"
 		sed -i "" -e 's/'"$oldVal"'/'"$newVal"'/g' "$tmpFile" 2>&1 >> "$genLog"
+        # underscore replacement
+        oldVal="_origin"
+        newVal="_$artifactNameUnderscores"
+        echo "sed -i \"\" -e 's/'\"$oldVal\"'/'\"$newVal\"'/g' \"$tmpFile\"" 2>&1 | tee -a "$genLog"
+        sed -i "" -e 's/'"$oldVal"'/'"$newVal"'/g' "$tmpFile" 2>&1 >> "$genLog"
 		# camelcase replacement
 		oldVal="Origin"
 		newVal="$artifactName"
@@ -462,6 +475,22 @@ function change_text() {
             echo "LC_ALL=C sed -i \"\" -e 's/'\"$oldVal\"'/'\"$newVal\"'/g' \"$tmpFile\"" 2>&1 | tee -a "$genLog"
             LC_ALL=C sed -i "" -e 's/'"$oldVal"'/'"$newVal"'/g' "$tmpFile" 2>&1 >> "$genLog"
         fi
+    if [ "$enableUI" = true ] ; then
+        oldVal="false # UIEnablement"
+        newVal="true # UIEnablement"
+        echo "LC_ALL=C sed -i \"\" -e 's/'\"$oldVal\"'/'\"$newVal\"'/g' \"$tmpFile\"" 2>&1 | tee -a "$genLog"
+        LC_ALL=C sed -i "" -e 's/'"$oldVal"'/'"$newVal"'/g' "$tmpFile" 2>&1 >> "$genLog"
+
+        oldVal="# UIEnablement"
+        newVal=""
+        echo "LC_ALL=C sed -i \"\" -e 's/'\"$oldVal\"'/'\"$newVal\"'/g' \"$tmpFile\"" 2>&1 | tee -a "$genLog"
+        LC_ALL=C sed -i "" -e 's/'"$oldVal"'/'"$newVal"'/g' "$tmpFile" 2>&1 >> "$genLog"
+    fi
+    # Replace obfuscated origins
+		oldVal="rIgIn"
+		newVal="rigin"
+		echo "sed -i \"\" -e 's/'\"$oldVal\"'/'\"$newVal\"'/g' \"$tmpFile\"" 2>&1 | tee -a "$genLog"
+		sed -i "" -e 's/'"$oldVal"'/'"$newVal"'/g' "$tmpFile" 2>&1 >> "$genLog"
 	done;
 	### do not check exit status, as windows editions of bash mysteriously report errors, but still do the work
 	# check_exit_status "$?"

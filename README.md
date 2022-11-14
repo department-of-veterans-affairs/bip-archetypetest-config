@@ -1,5 +1,5 @@
-# BIP Reference External Configuration Repository
-This repository contains deployment and runtime configuration data for the BIP Referencee Services. This repository serves as an example for how to structure other BIP service configuration repositories.
+# BIP Service External Configuration Repository
+This repository contains deployment and runtime configuration data for the BIP Services. This repository serves as an example for how to structure other BIP service configuration repositories.
 
 ## Project Breakdown
 
@@ -52,6 +52,29 @@ io.jenkins.plugins.casc.ConfiguratorException: Found conflicting configuration a
 ```
 
 Other than the Global Pipeline Library, the following options are supported.
+
+#### Overriding Jenkins Environment Variables
+Jenkins environment variable overrides can be added by creating an `envVars` section under `values.jenkinsConfig`.
+An example implementation is provided below, just replace the keys/values as desired.
+
+__Note: Any environment variables currently applied in Jenkins will be lost.
+Make sure to define preexisting environment variables here if needed.__
+
+```
+  values:
+    jenkinsConfig:
+      envVars: |
+        jenkins:
+          globalNodeProperties:
+            - envVars:
+                env:
+                  - key: GIT_SSL_NO_VERIFY
+                    value: true
+                  - key: chartBranch
+                    value: development
+                  - key: cucumberOpts
+                    value: "--tags @DEV"
+```
 
 #### Overriding or adding additional Maven Agents
 The configuration option `mavenSlave` in `jenkins_values.yaml.j2` configures the default list of agents. To override, an
@@ -363,3 +386,7 @@ Secrets must be provided over a secured channel like an encrypted email using on
 
 ## Promoting Secrets to Staging and Production clusters
 When a new secret is requested for the Dev environment, the ProdOps team should go ahead and create secrets in the Staging and Production vault instances as well.
+
+## [Kubernetes Cluster Agnostic Automated Testing Configuration](docs/cluster-agnostic-automated-testing-configuration.md)
+
+This documentation will describe how to configure automated tests across multiple kubernetes clusters to run during Jenkins builds. Since each cluster may require some unique configurations, we have provided methods to override specific values per cluster.

@@ -57,6 +57,8 @@ spec:
               value: {{ .Values.react.clientId }}
             - name: REACT_APP_JWT_DOMAINS
               value: {{ .Values.react.jwtDomains }}
+            - name: REACT_APP_REMOTE_LOG_ENABLED
+              value: {{ .Values.react.remoteLogEnabled }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
   {{- with .Values.nodeSelector }}

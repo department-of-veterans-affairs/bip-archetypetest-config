@@ -20,7 +20,6 @@ spec:
     path: charts/jenkins-config #Path to the chart directory in the repository
   values:
     helmVersion: v3
-    #TODO_CMF: Update cluster value
     cluster: sbx
     jenkinsConfig:
       globalLibrary: |
