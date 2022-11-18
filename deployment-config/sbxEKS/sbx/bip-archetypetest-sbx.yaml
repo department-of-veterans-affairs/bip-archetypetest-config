@@ -32,7 +32,6 @@ spec:
       enabled: true
       hosts:
       - archetypetest.sbx.bip.va.gov
-      - archetypetest.sbx8.bip.va.gov
       annotations:
       path: /
       tls:
@@ -106,13 +105,13 @@ spec:
       port: 8200
       scheme: http
     spring:
-      profiles: sbx
+      profiles: dev
     opa:
       enabled: true
       rego: api_authz_jwt_token.rego
     aws:
       accountID: "261727212250"
-      irsaRole: "project-bip-archetypetest-sbx-role"
+      irsaRole: "project-bip-blue-dev-role"
     certs:
       import: true
     java:
