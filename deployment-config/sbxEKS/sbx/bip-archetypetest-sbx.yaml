@@ -77,7 +77,7 @@ spec:
 
     image:
       repository: container-registry.sbx.bip.va.gov/archetypetest/bip-archetypetest
-      tag: sbx-d85ebfb0e5fd01813e24fec4dbc049348a25a3e5
+      tag: dev-d85ebfb0e5fd01813e24fec4dbc049348a25a3e5
       pullPolicy: Always
     resources:
       limits:
