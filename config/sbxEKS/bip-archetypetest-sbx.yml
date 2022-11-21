@@ -3,7 +3,7 @@ bip.framework.security:
     cors:
       enabled: true
   opa:
-    enabled: false
+    enabled: true
     allVotersAbstainGrantAccess: false
         
 spring:
