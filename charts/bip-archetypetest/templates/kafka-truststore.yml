@@ -1,4 +1,3 @@
-{{- if (.Values.opa.enabled) -}}
 {{- $fullName := include "bip-archetypetest.fullname" . -}}
 apiVersion: v1
 kind: ConfigMap
@@ -12,4 +11,3 @@ metadata:
 binaryData:
   truststore: |-
 {{ .Files.Get .Values.kafka.truststore | b64enc | indent 4 }}
-{{- end }}
