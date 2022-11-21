@@ -18,11 +18,3 @@ spring:
       enabled: false
     streams:
       enabled: false
-    properties:
-      ssl:
-        keystore:
-          location: /kafka/keystore/keystore
-        truststore:
-          location: /kafka/truststore/truststore
-io.confluent.developer.config.topic.name: archetypetest-sbx
-io.confluent.developer.config.topic.name.schema: archetypetest-sbx 
