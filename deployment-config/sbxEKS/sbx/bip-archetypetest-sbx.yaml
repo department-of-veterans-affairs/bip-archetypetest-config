@@ -107,13 +107,13 @@ spec:
     spring:
       profiles: sbx
     opa:
-      enabled: false
+      enabled: true
       rego: api_authz_jwt_token.rego
     aws:
       accountID: "261727212250"
       irsaRole: "project-bip-blue-dev-role"
     certs:
-      import: true
+      import: false
     java:
       toolOptions: -XX:+PrintFlagsFinal -XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStorePassword=changeit
         -Djavax.net.ssl.trustStore=/var/run/secrets/java.io/keystores/truststore.jks
