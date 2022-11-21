@@ -192,15 +192,19 @@ certs:
 
 livenessProbe: |
   httpGet:
-    path: /actuator/info
+    path: /actuator/health
     port: http
-  initialDelaySeconds: 45
-  periodSeconds: 5
-  failureThreshold: 6
+    scheme: HTTP
+  initialDelaySeconds: 120
+  periodSeconds: 10
+  failureThreshold: 13
+  timeoutSeconds: 5
 readinessProbe: |
   httpGet:
     path: /actuator/health
     port: http
-  initialDelaySeconds: 45
-  periodSeconds: 5
-  failureThreshold: 6
+    scheme: HTTP
+  initialDelaySeconds: 120
+  periodSeconds: 10
+  failureThreshold: 13
+  timeoutSeconds: 5
