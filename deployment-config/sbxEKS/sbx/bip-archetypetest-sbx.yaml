@@ -107,7 +107,7 @@ spec:
     spring:
       profiles: sbx
     opa:
-      enabled: false
+      enabled: true
       rego: api_authz_jwt_token.rego
     aws:
       accountID: "261727212250"
