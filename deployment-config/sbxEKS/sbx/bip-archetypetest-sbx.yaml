@@ -113,7 +113,7 @@ spec:
       accountID: "261727212250"
       irsaRole: "project-bip-blue-dev-role"
     certs:
-      import: false
+      import: true
     java:
       toolOptions: -XX:+PrintFlagsFinal -XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStorePassword=changeit
         -Djavax.net.ssl.trustStore=/var/run/secrets/java.io/keystores/truststore.jks
