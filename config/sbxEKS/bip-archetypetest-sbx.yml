@@ -9,9 +9,28 @@ bip.framework.security:
 spring:
   kafka:
     consumer:
-      enabled: false
+      enabled: true
+    properties:
+      security:
+        protocol: SSL
+      ssl:
+        enabled:
+          protocols: TLSv1.3,TLSv1.2,TLSv1.1,TLSv1
+        keystore:
+          location: /kafka/keystore/keystore
+          password: ${blue.bip.va.gov.keyStorePass}
+        truststore:
+          location: /kafka/truststore/truststore
+          password: ${blue.bip.va.gov.trustStorePass}
+      bootstrap:
+        servers: SSL://kafka.sbx.bip.va.gov:443
+      schema:
+        registry:
+          url: https://schemaregistry.confluentv2.svc.dev8:8081
     streams:
       enabled: false
+      properties:
+        bootstrap.servers: SSL://kafka.sbx.bip.va.gov:443
       
 bip:
   framework:
