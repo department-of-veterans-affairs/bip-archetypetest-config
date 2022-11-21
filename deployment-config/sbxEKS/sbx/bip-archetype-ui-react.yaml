@@ -52,7 +52,7 @@ spec:
         cpu: 50m
         memory: 50Mi
     certs:
-      import: true
+      import: false
     react:
       bssUrl: https://bss-dev.dev8.bip.va.gov/auth/
       brpUrl: https://blue.dev8.bip.va.gov
