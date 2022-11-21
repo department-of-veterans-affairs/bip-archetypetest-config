@@ -1,21 +1,28 @@
-foo:
-  bar: value
 bip.framework.security:
   http:
     cors:
       enabled: true
+  opa:
+    enabled: false
+    allVotersAbstainGrantAccess: false
+    
 bip-archetypetest:
   origins: #This will be replaced with archetypetests but we have to obfuscate it to prevent overriding with artifact name
     - https://bip-archetypetest-ui-dev.dev8.bip.va.gov
     - https://archetypetest-dev.dev8.bip.va.gov
     - http://localhost:3000
+    
 spring:
   kafka:
+    consumer:
+      enabled: false
+    streams:
+      enabled: false
     properties:
       ssl:
         keystore:
           location: /kafka/keystore/keystore
         truststore:
           location: /kafka/truststore/truststore
-bip.framework.security.opa:
-  enabled: false # OPAEnablement: Set this to true if you want to enable OPA
+io.confluent.developer.config.topic.name: archetypetest-dev
+io.confluent.developer.config.topic.name.schema: archetypetest-dev  
