@@ -105,7 +105,7 @@ spec:
       port: 8200
       scheme: http
     spring:
-      profiles: dev
+      profiles: sbx
     opa:
       enabled: true
       rego: api_authz_jwt_token.rego
