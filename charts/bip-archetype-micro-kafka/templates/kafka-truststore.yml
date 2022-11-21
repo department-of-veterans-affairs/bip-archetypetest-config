@@ -1,0 +1,15 @@
+{{- if (.Values.opa.enabled) -}}
+  {{- $fullName := include "bip-reference-person.fullname" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $fullName }}-kafka-truststore
+  labels:
+    app: {{ template "bip-reference-person.name" . }}
+    chart: {{ template "bip-reference-person.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+binaryData:
+  truststore: |-
+  {{ .Files.Get .Values.kafka.truststore | b64enc | indent 4 }}
+  {{- end }}

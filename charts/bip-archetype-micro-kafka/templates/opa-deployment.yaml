@@ -1,0 +1,58 @@
+{{- if (.Values.opa.enabled) -}}
+{{- $fullName := include "bip-reference-person.fullname" . -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opa-{{ template "bip-reference-person.fullname" . }}
+  labels:
+    app: {{ template "bip-reference-person.name" . }}
+    chart: {{ template "bip-reference-person.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      app: opa-{{ template "bip-reference-person.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: opa-{{ template "bip-reference-person.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      volumes:
+        - name: opa-rego
+          configMap:
+            name: {{ $fullName }}-opa-rego
+      {{- if .Values.imagePullSecret }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}
+      {{- end }}
+      containers:
+        - name: opa-{{ .Chart.Name }}
+          image: "{{ .Values.opaImage.repository }}:{{ .Values.opaImage.tag }}"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8181
+              protocol: TCP
+          volumeMounts:
+            - name: opa-rego
+              mountPath: /opa-rego/api_authz.rego
+              subPath: rego
+          args: ["run", "--server", "--log-level=debug", "--log-format=json",  "/opa-rego/api_authz.rego"]
+          resources:
+{{ toYaml .Values.opaResources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+{{- end }}

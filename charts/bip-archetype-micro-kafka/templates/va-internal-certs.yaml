@@ -1,0 +1,16 @@
+{{- if (.Values.certs.import) -}}
+{{- $fullName := include "bip-reference-person.fullname" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $fullName }}-va-certs
+  labels:
+    app: {{ template "bip-reference-person.name" . }}
+    chart: {{ template "bip-reference-person.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+binaryData:
+{{- range $key, $val := .Values.certs.vaCertificates }}
+  {{ $key }}: {{ $.Files.Get $val | b64enc }}
+{{- end }}
+{{- end }}
