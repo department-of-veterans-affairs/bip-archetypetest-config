@@ -1,4 +1,3 @@
-
 {{- $fullName := include "bip-archetypetest.fullname" . -}}
 apiVersion: v1
 kind: ConfigMap
