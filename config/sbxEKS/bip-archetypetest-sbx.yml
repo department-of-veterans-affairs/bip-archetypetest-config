@@ -18,10 +18,8 @@ spring:
           protocols: TLSv1.3,TLSv1.2,TLSv1.1,TLSv1
         keystore:
           location: /kafka/keystore/keystore
-          password: ${blue.bip.va.gov.keyStorePass}
         truststore:
           location: /kafka/truststore/truststore
-          password: ${blue.bip.va.gov.trustStorePass}
       bootstrap:
         servers: SSL://kafka.sbx.bip.va.gov:443
       schema:
