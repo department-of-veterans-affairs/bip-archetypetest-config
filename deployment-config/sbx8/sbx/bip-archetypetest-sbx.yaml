@@ -63,4 +63,4 @@ spec:
       port: 8200
       scheme: http
     spring:
-      profiles: dev
+      profiles: sbx
