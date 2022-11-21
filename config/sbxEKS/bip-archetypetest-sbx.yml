@@ -9,7 +9,7 @@ bip.framework.security:
 spring:
   kafka:
     consumer:
-      enabled: false
+      enabled: true
     properties:
       security:
         protocol: SSL
