@@ -9,7 +9,6 @@ bip.framework.security:
 spring:
   kafka:
     consumer:
-      enabled: true
     properties:
       security:
         protocol: SSL
@@ -23,8 +22,6 @@ spring:
       bootstrap:
         servers: SSL://kafka.sbx.bip.va.gov:443
       schema:
-        registry:
-          url: https://schemaregistry.confluentv2.svc.dev8:8081
     streams:
       enabled: false
       properties:
