@@ -1,5 +1,4 @@
-{{- if (.Values.opa.enabled) -}}
-  {{- $fullName := include "bip-reference-person.fullname" . -}}
+{{- $fullName := include "bip-reference-person.fullname" . -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
