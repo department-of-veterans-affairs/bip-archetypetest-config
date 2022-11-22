@@ -10,23 +10,14 @@ spring:
   kafka:
     consumer:
       enabled: false
-    properties:
-      security:
-        protocol: SSL
-      ssl:
-        enabled:
-          protocols: TLSv1.3,TLSv1.2,TLSv1.1,TLSv1
-        keystore:
-          location: /kafka/keystore/keystore
-        truststore:
-          location: /kafka/truststore/truststore
+    properties:     
       bootstrap:
-        servers: SSL://kafka.sbx.bip.va.gov:443
+        servers: kafka.sbx.bip.va.gov
       schema:
     streams:
       enabled: false
       properties:
-        bootstrap.servers: SSL://kafka.sbx.bip.va.gov:443
+        bootstrap.servers: kafka.sbx.bip.va.gov
       
 bip:
   framework:
