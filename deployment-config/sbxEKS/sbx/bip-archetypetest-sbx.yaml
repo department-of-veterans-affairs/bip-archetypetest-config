@@ -76,7 +76,7 @@ spec:
 
     image:
       repository: container-registry.sbx.bip.va.gov/archetypetest/bip-archetypetest
-      tag: development-d6748c5d98833c2ef4be001436c6d672aedd4bd3
+      tag: BIAPL-15422-d7eef1025e999c7e7d724e5d37c540b7f44c6499
       pullPolicy: Always
     resources:
       limits:
