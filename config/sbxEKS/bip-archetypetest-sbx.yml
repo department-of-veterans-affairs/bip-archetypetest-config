@@ -5,31 +5,7 @@ bip.framework.security:
   opa:
     enabled: true
     allVotersAbstainGrantAccess: false
-        
-  #Kafka Properties 
-  kafka:
-    properties:
-      consumer:
-        enabled: true
-      security:
-        protocol: SSL
-      ssl:
-        enabled:
-          protocols: TLSv1.2,TLSv1.1,TLSv1
-        keystore:
-          location: ${bip.framework.kafka.keystore.location:src/main/resources/test/ssl/dev/blueKeystore.jks}
-          password: ${bip.framework.kafka.keystore:changeit}
-        truststore:
-          location: ${bip.framework.kafka.truststore.location:src/main/resources/test/ssl/dev/blueTruststore.jks}
-          password: ${bip.framework.kafka.truststore:changeit}
-      bootstrap:
-        servers: ${bip.framework.kafka.bootstrap.servers:SSL://kafka.kafkav2.dev8.bip.va.gov:443}
-    consumer:
-      group-id: bip-pi-demo
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-io.confluent.developer.config.topic.name: bip-vetinfo-pi-demo
-      
+    
 bip:
   framework:
     localstack:
