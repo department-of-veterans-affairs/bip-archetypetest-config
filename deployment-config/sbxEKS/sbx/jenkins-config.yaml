@@ -27,7 +27,7 @@ spec:
           globalLibraries:
             libraries:
             - name: "jenkins-library"
-              defaultVersion: "sbxelopment"
+              defaultVersion: "development"
               implicit: true
               retriever:
                 modernSCM:
@@ -52,7 +52,7 @@ spec:
                   - key: GIT_SSL_NO_VERIFY
                     value: true
                   - key: chartBranch
-                    value: sbxelopment
+                    value: feature/BIAPL-15286-EKS
                   - key: cucumberOpts
                     value: "--tags @DEV --tags ~@vefsdocdownload"
       zzzz-alphatical-override-additionalSlaves: |
@@ -84,7 +84,7 @@ spec:
         pluginOverrideMethod: merge
     jenkins_framework_library: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
     github_apiurl: "https://github.ec.va.gov/api/v3"
-    jenkins_framework_library_branch: sbxelopment
+    jenkins_framework_library_branch: development
     jenkins_framework_library_owner: EPMO
     jenkins_framework_library_repo: "bip-jenkins-lib"
     jenkins_project_repo_owner: EPMO
@@ -311,7 +311,7 @@ spec:
                       <trust class="org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait$TrustPermission"/>
                     </org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
                     <jenkins.scm.impl.trait.WildcardSCMHeadFilterTrait plugin="scm-api@2.6.3">
-                      <includes>master PR-* sbxelopment release-* AF-1435</includes>
+                      <includes>master PR-* development release-* AF-1435</includes>
                       <excludes></excludes>
                     </jenkins.scm.impl.trait.WildcardSCMHeadFilterTrait>
                   </traits>
@@ -394,7 +394,7 @@ spec:
                       <trust class="org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait$TrustPermission"/>
                     </org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
                     <jenkins.scm.impl.trait.WildcardSCMHeadFilterTrait plugin="scm-api@2.6.3">
-                      <includes>master PR-* sbxelopment release-*</includes>
+                      <includes>master PR-* development release-*</includes>
                       <excludes></excludes>
                     </jenkins.scm.impl.trait.WildcardSCMHeadFilterTrait>
                   </traits>
@@ -470,7 +470,7 @@ spec:
                       <trust class="org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait$TrustPermission"/>
                     </org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
                     <jenkins.scm.impl.trait.WildcardSCMHeadFilterTrait plugin="scm-api@2.6.3">
-                      <includes>master PR-* sbxelopment release-*</includes>
+                      <includes>master PR-* development release-*</includes>
                       <excludes></excludes>
                     </jenkins.scm.impl.trait.WildcardSCMHeadFilterTrait>
                   </traits>
@@ -547,7 +547,7 @@ spec:
                       <trust class="org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait$TrustPermission"/>
                     </org.jenkinsci.plugins.github__branch__source.ForkPullRequestDiscoveryTrait>
                     <jenkins.scm.impl.trait.WildcardSCMHeadFilterTrait plugin="scm-api@2.6.3">
-                      <includes>master PR-* sbxelopment release-*</includes>
+                      <includes>master PR-* development release-*</includes>
                       <excludes></excludes>
                     </jenkins.scm.impl.trait.WildcardSCMHeadFilterTrait>
                   </traits>
