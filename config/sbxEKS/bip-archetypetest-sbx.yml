@@ -6,6 +6,15 @@ bip.framework.security:
     enabled: true
     allVotersAbstainGrantAccess: false
     
+spring:
+  kafka:
+    properties:
+      ssl:
+        keystore:
+          location: /kafka/keystore/keystore
+        truststore:
+          location: /kafka/truststore/truststore
+    
 bip:
   framework:
     localstack:
