@@ -1,0 +1,29 @@
+spring:
+  cache:
+    type: simple
+  kafka:
+    consumer:
+      enabled: false    
+    streams:
+      enabled: false
+      properties:
+        bootstrap.servers: SSL://kafka.sbx.bip.va.gov:443
+
+bip:
+  framework:
+    security:
+      opa:
+        enabled: true
+        allVotersAbstainGrantAccess: false
+      actuator:
+        username: bluebuilder
+        password: 2GiuQ1LKWS5y
+    localstack:
+      enabled: false
+    aws:
+      sns:
+        enabled: false
+      sqs:
+        enabled: false
+      s3:
+        enabled: false

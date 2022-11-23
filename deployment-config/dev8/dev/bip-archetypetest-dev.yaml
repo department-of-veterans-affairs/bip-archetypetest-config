@@ -25,6 +25,7 @@ spec:
   # These are specific to the chart being installed
   ########################################################################
   values:
+    # kubernetes ingress configuration
     ingress:
       enabled: true
       hosts:
@@ -37,6 +38,38 @@ spec:
       - secretName: bip-archetypetest-dev-tls
         hosts:
         - bip-archetypetest.archetypetest-dev.dev8.bip.va.gov
+    # kong ingress configuration
+    kong:
+      ingress:
+        anonymous:
+          enabled: false
+          hosts:
+            - name: bip-archetypetest.archetypetest-dev.apps.dev8.bip.va.gov
+              paths:
+                - /
+          annotations:
+            kubernetes.io/ingress.class: kong-internal
+            kubernetes.io/tls-acme: "true"
+            plugins.konghq.com: archetypetest-dev.bip-archetypetest-dev.acl, archetypetest-dev.bip-archetypetest-dev.jwt.anonymous
+          tls:
+            - secretName: bip-archetypetest-dev-tls
+              hosts:
+                - bip-archetypetest.archetypetest-dev.apps.dev8.bip.va.gov
+        secured:
+          enabled: false
+          hosts:
+            - name: bip-archetypetest.archetypetest-dev.apps.dev8.bip.va.gov
+              paths:
+                - /api/v.+/resourcename
+          annotations:
+            kubernetes.io/ingress.class: kong-internal
+            kubernetes.io/tls-acme: "true"
+            plugins.konghq.com: archetypetest-dev.bip-archetypetest-dev.acl, archetypetest-dev.bip-archetypetest-dev.jwt
+            configuration.konghq.com: bip-archetypetest-dev-kongingress
+          tls:
+            - secretName: bip-archetypetest-dev-tls
+              hosts:
+                - bip-archetypetest.archetypetest-dev.apps.dev8.bip.va.gov
     image:
       repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest
       tag: development-d6748c5d98833c2ef4be001436c6d672aedd4bd3

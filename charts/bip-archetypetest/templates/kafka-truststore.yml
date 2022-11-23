@@ -11,4 +11,3 @@ metadata:
 binaryData:
   truststore: |-
 {{ .Files.Get .Values.kafka.truststore | b64enc | indent 4 }}
-{{- end }}
