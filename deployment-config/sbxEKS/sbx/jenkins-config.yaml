@@ -16,7 +16,7 @@ spec:
   ########################################################################
   chart:
     git: ssh://git@github.ec.va.gov/EPMO/bip-archetypetest-config #Repository where the pull the chart from
-    ref: feature/BIAPL-15286-EKS  #Branch or tag to retreive the chart from
+    ref: development  #Branch or tag to retreive the chart from
     path: charts/jenkins-config #Path to the chart directory in the repository
   values:
     helmVersion: v3
@@ -52,7 +52,7 @@ spec:
                   - key: GIT_SSL_NO_VERIFY
                     value: true
                   - key: chartBranch
-                    value: feature/BIAPL-15286-EKS
+                    value: development
                   - key: cucumberOpts
                     value: "--tags @DEV --tags ~@vefsdocdownload"
 #      zzzz-alphatical-override-additionalSlaves: |
