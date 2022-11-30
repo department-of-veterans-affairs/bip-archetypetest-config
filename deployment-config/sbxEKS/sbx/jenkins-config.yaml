@@ -23,27 +23,27 @@ spec:
     cluster: sbx
     jenkinsConfig:
       globalLibrary: |
-        unclassified:
-          globalLibraries:
-            libraries:
-            - name: "jenkins-library"
-              defaultVersion: "development"
-              implicit: true
-              retriever:
-                modernSCM:
-                  scm:
-                    git:
-                      credentialsId: "github"
-                      remote: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
-                      traits:
-                      - "gitBranchDiscovery"
-          remoteBuildConfiguration:
-              remoteSites:
-              - address: "https://jenkins-archetypetest-sbx.sbx8.bip.va.gov"
-                auth2:
-                  CredentialsAuth:
-                    credentials: "docker-registry"
-                displayName: "archetypetest-sbx"
+#        unclassified:
+#          globalLibraries:
+#            libraries:
+#            - name: "jenkins-library"
+#              defaultVersion: "development"
+#              implicit: true
+#              retriever:
+#                modernSCM:
+#                  scm:
+#                    git:
+#                      credentialsId: "github"
+#                      remote: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
+#                      traits:
+#                      - "gitBranchDiscovery"
+#          remoteBuildConfiguration:
+#              remoteSites:
+#              - address: "https://jenkins-archetypetest-sbx.sbx8.bip.va.gov"
+#                auth2:
+#                  CredentialsAuth:
+#                    credentials: "docker-registry"
+#                displayName: "archetypetest-sbx"
       envVars: |
         jenkins:
           globalNodeProperties:
@@ -55,33 +55,33 @@ spec:
                     value: feature/BIAPL-15286-EKS
                   - key: cucumberOpts
                     value: "--tags @DEV --tags ~@vefsdocdownload"
-      zzzz-alphatical-override-additionalSlaves: |
-        jenkins:
-          clouds:
-            - kubernetes:
-                name: kubernetes
-                serverUrl: "https://kubernetes.default"
-                namespace: "archetypetest-sbx"
-                jenkinsUrl: "http://sbx8-archetypetest-jenkins:8080"
-                jenkinsTunnel: "sbx8-archetypetest-jenkins-agent:50000"
-                templates:
-                  - name: "fortify-sca"
-                    label: "fortify-sca"
-                    nodeUsageMode: EXCLUSIVE
-                    inheritFrom: "default"
-                    containers:
-                      - name: jnlp
-                        image: "container-registry.sbx8.bip.va.gov/ci/jenkins-slave-fortify:20.1.0-2020.3.0"
-                        alwaysPullImage: true
-                        workingDir: "/home/jenkins"
-                        command: ""
-                        args: "^${computer.jnlpmac} ^${computer.name}"
+#      zzzz-alphatical-override-additionalSlaves: |
+#        jenkins:
+#          clouds:
+#            - kubernetes:
+#                name: kubernetes
+#                serverUrl: "https://kubernetes.default"
+#                namespace: "archetypetest-sbx"
+#                jenkinsUrl: "http://sbx8-archetypetest-jenkins:8080"
+#                jenkinsTunnel: "sbx8-archetypetest-jenkins-agent:50000"
+#                templates:
+#                  - name: "fortify-sca"
+#                    label: "fortify-sca"
+#                    nodeUsageMode: EXCLUSIVE
+#                    inheritFrom: "default"
+#                    containers:
+#                      - name: jnlp
+#                        image: "container-registry.sbx8.bip.va.gov/ci/jenkins-slave-fortify:20.1.0-2020.3.0"
+#                        alwaysPullImage: true
+#                        workingDir: "/home/jenkins"
+#                        command: ""
+#                        args: "^${computer.jnlpmac} ^${computer.name}"
     jenkinsPlugins:
       plugins.txt: |
-        fortify:21.2.37
-        dependency-check-jenkins-plugin:5.1.2
+#        fortify:21.2.37
+#        dependency-check-jenkins-plugin:5.1.2
       pluginProperties.yaml: |
-        pluginOverrideMethod: merge
+#        pluginOverrideMethod: merge
     jenkins_framework_library: "https://github.ec.va.gov/EPMO/bip-jenkins-lib.git"
     github_apiurl: "https://github.ec.va.gov/api/v3"
     jenkins_framework_library_branch: development
@@ -534,7 +534,7 @@ spec:
                   <credentialsId>github</credentialsId>
                   <repoOwner>EPMO</repoOwner>
                   <repository>bip-archetypetest</repository>
-                  <repositoryUrl>https://github.ec.va.gov/EPMO/bip-archetypetest-config</repositoryUrl>
+                  <repositoryUrl>https://github.ec.va.gov/EPMO/bip-archetypetest</repositoryUrl>
                   <traits>
                     <org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
                       <strategyId>1</strategyId>
