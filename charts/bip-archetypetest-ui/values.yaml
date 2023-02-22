@@ -51,3 +51,9 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# ui.enabled
+#   Set to false when UI app deployment is not ready or not intended
+#   Tenant would then switch to true when UI app is ready to deploy
+ui:
+  enabled: false

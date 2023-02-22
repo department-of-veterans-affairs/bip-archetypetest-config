@@ -1,0 +1,62 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease #Custom Object type for use with Flux Helm Operator
+metadata:
+  name: bip-archetype-ui-react-dev #Name of the object
+  namespace: blue-dev #Namespace in which to install the helmrelease object
+  annotations:
+    flux.weave.works/automated: "true" #Set this to true to automate installation/updating of this release when the Chart of this object changes
+    flux.weave.works/tag.chart-image: glob:dev-*
+spec:
+  helmVersion: v3
+  releaseName: bip-archetype-ui-react-dev #Name of the Helm release
+  targetNamespace: archetypetest-dev #Namespace  in which to install the chart
+
+  ########################################################################
+  # Values section defines the location of the chart
+  # This example pulls the chart from a Git repository
+  ########################################################################
+  chart:
+    git: ssh://git@github.ec.va.gov/EPMO/bip-archetypetest-config #Repository where the pull the chart from
+    ref: development #Branch or tag to retreive the chart from
+    path: charts/bip-archetype-ui-react #Path to the chart directory in the repository
+
+  ########################################################################
+  # Values section defines the parameters to the chart
+  # These are specific to the chart being installed
+  ########################################################################
+  values:
+    ui:
+      enabled: true
+    ingress:
+      enabled: true
+      hosts:
+      - bip-archetype-ui-react-dev.dev8.bip.va.gov
+      annotations:
+        # kubernetes.io/ingress.class: nginx
+        kubernetes.io/tls-acme: "true"
+      path: /
+      tls:
+      - secretName: bip-archetype-ui-react-dev
+        hosts:
+        - bip-archetype-ui-react-dev.dev8.bip.va.gov
+    image:
+      repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetype-ui-react
+      tag: dev-11fe1e88454b4d7f9b7ee7e4e9f902fede533de5
+      pullPolicy: Always
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 50Mi
+    certs:
+      import: true
+    react:
+      bssUrl: https://bss-dev.dev8.bip.va.gov/auth/
+      brpUrl: https://blue.dev8.bip.va.gov
+      archetypetestUrl: https://archetypetest-dev.dev8.bip.va.gov
+      realm: idp
+      clientId: bip-archetypetest-ui-dev
+      jwtDomains: https://blue.dev8.bip.va.gov,https://archetypetest-dev.dev8.bip.va.gov

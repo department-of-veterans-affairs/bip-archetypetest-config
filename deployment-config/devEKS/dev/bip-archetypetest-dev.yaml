@@ -1,0 +1,126 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease #Custom Object type for use with Flux Helm Operator
+metadata:
+  name: bip-archetypetest-dev #Name of the object
+  namespace: archetypetest-dev #Namespace in which to install the helmrelease object
+  annotations:
+    flux.weave.works/automated: "true" #Set this to true to automate installation/updating of this release when the Chart of this object changes
+    flux.weave.works/tag.chart-image: glob:dev-*
+spec:
+  helmVersion: v3
+  releaseName: bip-archetypetest-dev #Name of the Helm release
+  targetNamespace: archetypetest-dev #Namespace  in which to install the chart
+  forceUpgrade: true # Force resource update through delete/recreate, allows recovery from a failed state
+  timeout: 500
+  ########################################################################
+  # Values section defines the location of the chart
+  # This example pulls the chart from a Git repository
+  ########################################################################
+  chart:
+    git: ssh://git@github.ec.va.gov/EPMO/bip-archetypetest-config #Repository where the pull the chart from
+    ref: development #Branch or tag to retreive the chart from
+    path: charts/bip-archetypetest #Path to the chart directory in the repository
+
+  ########################################################################
+  # Values section defines the parameters to the chart
+  # These are specific to the chart being installed
+  ########################################################################
+  values:
+    # kubernetes ingress configuration
+    ingress:
+      enabled: true
+      hosts:
+      - archetypetest.dev.bip.va.gov
+      - archetypetest.dev8.bip.va.gov
+      annotations:
+      path: /
+      tls:
+      - secretName: bip-archetypetest-dev-tls
+        hosts:
+        - archetypetest.dev.bip.va.gov
+        - archetypetest.dev8.bip.va.gov
+    # kong ingress configuration
+    kong:
+      ingress:
+        anonymous:
+          enabled: false
+          hosts:
+            - name: bip-archetypetest.archetypetest-dev.apps.dev.bip.va.gov
+              paths:
+                - /
+          annotations:
+            kubernetes.io/ingress.class: kong-internal
+            kubernetes.io/tls-acme: "true"
+            plugins.konghq.com: archetypetest-dev.bip-archetypetest-dev.acl, archetypetest-dev.bip-archetypetest-dev.jwt.anonymous
+          tls:
+            - secretName: bip-archetypetest-dev-tls
+              hosts:
+                - bip-archetypetest.archetypetest-dev.apps.dev.bip.va.gov
+        secured:
+          enabled: false
+          hosts:
+          - name: bip-archetypetest.archetypetest-dev.apps.dev.bip.va.gov
+            paths:
+            - /api/v.+/persons
+            - /api/v.+/sns
+            - /api/v.+/s3
+            - /api/v.+/consul
+            - /api/v.+/sqs
+          annotations:
+            kubernetes.io/ingress.class: kong-internal
+            kubernetes.io/tls-acme: "true"
+            plugins.konghq.com: archetypetest-dev.bip-archetypetest-dev.acl, archetypetest-dev.bip-archetypetest-dev.jwt
+            configuration.konghq.com: bip-archetypetest-dev-kongingress
+          tls:
+            - secretName: bip-archetypetest-dev-tls
+              hosts:
+                - bip-archetypetest.archetypetest-dev.apps.dev.bip.va.gov
+    image:
+      repository: container-registry.dev.bip.va.gov/archetypetest/bip-archetypetest
+      tag: dev-d85ebfb0e5fd01813e24fec4dbc049348a25a3e5
+      pullPolicy: Always
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 200m
+        memory: 1Gi
+    consul:
+      enabled: true
+      config:
+        enabled: true
+        prefix: config/archetypetest
+      discovery:
+        enabled: false
+        register: false
+      secret: consul-acl-token
+      scheme: http
+    vault:
+      enabled: true
+      host: vault.vault
+      kubernetes:
+        role: archetypetest-read
+      kv:
+        applicationName: archetypetest/bip-archetypetest
+      port: 8200
+      scheme: http
+    spring:
+      profiles: dev
+    opa:
+      enabled: true
+      rego: api_authz_jwt_token.rego
+    aws:
+      accountID: "261727212250"
+      irsaRole: "project-bip-archetypetest-dev-role"
+    certs:
+      import: true
+    java:
+      toolOptions: -XX:+PrintFlagsFinal -XX:MaxRAMPercentage=70.0 -Djavax.net.ssl.trustStorePassword=changeit
+        -Djavax.net.ssl.trustStore=/var/run/secrets/java.io/keystores/truststore.jks
+    deployment:
+      labels:
+        auto_instrumented_application_platform: openjdk-rhel
+        auto_instrumented_application_name: archetypetest-dev-2295
+

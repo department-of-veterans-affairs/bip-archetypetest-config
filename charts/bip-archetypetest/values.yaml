@@ -34,6 +34,38 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+  
+kong:
+  ingress:
+    anonymous:
+      enabled: false
+      hosts:
+      #- name: bip-reference.local
+      #  paths: 
+      #  - /
+      annotations: {}
+      # kubernetes.io/ingress.class: kong-internal
+      # kubernetes.io/tls-acme: "true"
+      # plugins.konghq.com: bip-archetypetest.archTest-dev.acl, bip-archetypetest.archTest-dev.jwt.anonymous
+      tls:
+      #- secretName: chart-example-tls
+      #  hosts:
+      #  - chart-example.local
+    secured:
+      enabled: false
+      hosts:
+      #- name: bip-reference.local
+      #  paths:
+      #  - /api/v.+/persons
+      annotations: {}
+      # kubernetes.io/ingress.class: kong-internal
+      # kubernetes.io/tls-acme: "true"
+      # plugins.konghq.com: bip-archetypetest.archTest-dev.acl, bip-archetypetest.archTest-dev.jwt
+      # configuration.konghq.com: bip-archetypetest-dev-kongingress
+      tls: []
+      #- secretName: chart-example-tls
+      #  hosts:
+      #  - chart-example.local
 
 route:
   enabled: false
@@ -162,13 +194,17 @@ livenessProbe: |
   httpGet:
     path: /actuator/health
     port: http
+    scheme: HTTP
   initialDelaySeconds: 120
-  periodSeconds: 5
-  failureThreshold: 6
+  periodSeconds: 10
+  failureThreshold: 13
+  timeoutSeconds: 5
 readinessProbe: |
   httpGet:
     path: /actuator/health
     port: http
+    scheme: HTTP
   initialDelaySeconds: 120
-  periodSeconds: 5
-  failureThreshold: 6
+  periodSeconds: 10
+  failureThreshold: 13
+  timeoutSeconds: 5

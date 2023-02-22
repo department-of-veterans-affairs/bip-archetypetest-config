@@ -11,6 +11,8 @@ bip-archetypetest:
     - http://localhost:3000
 spring:
   kafka:
+    consumer:
+      enabled: false
     properties:
       ssl:
         keystore:

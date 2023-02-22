@@ -25,6 +25,7 @@ spec:
   # These are specific to the chart being installed
   ########################################################################
   values:
+    # kubernetes ingress configuration
     ingress:
       enabled: true
       hosts:
@@ -37,6 +38,38 @@ spec:
       - secretName: bip-archetypetest-preprod-tls
         hosts:
           - bip-archetypetest.archetypetest-preprod.stage8.bip.va.gov
+    # kong ingress configuration
+    kong:
+      ingress:
+        anonymous:
+          enabled: false
+          hosts:
+            - name: bip-archetypetest.archetypetest-preprod.apps.stage8.bip.va.gov
+              paths:
+                - /
+          annotations:
+            kubernetes.io/ingress.class: kong-internal
+            kubernetes.io/tls-acme: "true"
+            plugins.konghq.com: archetypetest-preprod.bip-archetypetest-preprod.acl, archetypetest-preprod.bip-archetypetest-preprod.jwt.anonymous
+          tls:
+            - secretName: bip-archetypetest-preprod-tls
+              hosts:
+                - bip-archetypetest.archetypetest-preprod.apps.stage8.bip.va.gov
+        secured:
+          enabled: false
+          hosts:
+            - name: bip-archetypetest.archetypetest-preprod.apps.stage8.bip.va.gov
+              paths:
+                - /api/v.+/resourcename
+          annotations:
+            kubernetes.io/ingress.class: kong-internal
+            kubernetes.io/tls-acme: "true"
+            plugins.konghq.com: archetypetest-preprod.bip-archetypetest-preprod.acl, archetypetest-preprod.bip-archetypetest-preprod.jwt
+            configuration.konghq.com: bip-archetypetest-preprod-kongingress
+          tls:
+            - secretName: bip-archetypetest-preprod-tls
+              hosts:
+                - bip-archetypetest.archetypetest-preprod.apps.stage8.bip.va.gov
     image:
       repository: container-registry.stage8.bip.va.gov/archetypetest/bip-archetypetest
       tag: 0.0.2-SNAPSHOT

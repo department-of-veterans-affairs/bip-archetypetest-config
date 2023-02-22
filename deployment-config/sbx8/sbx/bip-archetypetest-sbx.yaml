@@ -25,6 +25,7 @@ spec:
   # These are specific to the chart being installed
   ########################################################################
   values:
+    # kubernetes ingress configuration
     ingress:
       enabled: true
       hosts:
@@ -37,6 +38,39 @@ spec:
       - secretName: bip-archetypetest-sbx-tls
         hosts:
           - bip-archetypetest.archetypetest-sbx.sbx8.bip.va.gov
+    # kong ingress configuration
+    kong:
+      ingress:
+        anonymous:
+          enabled: false
+          hosts:
+            - name: bip-archetypetest.archetypetest-sbx.apps.sbx8.bip.va.gov
+              paths:
+                - /
+          annotations:
+            kubernetes.io/ingress.class: kong-internal
+            kubernetes.io/tls-acme: "true"
+            plugins.konghq.com: archetypetest-sbx.bip-archetypetest-sbx.acl, archetypetest-sbx.bip-archetypetest-sbx.jwt.anonymous
+          tls:
+            - secretName: bip-archetypetest-sbx-tls
+              hosts:
+                - bip-archetypetest.archetypetest-sbx.apps.sbx8.bip.va.gov
+        secured:
+          enabled: false
+          hosts:
+            - name: bip-archetypetest.archetypetest-sbx.apps.sbx8.bip.va.gov
+              paths:
+                - /api/v.+/resourcename
+          annotations:
+            kubernetes.io/ingress.class: kong-internal
+            kubernetes.io/tls-acme: "true"
+            plugins.konghq.com: archetypetest-sbx.bip-archetypetest-sbx.acl, archetypetest-sbx.bip-archetypetest-sbx.jwt
+            configuration.konghq.com: bip-archetypetest-sbx-kongingress
+          tls:
+            - secretName: bip-archetypetest-sbx-tls
+              hosts:
+                - bip-archetypetest.archetypetest-sbx.apps.sbx8.bip.va.gov
+
     image:
       repository: container-registry.sbx8.bip.va.gov/archetypetest/bip-archetypetest
       tag: 0.0.2-SNAPSHOT
@@ -63,4 +97,4 @@ spec:
       port: 8200
       scheme: http
     spring:
-      profiles: dev
+      profiles: sbx
