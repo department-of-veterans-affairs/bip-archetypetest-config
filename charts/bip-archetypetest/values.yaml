@@ -76,7 +76,7 @@ resources:
     cpu: 1000m
     memory: 500Mi
   requests:
-    cpu: 250m
+    cpu: 10m
     memory: 500Mi
 
 opaResources:
@@ -84,7 +84,7 @@ opaResources:
     cpu: 250m
     memory: 250Mi
   requests:
-    cpu: 250m
+    cpu: 10m
     memory: 250Mi
 
 java:
