@@ -1,0 +1,76 @@
+{{- if (.Values.ui.enabled) -}}
+{{- $fullName := include "bip-archetypetestconfig-ui.fullname" . -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "bip-archetypetestconfig-ui.fullname" . }}
+  labels:
+    app: {{ template "bip-archetypetestconfig-ui.name" . }}
+    chart: {{ template "bip-archetypetestconfig-ui.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    flux.weave.works/automated: "true" #Set this to true to automate installation/updating of this release when the Chart of this object changes
+    flux.weave.works/tag.app: glob:dev-*
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "bip-archetypetestconfig-ui.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "bip-archetypetestconfig-ui.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      {{- if .Values.imagePullSecret }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- if and .Values.image.name (.Values.image.repositoryHost) }}
+          image: "{{ .Values.image.repositoryHost }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          {{- else }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          {{- end }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.sleepContainer }}
+          command: ["/bin/sh"]
+          args: ["-c", "while true; do echo hello; sleep 1000;done"]
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          env:
+            - name: REACT_APP_BSS_URL
+              value: {{ .Values.react.bssUrl }}
+            - name: REACT_APP_ARCHETYPETESTCONFIG_URL
+              value: {{ .Values.react.originUrl }}
+            - name: REACT_APP_BRP_URL
+              value: {{ .Values.react.brpUrl }}
+            - name: REACT_APP_REALM
+              value: {{ .Values.react.realm }}
+            - name: REACT_APP_CLIENTID
+              value: {{ .Values.react.clientId }}
+            - name: REACT_APP_JWT_DOMAINS
+              value: {{ .Values.react.jwtDomains }}
+            - name: REACT_APP_REMOTE_LOG_ENABLED
+              value: {{ .Values.react.remoteLogEnabled | quote  }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+  {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+{{- end }}

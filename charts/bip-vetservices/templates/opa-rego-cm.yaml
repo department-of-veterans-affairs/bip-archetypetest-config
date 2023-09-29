@@ -1,0 +1,15 @@
+{{- if (.Values.opa.enabled) -}}
+{{- $fullName := include "bip-archetypetestconfig.fullname" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $fullName }}-opa-rego
+  labels:
+    app: {{ template "bip-archetypetestconfig.name" . }}
+    chart: {{ template "bip-archetypetestconfig.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+binaryData:
+  rego: |-
+{{ .Files.Get .Values.opa.rego | b64enc | indent 4 }}
+{{- end }}

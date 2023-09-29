@@ -1,0 +1,45 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease #Custom Object type for use with Flux Helm Operator
+metadata:
+  name: bip-archetypetestconfig #Name of the object
+  namespace: archetypetest-dev #Namespace in which to install the Chart
+  annotations:
+    flux.weave.works/automated: "true" #Set this to true to automate installation/updating of this release when the Chart of this object changes
+spec:
+  releaseName: bip-archetypetestconfig-dev #Name of the Helm release
+
+  ########################################################################
+  # Values section defines the location of the chart
+  # This example pulls the chart from a Git repository
+  ########################################################################
+  chart:
+    git: ssh://git@github.com/department-of-veterans-affairs/ocp-external-config #Repository where the pull the chart from
+    ref: promotion #Branch or tag to retrieve the chart from
+    path: charts/bip-archetypetestconfig #Path to the chart directory in the repository
+
+  ########################################################################
+  # Values section defines the parameters to the chart
+  # These are specific to the chart being installed
+  ########################################################################
+  values:
+    image:
+      repository: 172.30.1.1:5000/archetypetest/bip-archetypetestconfig
+      tag: latest
+    vault:
+      enabled: false
+      failFast: false
+      consul:
+        enabled: false
+      service:
+        configMap: null
+    consul:
+        enabled: false
+        config:
+          enabled: false
+        discovery:
+          enabled: false
+          register: false
+        service:
+          configMap: null
+          secret: null

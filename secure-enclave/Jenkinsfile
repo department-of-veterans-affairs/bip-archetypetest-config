@@ -1,0 +1,14 @@
+ftiTerraformPipeline {
+
+    //Git credentials for the configuration repository
+    configGitCredentials = "github"
+    //Git credentials used to terraform modules pulled from github.com/department-of-veterans-affairs/bip-fti-infrastructure
+    terraformGitCredentials = "github-dva"
+
+    //Map of branch name to the directory of the terraform module
+    branchToTerraformDirectoryMap = [
+            'development' : ['secure-enclave/dev-vpc/dev', 'secure-enclave/dev-vpc/test', 'secure-enclave/dev-vpc/int'],
+            'staging' : ['secure-enclave/stage-vpc/ivv', 'secure-enclave/stage-vpc/uat', 'secure-enclave/stage-vpc/preprod'],
+            'master': ['secure-enclave/prod-vpc/perf', 'secure-enclave/prod-vpc/prodtest', 'secure-enclave/prod-vpc/prod']
+    ]
+}

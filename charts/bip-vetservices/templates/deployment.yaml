@@ -1,0 +1,196 @@
+{{- $fullName := include "bip-archetypetestconfig.fullname" . -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "bip-archetypetestconfig.fullname" . }}
+  labels:
+    app: {{ template "bip-archetypetestconfig.name" . }}
+    chart: {{ template "bip-archetypetestconfig.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "bip-archetypetestconfig.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "bip-archetypetestconfig.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      {{- if .Values.imagePullSecret }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.sleepContainer }}
+          command: ["/bin/sh"]
+          args: ["-c", "while true; do echo hello; sleep 1000;done"]
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            {{- if kindIs "invalid" .Values.consul.enabled | not }}
+            - name: spring.cloud.consul.enabled
+              value: {{ .Values.consul.enabled | quote }}
+            {{- end }}
+            {{- if kindIs "invalid" .Values.consul.config.enabled | not }}
+            - name: spring.cloud.consul.config.enabled
+              value: {{ .Values.consul.config.enabled | quote }}
+            {{- end }}
+            {{- if kindIs "invalid" .Values.consul.config.failFast | not }}
+            - name: spring.cloud.consul.config.failFast
+              value: {{ .Values.consul.config.failFast | quote }}
+            {{- end }}
+            {{- if .Values.consul.config.format }}
+            - name: spring.cloud.consul.config.format
+              value: {{ .Values.consul.config.format | quote }}
+            {{- end }}
+            {{- if kindIs "invalid" .Values.consul.discovery.enabled | not }}
+            - name: spring.cloud.consul.discovery.enabled
+              value: {{ .Values.consul.discovery.enabled | quote }}
+            {{- end }}
+            {{- if .Values.consul.discovery.register }}
+            - name: spring.cloud.consul.discovery.register
+              value: {{ .Values.consul.discovery.register | quote }}
+            {{- end }}
+            {{- if kindIs "invalid" .Values.vault.enabled | not }}
+            - name: spring.cloud.vault.enabled
+              value: {{ .Values.vault.enabled | quote }}
+            {{- end }}
+            {{- if .Values.vault.failFast }}
+            - name: spring.cloud.vault.failFast
+              value: {{ .Values.vault.failFast | quote }}
+            {{- end }}
+            {{- if kindIs "invalid" .Values.vault.consulBackendEnabled | not }}
+            - name: spring.cloud.vault.consul.enabled
+              value: {{ .Values.vault.consulBackendEnabled | quote }}
+            {{- else }}
+            - name: spring.cloud.consul.config.acl-token
+              valueFrom:
+                secretKeyRef:
+                    name: {{ .Values.consul.secret | default $fullName }}
+                    key: consul-acl-token
+            - name: spring.cloud.consul.discovery.acl-token
+              valueFrom:
+                secretKeyRef:
+                    name: {{ .Values.consul.secret | default $fullName }}
+                    key: consul-acl-token
+            {{- end }}
+            {{- if .Values.vault.kv.applicationName }}
+            - name: spring.cloud.vault.kv.application-name
+              value: {{ .Values.vault.kv.applicationName }}
+            {{- end }}
+            {{- if .Values.spring.profiles }}
+            - name: spring.profiles.active
+              value: {{ .Values.spring.profiles }}
+            {{- end }}
+            {{- if .Values.consul.config.prefix }}
+            - name: spring.cloud.consul.config.prefix
+              value: {{ .Values.consul.config.prefix }}
+            {{- end }}
+            - name: spring.cloud.consul.host
+            {{- if .Values.consul.host }}
+              value: {{ quote .Values.consul.host }}
+            {{- else }}
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.hostIP
+            {{- end }}
+            - name: spring.cloud.consul.port
+              value: {{quote .Values.consul.port }}
+            - name: spring.cloud.consul.scheme
+              value: {{quote .Values.consul.scheme }}
+            - name: spring.cloud.vault.host
+              value: {{quote .Values.vault.host }}
+            - name: spring.cloud.vault.port
+              value: {{quote .Values.vault.port }}
+            - name: spring.cloud.vault.scheme
+              value: {{quote .Values.vault.scheme }}
+            {{- if .Values.vault.authentication }}
+            - name: spring.cloud.vault.authentication
+              value: {{ .Values.vault.authentication }}
+            {{- end }}
+            {{- if .Values.vault.kubernetes }}
+            - name: spring.cloud.vault.kubernetes.role
+              value: {{ quote .Values.vault.kubernetes.role }}
+            - name: spring.cloud.vault.kubernetes.service-account-token-file
+              value: {{ quote .Values.vault.kubernetes.tokenFile }}
+            {{- end }}
+            {{- if .Values.java.toolOptions }}
+            - name: JAVA_TOOL_OPTIONS
+              value: {{ quote .Values.java.toolOptions }}
+            {{- end }}
+            - name: bip.framework.security.opa.urls
+              value: http://opa-{{ template "bip-archetypetestconfig.fullname" . }}:{{ .Values.opaService.port }}/v1/data/bip/http/authz/admin,http://opa-{{ template "bip-archetypetestconfig.fullname" . }}:{{ .Values.opaService.port }}/v1/data/bip/http/authz/allow
+          {{- if not .Values.sleepContainer }}
+          livenessProbe:
+            {{- with .Values.livenessProbe }}
+            {{- tpl . $ | nindent 12 }}
+            {{- end}}
+          readinessProbe:
+            {{- with .Values.readinessProbe }}
+            {{- tpl . $ | nindent 12 }}
+            {{- end}}
+          {{- end }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- if .Values.certs.import }}
+          volumeMounts:
+            - mountPath: /var/run/secrets/java.io/keystores
+              name: keystore-volume
+            - mountPath: /tmp/vacerts
+              name: va-certs
+      initContainers:
+        - name: pem-to-truststore
+          image: registry.access.redhat.com/openjdk/openjdk-11-rhel7:1.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: va_certs
+              value: /tmp/vacerts
+            - name: truststore_jks
+              value: /var/run/secrets/java.io/keystores/truststore.jks
+          command:
+            - /bin/bash
+          args:
+            - -c
+            - echo 'Importing following va certificates from ConfigMap';
+              cd $va_certs; pwd; ls; for file in *; do keytool -import -noprompt -keystore $truststore_jks -file
+              $file -storepass changeit -alias $file; done; echo 'Importing certs from JAVA_HOME trust store';
+              keytool -importkeystore -srckeystore $JAVA_HOME/lib/security/cacerts -srcstorepass
+              changeit -destkeystore $truststore_jks -deststorepass changeit
+          volumeMounts:
+            - mountPath: /var/run/secrets/java.io/keystores
+              name: keystore-volume
+            - mountPath: /tmp/vacerts
+              name: va-certs
+      volumes:
+      - emptyDir: {}
+        name: keystore-volume
+      - name: va-certs
+        configMap:
+          name: {{ $fullName }}-va-certs
+        {{- end }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- if ((.Values.aws).irsaRole) }}
+      serviceAccountName: {{ include "bip-archetypetestconfig.fullname" . }}
+    {{- end }}

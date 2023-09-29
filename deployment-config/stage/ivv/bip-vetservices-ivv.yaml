@@ -1,0 +1,99 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease #Custom Object type for use with Flux Helm Operator
+metadata:
+  name: bip-archetypetestconfig-ivv #Name of the object
+  namespace: archetypetest-ivv #Namespace in which to install the helmrelease object
+  annotations:
+    flux.weave.works/automated: "true" #Set this to true to automate installation/updating of this release when the Chart of this object changes
+    flux.weave.works/tag.chart-image: glob:ivv-* #Regex value flux will look for in image tag to auto update
+
+spec:
+  releaseName: bip-archetypetestconfig-ivv #Name of the Helm release
+  targetNamespace: archetypetest-ivv #Namespace in which to deploy chart
+
+  ########################################################################
+  # Values section defines the location of the chart
+  # This example pulls the chart from a Git repository
+  ########################################################################
+  chart:
+    git: https://github.com/department-of-veterans-affairs/bip-vetservices-archetypetest-config #Repository where the pull the chart from
+    ref: staging #Branch or tag to retrieve the chart from
+    path: charts/bip-archetypetestconfig #Path to the chart directory in the repository
+
+  ########################################################################
+  # Values section defines the parameters to the chart
+  # These are specific to the chart being installed
+  ########################################################################
+  values:
+    # kubernetes ingress configuration
+    ingress:
+      enabled: true
+      hosts:
+        - bip-archetypetestconfig-ivv.stage.bip.va.gov
+      annotations:
+      path: /
+      tls:
+        - hosts:
+          - bip-archetypetestconfig-ivv.stage.bip.va.gov
+    # kong ingress configuration
+    kong:
+      ingress:
+        anonymous:
+          enabled: false
+          hosts:
+            - name: bip-archetypetestconfig.archetypetest-ivv.apps.stage.bip.va.gov
+              paths:
+                - /
+          annotations:
+            kubernetes.io/ingress.class: kong-internal
+            kubernetes.io/tls-acme: "true"
+            plugins.konghq.com: archetypetest-ivv.bip-archetypetestconfig-ivv.acl, archetypetest-ivv.bip-archetypetestconfig-ivv.jwt.anonymous
+          tls:
+            - secretName: bip-archetypetestconfig-ivv-tls
+            - hosts:
+                - bip-archetypetestconfig.archetypetest-ivv.apps.stage.bip.va.gov
+        secured:
+          enabled: false
+          hosts:
+            - name: bip-archetypetestconfig.archetypetest-ivv.apps.stage.bip.va.gov
+              paths:
+                - /api/v.+/resourcename
+          annotations:
+            kubernetes.io/ingress.class: kong-internal
+            kubernetes.io/tls-acme: "true"
+            plugins.konghq.com: archetypetest-ivv.bip-archetypetestconfig-ivv.acl, archetypetest-ivv.bip-archetypetestconfig-ivv.jwt
+            configuration.konghq.com: bip-archetypetestconfig-ivv-kongingress
+          tls:
+            - secretName: bip-archetypetestconfig-ivv-tls
+            - hosts:
+                - bip-archetypetestconfig.archetypetest-ivv.apps.stage.bip.va.gov
+    image:
+      repository: container-registry.stage.bip.va.gov/archetypetest/bip-archetypetestconfig
+      tag: 0.0.2-SNAPSHOT
+    opaImage:
+      repository: container-registry.stage.bip.va.gov/openpolicyagent/opa
+    consul:
+      config:
+        enabled: true
+        prefix: config/archetypetest/ivv
+      discovery:
+        enabled: true
+        register: false
+      secret: consul-acl-token
+      scheme: http
+    vault:
+      enabled: true
+      host: vault.vault
+      kubernetes:
+        role: archetypetest-read
+      kv:
+        applicationName: archetypetest/bip-archetypetestconfig
+      port: 8200
+      scheme: http
+    spring:
+      profiles: dev
+    hpa:
+      enabled: false
+      cpu: 100
+      maxReplicas: 2

@@ -1,0 +1,72 @@
+{{- $fullName := include "bip-archetypetestconfig.fullname" . -}}
+---
+{{- if or .Values.kong.ingress.secured.enabled .Values.kong.ingress.anonymous.enabled }}
+# https://docs.konghq.com/hub/kong-inc/acl/
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: {{.Release.Namespace}}.{{$fullName}}.acl
+  labels:
+    app: {{ template "bip-archetypetestconfig.name" . }}
+    chart: {{ template "bip-archetypetestconfig.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+config:
+  whitelist: [{{.Release.Namespace}}.{{$fullName}}, 'admin', 'anonymous']
+plugin: acl
+
+{{- end }}
+---
+{{- if .Values.kong.ingress.secured.enabled }}
+# https://docs.konghq.com/hub/kong-inc/jwt/
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: {{ .Release.Namespace }}.{{ $fullName }}.jwt
+  labels:
+    app: {{ template "bip-archetypetestconfig.name" . }}
+    chart: {{ template "bip-archetypetestconfig.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+config:
+  uri_param_names:
+    - jwt
+  cookie_names:
+    - jwt
+  key_claim_name: iss
+  secret_is_base64: false
+  claims_to_verify:
+    - exp
+  run_on_preflight: true
+  header_names:
+    - Authorization
+plugin: jwt
+{{- end }}
+
+---
+{{- if .Values.kong.ingress.anonymous.enabled }}
+# https://docs.konghq.com/hub/kong-inc/jwt/
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: {{ .Release.Namespace }}.{{ $fullName }}.jwt.anonymous
+  labels:
+    app: {{ template "bip-archetypetestconfig.name" . }}
+    chart: {{ template "bip-archetypetestconfig.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+config:
+  uri_param_names:
+    - jwt
+  cookie_names:
+    - jwt
+  key_claim_name: iss
+  secret_is_base64: false
+  claims_to_verify:
+    - exp
+  anonymous: anonymous_user
+  run_on_preflight: true
+  header_names:
+    - Authorization
+plugin: jwt
+{{- end }}

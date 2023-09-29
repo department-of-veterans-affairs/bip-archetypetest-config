@@ -1,0 +1,12 @@
+foo:
+  bar: value
+bip.framework.security:
+  http:
+    cors:
+      enabled: true
+bip-archetypetestconfig:
+  origins: #This will be replaced with archetypetestconfigs but we have to obfuscate it to prevent overriding with artifact name
+    - https://bip-archetypetestconfig-ui-dev.dev.bip.va.gov
+    - https://bip-archetypetestconfig-dev.dev.bip.va.gov
+    - https://bip-archetypetestconfig.archetypetest-dev.dev.bip.va.gov
+    - http://localhost:3000

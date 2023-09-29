@@ -28,10 +28,10 @@ Using overrides makes the Jenkinsfile easier to maintain across multiple branche
 Supported Jenkins environment variables include:
 * __chartBranch__: Overrides `chartBranch` Jenkins parameter described above.
 * __cucumberOpts__: Overrides `cucubmerOpts` Jenkins parameter described above.
-* __MAVEN_REPOSITORY_URL__: Url of nexus repository to pull maven dependencies from. Defaults to https://nexus.dev8.bip.va.gov/repository if null.
+* __MAVEN_REPOSITORY_URL__: Url of nexus repository to pull maven dependencies from. Defaults to https://nexus.dev.bip.va.gov/repository if null.
 * __DOCKER_REGISTRY_URL__: Url of Docker repository where built Docker image is pushed to.
 This variable will likely be set on the Docker Kubernetes Pod template after intake by default.
-Defaults to https://nexus.dev8.bip.va.gov:5000 if null.
+Defaults to https://nexus.dev.bip.va.gov:5000 if null.
 
 See [Overriding Jenkins Environment Variables](../README.md#overriding-jenkins-environment-variables)
 
@@ -46,7 +46,7 @@ We have implemented the ability to define different deployment config value YAML
 Use `chartPath` to define the path to the directory where the value YAMLs are located within the config repository.
 These value files will be pulled from the `chartPath` within the `chartBranch` of your `chartRepository`.
 
-See [Overriding Deployment Config YAMLs](https://github.ec.va.gov/EPMO/bip-jenkins-lib/blob/development/docs/deploy-review-instance.md#overriding-deployment-config-yamls) documentation for implementation instructions.
+See [Overriding Deployment Config YAMLs](https://github.com/department-of-veterans-affairs/bip-jenkins-lib/blob/development/docs/deploy-review-instance.md#overriding-deployment-config-yamls) documentation for implementation instructions.
 
 Example using `testing-config` as the `chartPath`:
 

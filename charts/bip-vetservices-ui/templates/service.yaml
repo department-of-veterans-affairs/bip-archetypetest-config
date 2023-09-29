@@ -1,0 +1,21 @@
+{{- if (.Values.ui.enabled) -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "bip-archetypetestconfig-ui.fullname" . }}
+  labels:
+    app: {{ template "bip-archetypetestconfig-ui.name" . }}
+    chart: {{ template "bip-archetypetestconfig-ui.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 80
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "bip-archetypetestconfig-ui.name" . }}
+    release: {{ .Release.Name }}
+{{- end }}

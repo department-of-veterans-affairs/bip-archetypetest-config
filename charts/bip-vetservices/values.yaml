@@ -1,0 +1,224 @@
+# Default values for ocp-archetypetestconfig.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: container-registry.dev.bip.va.gov/archetypetest/bip-archetypetestconfig
+  tag: master
+  pullPolicy: IfNotPresent
+
+opaImage:
+  repository: container-registry.dev.bip.va.gov/openpolicyagent/opa
+  tag: 0.16.0
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+opaService:
+  type: ClusterIP
+  port: 8181
+
+ingress:
+  enabled: true
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts: 
+    - bip-archetypetestconfig.local
+  path: /
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+hpa:
+  enabled: false
+
+kong:
+  ingress:
+    anonymous:
+      enabled: false
+      hosts:
+      #- name: bip-reference.local
+      #  paths: 
+      #  - /
+      annotations: {}
+      # kubernetes.io/ingress.class: kong-internal
+      # kubernetes.io/tls-acme: "true"
+      # plugins.konghq.com: bip-archetypetestconfig.archetypetest-dev.acl, bip-archetypetestconfig.archetypetest-dev.jwt.anonymous
+      tls:
+      #- secretName: chart-example-tls
+      #  hosts:
+      #  - chart-example.local
+    secured:
+      enabled: false
+      hosts:
+      #- name: bip-reference.local
+      #  paths:
+      #  - /api/v.+/persons
+      annotations: {}
+      # kubernetes.io/ingress.class: kong-internal
+      # kubernetes.io/tls-acme: "true"
+      # plugins.konghq.com: bip-archetypetestconfig.archetypetest-dev.acl, bip-archetypetestconfig.archetypetest-dev.jwt
+      # configuration.konghq.com: bip-archetypetestconfig-dev-kongingress
+      tls: []
+      #- secretName: chart-example-tls
+      #  hosts:
+      #  - chart-example.local
+
+route:
+  enabled: false
+  annotations: {}
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 500Mi
+  requests:
+    cpu: 100m
+    memory: 100Mi
+
+opaResources:
+  limits:
+    cpu: 250m
+    memory: 250Mi
+  requests:
+    cpu: 250m
+    memory: 250Mi
+
+java:
+  toolOptions: -XX:+PrintFlagsFinal -XX:MaxRAMPercentage=67.0 -Djavax.net.ssl.trustStorePassword=changeit -Djavax.net.ssl.trustStore=/var/run/secrets/java.io/keystores/truststore.jks
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            k8s-app: bip-archetypetestconfig
+        topologyKey: kubernetes.io/hostname
+
+#
+# Application Configuration
+#
+
+consul:
+  # Hostname of Consul Agent. Defaults to the hosts IP address.
+  host: "dev-consul-helm-server.vault.svc.dev"
+
+  # Port of Consul Agent.
+  port: 8500
+
+  # Scheme to use to connect to Consul; https/http.
+  scheme: "https"
+
+  # Name of the platform provided Secret for Consul authentication
+  # If this is not set, then a Secret object is generated to store the Consul ACL token. This would need to populated manually.
+  # secret: consul-acl-token
+  enabled: false
+  config:
+    enabled: false
+    failFast: true
+    prefix: config/archetypetest/development
+    # Format in which key/values are stored in Consul. Valid values are FILES and KEY_VALUE
+    format: null
+  discovery:
+    enabled: false
+    register: false
+    client:
+      compositeIndicator:
+        enabled: false
+  # Set this value to the name of the Secret object containing the Consul ACL token. If not set, a Secret will be created by the Chart
+  secret: consul-acl-token
+  # Set this to the name of the key in the above Secret containing the ACL token value
+  secretKey: consul-acl-token
+
+vault:
+  # Enable or disable integration with Vault
+  enabled: false
+  failFast: true
+
+  # Hostname of Vault service. Required.
+  host: "vault.vault"
+  
+  # Port of Vault service. Required.
+  port: 8200
+
+  # Scheme to use to connect to Vault; https/http. Required.
+  scheme: "https"
+
+  # Enable the use of the Vault Consul backend to generate Consul ACL token. Defaults to false.
+  #consulBackendEnabled: "true"
+
+  # Authentication method for connecting to Vault
+  authentication: KUBERNETES
+  kubernetes:
+    tokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+
+    # Role to use for Kubernetes Authentication. Required.
+    role: null
+  kv:
+    applicationName: null
+
+spring:
+  profiles: null
+
+opa:
+  enabled: false # OPAEnablement: Set this to true if you want to enable OPA
+  rego: api_authz_jwt_token.rego
+
+certs:
+  import: true
+  vaCertificates:
+    InternalNetCA1: vacerts/InternalNetCA1.cer
+    InternalSubCA1: vacerts/InternalSubCA1.cer
+    InternalSubCA2: vacerts/InternalSubCA2.cer
+    VA-Internal-E5-RCA1-va: vacerts/VA-Internal-E5-RCA1-va.cer
+    VA-Internal-S2-ICA4: vacerts/VA-Internal-S2-ICA4.cer
+    VA-Internal-S2-ICA8: vacerts/VA-Internal-S2-ICA8.cer
+    VAFIM1-Internal-S2-RCA1-v1: vacerts/VAFIM1-Internal-S2-RCA1-v1.cer
+    VA-Internal-S2-ICA1-v1: vacerts/VA-Internal-S2-ICA1-v1.cer
+    VA-Internal-S2-ICA5: vacerts/VA-Internal-S2-ICA5.cer
+    VA-Internal-S2-ICA9: vacerts/VA-Internal-S2-ICA9.cer
+    VA-Internal-S2-ICA2-v1: vacerts/VA-Internal-S2-ICA2-v1.cer
+    VA-Internal-S2-ICA6: vacerts/VA-Internal-S2-ICA6.cer
+    VA-Internal-S2-RCA1-v1: vacerts/VA-Internal-S2-RCA1-v1.cer
+    VA-Internal-E5-ICA1-v1: vacerts/VA-Internal-E5-ICA1-v1.cer
+    VA-Internal-S2-ICA3-v1: vacerts/VA-Internal-S2-ICA3-v1.cer
+    VA-Internal-S2-ICA7: vacerts/VA-Internal-S2-ICA7.cer
+    VAFIM1-Internal-S2-ICA1-v1: vacerts/VAFIM1-Internal-S2-ICA1-v1.cer
+    VA-Internal-S2-ICA10: vacerts/VA-Internal-S2-ICA10.cer
+    VA-Internal-S2-ICA11: vacerts/VA-Internal-S2-ICA11.cer
+    VA-Internal-S2-ICA12: vacerts/VA-Internal-S2-ICA12.cer
+    VA-Internal-S2-ICA13: vacerts/VA-Internal-S2-ICA13.cer
+    VA-Internal-S2-ICA14: vacerts/VA-Internal-S2-ICA14.cer
+    VA-Internal-S2-ICA15: vacerts/VA-Internal-S2-ICA15.cer
+    VA-Internal-S2-ICA16: vacerts/VA-Internal-S2-ICA16.cer
+    VA-Internal-S2-ICA17: vacerts/VA-Internal-S2-ICA17.cer
+    VA-Internal-S2-ICA18: vacerts/VA-Internal-S2-ICA18.cer
+    VA-Internal-S2-ICA19: vacerts/VA-Internal-S2-ICA19.cer
+    VA-Internal-S2-ICA20: vacerts/VA-Internal-S2-ICA20.cer
+    VA-Internal-S2-ICA21: vacerts/VA-Internal-S2-ICA21.cer
+    VA-Internal-S2-RCA2: vacerts/VA-Internal-S2-RCA2.cer
+
+livenessProbe: |
+  httpGet:
+    path: /actuator/info
+    port: http
+  initialDelaySeconds: 45
+  periodSeconds: 5
+  failureThreshold: 6
+readinessProbe: |
+  httpGet:
+    path: /actuator/health
+    port: http
+  initialDelaySeconds: 45
+  periodSeconds: 5
+  failureThreshold: 6
