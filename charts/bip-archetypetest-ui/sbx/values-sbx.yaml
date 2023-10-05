@@ -1,0 +1,32 @@
+ui:
+  enabled: false # UIEnablement
+ingress:
+  enabled: true
+  hosts:
+    - bip-archetypetest-ui-sbx.sbx.bip.va.gov
+  annotations:
+  path: /
+  tls:
+    - secretName: bip-archetypetest-ui-sbx
+    - hosts:
+        - bip-archetypetest-ui-sbx.sbx.bip.va.gov
+image:
+  repository: container-registry.sbx.bip.va.gov/archetypetest/bip-archetypetest-ui
+  tag: sbx-df1e34c1ee08c104334b2219bbe58350bb8df02a
+  pullPolicy: Always
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 750m
+    memory: 1Gi
+certs:
+  import: true
+react:
+  bssUrl: https://bss-sbx.sbx.bip.va.gov/auth/
+  brpUrl: https://blue.sbx.bip.va.gov
+  originUrl: https://bip-archetypetest.archetypetest-sbx.sbx.bip.va.gov
+  realm: idp
+  clientId: bip-archetypetest-ui-sbx
+  jwtDomains: https://blue.sbx.bip.va.gov,https://bip-archetypetest.archetypetest-sbx.sbx.bip.va.gov

@@ -1,0 +1,35 @@
+appConfig:
+  archetypetest:
+    instances:
+    - revision: development
+      enabled: true
+      namespaceSuffix: dev
+      imageList: archetypetest=container-registry.dev.bip.va.gov/archetypetest/bip-archetypetest
+      imageAllowTags: regexp:^dev-.*
+    - revision: int
+      enabled: true
+      namespaceSuffix: int
+      imageList: archetypetest=container-registry.dev.bip.va.gov/archetypetest/bip-archetypetest
+      imageAllowTags: regexp:^int-.*
+    - revision: test
+      enabled: true
+      namespaceSuffix: test
+      imageList: archetypetest=container-registry.dev.bip.va.gov/archetypetest/bip-archetypetest
+      imageAllowTags: regexp:^test-.*
+  archetypetest-ui:
+    instances:
+      - revision: development
+        enabled: true
+        namespaceSuffix: dev
+        imageList: archetypetest-ui=container-registry.dev.bip.va.gov/archetypetest/bip-archetypetest-ui
+        imageAllowTags: regexp:^dev-.*
+      - revision: int
+        enabled: true
+        namespaceSuffix: int
+        imageList: archetypetest-ui=container-registry.dev.bip.va.gov/archetypetest/bip-archetypetest-ui
+        imageAllowTags: regexp:^int-.*
+      - revision: test
+        enabled: true
+        namespaceSuffix: test
+        imageList: archetypetest-ui=container-registry.dev.bip.va.gov/archetypetest/bip-archetypetest-ui
+        imageAllowTags: regexp:^test-.*

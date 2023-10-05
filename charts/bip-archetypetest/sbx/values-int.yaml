@@ -1,0 +1,74 @@
+# kubernetes ingress configuration
+ingress:
+  enabled: true
+  hosts:
+    - bip-archetypetest-int.sbx.bip.va.gov
+    - bip-archetypetest-int.sbx.bip.va.gov
+  annotations:
+  path: /
+  tls:
+    - hosts:
+      - bip-archetypetest-int.sbx.bip.va.gov
+      - bip-archetypetest-int.sbx.bip.va.gov
+# kong ingress configuration
+kong:
+  ingress:
+    anonymous:
+      enabled: false
+      hosts:
+        - name: bip-archetypetest.archetypetest-int.apps.sbx.bip.va.gov
+          paths:
+            - /
+      annotations:
+        kubernetes.io/ingress.class: kong-internal
+        kubernetes.io/tls-acme: "true"
+        plugins.konghq.com: archetypetest-int.bip-archetypetest-int.acl, archetypetest-int.bip-archetypetest-int.jwt.anonymous
+      tls:
+        - secretName: bip-archetypetest-int-tls
+        - hosts:
+            - bip-archetypetest.archetypetest-int.apps.sbx.bip.va.gov
+    secured:
+      enabled: false
+      hosts:
+        - name: bip-archetypetest.archetypetest-int.apps.sbx.bip.va.gov
+          paths:
+            - /api/v.+/resourcename
+      annotations:
+        kubernetes.io/ingress.class: kong-internal
+        kubernetes.io/tls-acme: "true"
+        plugins.konghq.com: archetypetest-int.bip-archetypetest-int.acl, archetypetest-int.bip-archetypetest-int.jwt
+        configuration.konghq.com: bip-archetypetest-int-kongingress
+      tls:
+        - secretName: bip-archetypetest-int-tls
+        - hosts:
+            - bip-archetypetest.archetypetest-int.apps.sbx.bip.va.gov
+image:
+  repository: container-registry.sbx.bip.va.gov/archetypetest/bip-archetypetest
+  tag: 0.0.2-SNAPSHOT
+opaImage:
+  repository: container-registry.sbx.bip.va.gov/openpolicyagent/opa
+consul:
+  enabled: true
+  config:
+    enabled: true
+    prefix: config/archetypetest/development
+  discovery:
+    enabled: true
+    register: false
+  secret: consul-acl-token
+  scheme: http
+vault:
+  enabled: true
+  host: vault.vault
+  kubernetes:
+    role: archetypetest-read
+  kv:
+    applicationName: archetypetest/bip-archetypetest
+  port: 8200
+  scheme: http
+spring:
+  profiles: int
+hpa:
+  enabled: false
+  cpu: 100
+  maxReplicas: 2

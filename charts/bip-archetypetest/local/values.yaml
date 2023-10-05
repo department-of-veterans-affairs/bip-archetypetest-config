@@ -1,0 +1,20 @@
+image:
+  repository: 172.30.1.1:5000/archetypetest/bip-archetypetest
+  tag: latest
+vault:
+  enabled: false
+  failFast: false
+  consul:
+    enabled: false
+  service:
+    configMap: null
+consul:
+    enabled: false
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+      register: false
+    service:
+      configMap: null
+      secret: null

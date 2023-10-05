@@ -1,0 +1,35 @@
+appConfig:
+  archetypetest:
+    instances:
+      - revision: ivv
+        enabled: true
+        namespaceSuffix: ivv
+        imageList: archetypetest=container-registry.stage.bip.va.gov/archetypetest/bip-archetypetest
+        imageAllowTags: regexp:^ivv-.*
+      - revision: preprod
+        enabled: true
+        namespaceSuffix: preprod
+        imageList: archetypetest=container-registry.stage.bip.va.gov/archetypetest/bip-archetypetest
+        imageAllowTags: regexp:^preprod-.*
+      - revision: uat
+        enabled: true
+        namespaceSuffix: uat
+        imageList: archetypetest=container-registry.stage.bip.va.gov/archetypetest/bip-archetypetest
+        imageAllowTags: regexp:^uat-.*
+  archetypetest-ui:
+    instances:
+      - revision: ivv
+        enabled: true
+        namespaceSuffix: ivv
+        imageList: archetypetest-ui=container-registry.stage.bip.va.gov/archetypetest/bip-archetypetest-ui
+        imageAllowTags: regexp:^ivv-.*
+      - revision: preprod
+        enabled: true
+        namespaceSuffix: preprod
+        imageList: archetypetest-ui=container-registry.stage.bip.va.gov/archetypetest/bip-archetypetest-ui
+        imageAllowTags: regexp:^preprod-.*
+      - revision: uat
+        enabled: true
+        namespaceSuffix: uat
+        imageList: archetypetest-ui=container-registry.stage.bip.va.gov/archetypetest/bip-archetypetest-ui
+        imageAllowTags: regexp:^uat-.*

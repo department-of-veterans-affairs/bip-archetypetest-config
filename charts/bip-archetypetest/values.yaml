@@ -5,12 +5,12 @@
 replicaCount: 1
 
 image:
-  repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest
+  repository: container-registry.dev.bip.va.gov/archetypetest/bip-archetypetest
   tag: master
   pullPolicy: IfNotPresent
 
 opaImage:
-  repository: container-registry.dev8.bip.va.gov/openpolicyagent/opa
+  repository: container-registry.dev.bip.va.gov/openpolicyagent/opa
   tag: 0.16.0
   pullPolicy: IfNotPresent
 
@@ -34,7 +34,10 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-  
+
+hpa:
+  enabled: false
+
 kong:
   ingress:
     anonymous:
@@ -46,7 +49,7 @@ kong:
       annotations: {}
       # kubernetes.io/ingress.class: kong-internal
       # kubernetes.io/tls-acme: "true"
-      # plugins.konghq.com: bip-archetypetest.archTest-dev.acl, bip-archetypetest.archTest-dev.jwt.anonymous
+      # plugins.konghq.com: bip-archetypetest.archetypetest-dev.acl, bip-archetypetest.archetypetest-dev.jwt.anonymous
       tls:
       #- secretName: chart-example-tls
       #  hosts:
@@ -60,7 +63,7 @@ kong:
       annotations: {}
       # kubernetes.io/ingress.class: kong-internal
       # kubernetes.io/tls-acme: "true"
-      # plugins.konghq.com: bip-archetypetest.archTest-dev.acl, bip-archetypetest.archTest-dev.jwt
+      # plugins.konghq.com: bip-archetypetest.archetypetest-dev.acl, bip-archetypetest.archetypetest-dev.jwt
       # configuration.konghq.com: bip-archetypetest-dev-kongingress
       tls: []
       #- secretName: chart-example-tls
@@ -76,15 +79,15 @@ resources:
     cpu: 1000m
     memory: 500Mi
   requests:
-    cpu: 10m
-    memory: 500Mi
+    cpu: 100m
+    memory: 100Mi
 
 opaResources:
   limits:
     cpu: 250m
     memory: 250Mi
   requests:
-    cpu: 10m
+    cpu: 250m
     memory: 250Mi
 
 java:
@@ -94,7 +97,13 @@ nodeSelector: {}
 
 tolerations: []
 
-affinity: {}
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            k8s-app: bip-archetypetest
+        topologyKey: kubernetes.io/hostname
 
 #
 # Application Configuration
@@ -102,8 +111,8 @@ affinity: {}
 
 consul:
   # Hostname of Consul Agent. Defaults to the hosts IP address.
-  host: "dev8-consul-helm-server.vault.svc.dev8"
-  
+  host: "dev-consul-helm-server.vault.svc.dev"
+
   # Port of Consul Agent.
   port: 8500
 
@@ -137,7 +146,7 @@ vault:
   failFast: true
 
   # Hostname of Vault service. Required.
-  host: "dev8-vault.vault.svc.dev8"
+  host: "vault.vault"
   
   # Port of Vault service. Required.
   port: 8200
@@ -162,12 +171,8 @@ spring:
   profiles: null
 
 opa:
-  enabled: true # OPAEnablement: Set this to true if you want to enable OPA
+  enabled: false # OPAEnablement: Set this to true if you want to enable OPA
   rego: api_authz_jwt_token.rego
-
-kafka:
-  truststore: blueTruststore.jks
-  keystore: blueKeystore.jks
 
 certs:
   import: true
@@ -189,22 +194,31 @@ certs:
     VA-Internal-S2-ICA3-v1: vacerts/VA-Internal-S2-ICA3-v1.cer
     VA-Internal-S2-ICA7: vacerts/VA-Internal-S2-ICA7.cer
     VAFIM1-Internal-S2-ICA1-v1: vacerts/VAFIM1-Internal-S2-ICA1-v1.cer
+    VA-Internal-S2-ICA10: vacerts/VA-Internal-S2-ICA10.cer
+    VA-Internal-S2-ICA11: vacerts/VA-Internal-S2-ICA11.cer
+    VA-Internal-S2-ICA12: vacerts/VA-Internal-S2-ICA12.cer
+    VA-Internal-S2-ICA13: vacerts/VA-Internal-S2-ICA13.cer
+    VA-Internal-S2-ICA14: vacerts/VA-Internal-S2-ICA14.cer
+    VA-Internal-S2-ICA15: vacerts/VA-Internal-S2-ICA15.cer
+    VA-Internal-S2-ICA16: vacerts/VA-Internal-S2-ICA16.cer
+    VA-Internal-S2-ICA17: vacerts/VA-Internal-S2-ICA17.cer
+    VA-Internal-S2-ICA18: vacerts/VA-Internal-S2-ICA18.cer
+    VA-Internal-S2-ICA19: vacerts/VA-Internal-S2-ICA19.cer
+    VA-Internal-S2-ICA20: vacerts/VA-Internal-S2-ICA20.cer
+    VA-Internal-S2-ICA21: vacerts/VA-Internal-S2-ICA21.cer
+    VA-Internal-S2-RCA2: vacerts/VA-Internal-S2-RCA2.cer
 
 livenessProbe: |
   httpGet:
-    path: /actuator/health
+    path: /actuator/info
     port: http
-    scheme: HTTP
-  initialDelaySeconds: 120
-  periodSeconds: 10
-  failureThreshold: 13
-  timeoutSeconds: 5
+  initialDelaySeconds: 45
+  periodSeconds: 5
+  failureThreshold: 6
 readinessProbe: |
   httpGet:
     path: /actuator/health
     port: http
-    scheme: HTTP
-  initialDelaySeconds: 120
-  periodSeconds: 10
-  failureThreshold: 13
-  timeoutSeconds: 5
+  initialDelaySeconds: 45
+  periodSeconds: 5
+  failureThreshold: 6

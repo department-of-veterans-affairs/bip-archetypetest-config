@@ -4,5 +4,5 @@ git init
 git add *
 git add .gitignore
 git commit -m "First commit"
-git remote add origin https://github.ec.va.gov/EPMO/bip-archetypetest-config.git
+git remote add origin https://github.com/department-of-veterans-affairs/bip-archetypetest.git
 git push -u origin development
