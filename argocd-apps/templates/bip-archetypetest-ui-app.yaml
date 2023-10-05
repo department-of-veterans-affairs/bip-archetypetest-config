@@ -1,0 +1,41 @@
+{{- range .Values.appConfig.archetypetest.instances }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bip-archetypetest-ui-{{ .namespaceSuffix }}
+  annotations:
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/image-list: {{ .imageList }}
+    argocd-image-updater.argoproj.io/archetypetest-ui.helm.image-name: image.repository
+    argocd-image-updater.argoproj.io/archetypetest-ui.helm.image-tag: image.tag
+    argocd-image-updater.argoproj.io/archetypetest-ui.helm.update-strategy: latest
+    argocd-image-updater.argoproj.io/archetypetest-ui.allow-tags: {{ .imageAllowTags }}
+    argocd-image-updater.argoproj.io/archetypetest-ui.update-strategy: latest
+spec:
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      managedFieldsManagers:
+        - cluster-agent
+  project: bip-archetypetest
+  source:
+    repoURL: https://github.com/department-of-veterans-affairs/bip-archetypetest.git
+    targetRevision: {{ .revision }}
+    path: charts/bip-archetypetest-ui
+    helm:
+      parameters:
+{{ include "common.global_helm_parameters" $ | indent 8 }}
+      valueFiles:
+      - values.yaml
+      - {{ $.Values.global.deployEnv }}/values-{{ .namespaceSuffix }}.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: 'bip-archetypetest-ui-{{ .namespaceSuffix }}'
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+{{ end }}

@@ -1,0 +1,71 @@
+# kubernetes ingress configuration
+ingress:
+  enabled: true
+  hosts:
+    - bip-archetypetest-ivv.stage.bip.va.gov
+  annotations:
+  path: /
+  tls:
+    - hosts:
+      - bip-archetypetest-ivv.stage.bip.va.gov
+# kong ingress configuration
+kong:
+  ingress:
+    anonymous:
+      enabled: false
+      hosts:
+        - name: bip-archetypetest.archetypetest-ivv.apps.stage.bip.va.gov
+          paths:
+            - /
+      annotations:
+        kubernetes.io/ingress.class: kong-internal
+        kubernetes.io/tls-acme: "true"
+        plugins.konghq.com: archetypetest-ivv.bip-archetypetest-ivv.acl, archetypetest-ivv.bip-archetypetest-ivv.jwt.anonymous
+      tls:
+        - secretName: bip-archetypetest-ivv-tls
+        - hosts:
+            - bip-archetypetest.archetypetest-ivv.apps.stage.bip.va.gov
+    secured:
+      enabled: false
+      hosts:
+        - name: bip-archetypetest.archetypetest-ivv.apps.stage.bip.va.gov
+          paths:
+            - /api/v.+/resourcename
+      annotations:
+        kubernetes.io/ingress.class: kong-internal
+        kubernetes.io/tls-acme: "true"
+        plugins.konghq.com: archetypetest-ivv.bip-archetypetest-ivv.acl, archetypetest-ivv.bip-archetypetest-ivv.jwt
+        configuration.konghq.com: bip-archetypetest-ivv-kongingress
+      tls:
+        - secretName: bip-archetypetest-ivv-tls
+        - hosts:
+            - bip-archetypetest.archetypetest-ivv.apps.stage.bip.va.gov
+image:
+  repository: container-registry.stage.bip.va.gov/archetypetest/bip-archetypetest
+  tag: 0.0.2-SNAPSHOT
+opaImage:
+  repository: container-registry.stage.bip.va.gov/openpolicyagent/opa
+consul:
+  config:
+    enabled: true
+    prefix: config/archetypetest/ivv
+  discovery:
+    enabled: true
+    register: false
+  secret: consul-acl-token
+  scheme: http
+vault:
+  enabled: true
+  host: vault.vault
+  kubernetes:
+    role: archetypetest-read
+  kv:
+    applicationName: archetypetest/bip-archetypetest
+  port: 8200
+  scheme: http
+spring:
+  profiles: dev
+hpa:
+  enabled: false
+  cpu: 100
+  maxReplicas: 2

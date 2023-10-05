@@ -1,0 +1,35 @@
+# ui.enabled
+#   Set to false when UI app deployment is not ready or not intended
+#   Tenant would then switch to true when UI app is ready to deploy
+ui:
+  enabled: false # UIEnablement
+ingress:
+  enabled: true
+  hosts:
+    - bip-archetypetest-ui-int.dev.bip.va.gov
+  annotations:
+  path: /
+  tls:
+    - secretName: bip-archetypetest-ui-int
+    - hosts:
+        - bip-archetypetest-ui-int.dev.bip.va.gov
+image:
+  repository: container-registry.dev.bip.va.gov/archetypetest/bip-archetypetest-ui
+  tag: int-df1e34c1ee08c104334b2219bbe58350bb8df02a
+  pullPolicy: Always
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 750m
+    memory: 1Gi
+certs:
+  import: true
+react:
+  bssUrl: https://bss-int.dev.bip.va.gov/auth/
+  brpUrl: https://blue.dev.bip.va.gov
+  originUrl: https://bip-archetypetest.archetypetest-int.dev.bip.va.gov
+  realm: idp
+  clientId: bip-archetypetest-ui-int
+  jwtDomains: https://blue.dev.bip.va.gov,https://bip-archetypetest.archetypetest-int.dev.bip.va.gov

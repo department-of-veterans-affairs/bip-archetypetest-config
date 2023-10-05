@@ -1,0 +1,32 @@
+ui:
+  enabled: false # UIEnablement
+ingress:
+  enabled: true
+  hosts:
+    - bip-archetypetest-ui-preprod.stage.bip.va.gov
+  annotations:
+  path: /
+  tls:
+    - secretName: bip-archetypetest-ui-preprod
+    - hosts:
+        - bip-archetypetest-ui-preprod.stage.bip.va.gov
+image:
+  repository: container-registry.stage.bip.va.gov/archetypetest/bip-archetypetest-ui
+  tag: preprod-df1e34c1ee08c104334b2219bbe58350bb8df02a
+  pullPolicy: Always
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 750m
+    memory: 1Gi
+certs:
+  import: true
+react:
+  bssUrl: https://bss-preprod.stage.bip.va.gov/auth/
+  brpUrl: https://blue.stage.bip.va.gov
+  originUrl: https://bip-archetypetest.archetypetest-preprod.stage.bip.va.gov
+  realm: idp
+  clientId: bip-archetypetest-ui-preprod
+  jwtDomains: https://blue.stage.bip.va.gov,https://bip-archetypetest.archetypetest-preprod.stage.bip.va.gov

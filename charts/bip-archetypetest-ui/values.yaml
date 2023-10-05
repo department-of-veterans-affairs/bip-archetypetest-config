@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: container-registry.dev8.bip.va.gov/archetypetest/bip-archetypetest-ui
+  repository: container-registry.dev.bip.va.gov/archetypetest/bip-archetypetest-ui
   pullPolicy: IfNotPresent
 
 service:
@@ -56,4 +56,7 @@ affinity: {}
 #   Set to false when UI app deployment is not ready or not intended
 #   Tenant would then switch to true when UI app is ready to deploy
 ui:
+  enabled: false
+
+hpa:
   enabled: false

@@ -1,0 +1,32 @@
+ui:
+  enabled: false # UIEnablement
+ingress:
+  enabled: true
+  hosts:
+    - bip-archetypetest-ui-prodtest.prod.bip.va.gov
+  annotations:
+  path: /
+  tls:
+    - secretName: bip-archetypetest-ui-prodtest
+    - hosts:
+        - bip-archetypetest-ui-prodtest.prod.bip.va.gov
+image:
+  repository: container-registry.prod.bip.va.gov/archetypetest/bip-archetypetest-ui
+  tag: prodtest-df1e34c1ee08c104334b2219bbe58350bb8df02a
+  pullPolicy: Always
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 750m
+    memory: 1Gi
+certs:
+  import: true
+react:
+  bssUrl: https://bss-test.prod.bip.va.gov/auth/
+  brpUrl: https://blue.prod.bip.va.gov
+  originUrl: https://bip-archetypetest.archetypetest-prodtest.prod.bip.va.gov
+  realm: idp
+  clientId: bip-archetypetest-ui-prodtest
+  jwtDomains: https://blue.prod.bip.va.gov,https://bip-archetypetest.archetypetest-prodtest.prod.bip.va.gov

@@ -149,10 +149,6 @@ spec:
               name: keystore-volume
             - mountPath: /tmp/vacerts
               name: va-certs
-            - name: kafka-keystore
-              mountPath: /kafka/keystore
-            - name: kafka-truststore
-              mountPath: /kafka/truststore
       initContainers:
         - name: pem-to-truststore
           image: registry.access.redhat.com/openjdk/openjdk-11-rhel7:1.1
@@ -177,18 +173,12 @@ spec:
             - mountPath: /tmp/vacerts
               name: va-certs
       volumes:
-        - name: kafka-keystore
-          configMap:
-            name: {{ $fullName }}-kafka-keystore
-        - name: kafka-truststore
-          configMap:
-            name: {{ $fullName }}-kafka-truststore
-        - emptyDir: {}
-          name: keystore-volume
-        - name: va-certs
-          configMap:
-            name: {{ $fullName }}-va-certs
-    {{- end }}
+      - emptyDir: {}
+        name: keystore-volume
+      - name: va-certs
+        configMap:
+          name: {{ $fullName }}-va-certs
+        {{- end }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}

@@ -48,7 +48,7 @@ spec:
             - name: REACT_APP_BSS_URL
               value: {{ .Values.react.bssUrl }}
             - name: REACT_APP_ARCHETYPETEST_URL
-              value: {{ .Values.react.archetypetestUrl }}
+              value: {{ .Values.react.originUrl }}
             - name: REACT_APP_BRP_URL
               value: {{ .Values.react.brpUrl }}
             - name: REACT_APP_REALM
@@ -58,7 +58,7 @@ spec:
             - name: REACT_APP_JWT_DOMAINS
               value: {{ .Values.react.jwtDomains }}
             - name: REACT_APP_REMOTE_LOG_ENABLED
-              value: {{ .Values.react.remoteLogEnabled }}
+              value: {{ .Values.react.remoteLogEnabled | quote  }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
   {{- with .Values.nodeSelector }}
